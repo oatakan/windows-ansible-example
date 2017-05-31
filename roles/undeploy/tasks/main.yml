@@ -10,7 +10,7 @@
     state: poweredoff
   delegate_to: 127.0.0.1
   with_items: "{{ nodes }}"
-  when: (nodes is defined) and (hostvars[inventory_hostname].config.uuid is defined) and (hostvars[inventory_hostname].guest.hostname == item)
+  when: (nodes is defined) and (hostvars[inventory_hostname].config.uuid is defined) and (hostvars[inventory_hostname].guest.hostname == item.name)
 
 - name: delete vm
   vmware_guest:
@@ -23,7 +23,7 @@
     state: absent
   delegate_to: 127.0.0.1
   with_items: "{{ nodes }}"
-  when: (nodes is defined) and (hostvars[inventory_hostname].config.uuid is defined) and (hostvars[inventory_hostname].guest.hostname == item)
+  when: (nodes is defined) and (hostvars[inventory_hostname].config.uuid is defined) and (hostvars[inventory_hostname].guest.hostname == item.name)
 
 
 
