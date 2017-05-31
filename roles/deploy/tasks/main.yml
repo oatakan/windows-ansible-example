@@ -53,12 +53,11 @@
 
 - name: Waiting for servers to come online
   wait_for:
-    host: "{{ item.instance.hw_eth0.ipaddresses[0] }}"
+    host: "{{ item.networks[0].ip }}"
     port: 5986
-    delay: 120
     timeout: 600
-  with_items: "{{ instances.results }}"
-  when: (instances | changed) and (item.instance is defined)
+  with_items: "{{ nodes }}"
+  when: (instances | changed) and (nodes is defined)
 
 
 
