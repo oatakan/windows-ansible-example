@@ -33,6 +33,7 @@
       password: Password!1
       dns_servers: "{{ item.dns_servers|default([]) }}"
       runonce:
+      - powershell.exe Unblock-File C:\ConfigureRemotingForAnsible.ps1
       - powershell.exe -ExecutionPolicy Unrestricted -File C:\ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert -EnableCredSSP
       - winrm set winrm/config/service/auth @{Basic="true"}
       - winrm set winrm/config/service @{AllowUnencrypted="true"}
