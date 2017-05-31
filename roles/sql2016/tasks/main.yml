@@ -28,16 +28,25 @@
     - C:\Databases
     - C:\UserDatabases
 
+- name: mount iso
+  win_disk_image:
+    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
+    state: present
+  register: disk_image_out
 
 - name: Create SQL 2016 Install Script
   win_template:
     src: templates/installSQL2016.bat
     dest: C:\installSQL2016.bat
 
-
 - name: Install SQL 2016
   win_command: c:\installSQL2016.bat
   args:
     creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+
+- name: unmount iso
+  win_disk_image:
+    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
+    state: absent
 
 
