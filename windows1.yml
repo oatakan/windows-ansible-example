@@ -2,6 +2,7 @@
   hosts: all
   gather_facts: False
   connection: local
+  become: no
   vars_files:
     - "win-nodes.yml"
     
