@@ -23,5 +23,5 @@ nodes:
     memory: 4096
     cpu: 2
     template: windows-2012-r2
-    snapshot_src: Linked
-    linked_clone: True
+    #snapshot_src: Linked
+    #linked_clone: True

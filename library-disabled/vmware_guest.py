@@ -182,7 +182,7 @@ options:
     - ' - C(password) (string): Local administrator password.'
     - ' - C(productid) (string): Product ID.'
     - ' - C(runonce) (list): List of commands to run at first user logon.'
-    - ' - C(timezone) (int): Timezone (See U(https://msdn.microsoft.com/en-us/library/ms912391.aspx)).'
+    - ' - C(timezone) (int): Timezone (See U(https://msdn.microsoft.com/en-us/library-disabled/ms912391.aspx)).'
     version_added: '2.3'
 extends_documentation_fragment: vmware.documentation
 '''
