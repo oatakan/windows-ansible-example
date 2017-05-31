@@ -1,0 +1,8 @@
+- name: Install Third Party Software
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+
+  roles:
+  - thirdparty

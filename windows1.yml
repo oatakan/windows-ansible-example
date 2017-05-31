@@ -1,0 +1,7 @@
+- name: Deploy Windows Servers
+  hosts: all
+  gather_facts: False
+  connection: local
+    
+  roles:
+  - deploy

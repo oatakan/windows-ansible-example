@@ -1,0 +1,22 @@
+---
+
+- name: Call a Public Test Restful API
+  hosts: localhost
+  gather_facts: False
+  connection: local
+
+  tasks:
+    - name: Create new user using Restful API
+      uri: 
+        url: https://reqres.in/api/users
+        method: POST
+        username: test
+        password: test
+        return_content: yes
+        body: {"email":"testuser@test.com","password":"Test!!!1"}
+        body_format: json
+        status_code: 201
+      register: todo
+
+    - debug:
+        msg: "{{ todo }}"

@@ -1,0 +1,8 @@
+- name: Upgrade to SQL 2016
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+
+  roles:
+  - sqlupgrade

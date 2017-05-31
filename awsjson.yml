@@ -1,0 +1,7 @@
+- name: Join server to the domain
+  hosts: all
+  gather_facts: False
+  connection: local
+
+  roles:
+  - awsjson

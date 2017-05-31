@@ -1,0 +1,8 @@
+- name: Install SQL 2016
+  hosts: SQL2016
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+
+  roles:
+  - sql2016
