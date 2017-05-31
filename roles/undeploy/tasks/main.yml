@@ -13,7 +13,7 @@
   poll: 0
   register: poweroff
   with_items: "{{ nodes }}"
-  when: (nodes is defined) and (item.name in inventory_hostname) and (hostvars[inventory_hostname].config.uuid in inventory_hostname)
+  when: (nodes is defined) and (item.name in inventory_hostname) and (hostvars[inventory_hostname].config.uuid is defined)
 
 - name: Wait for systems to poweroff
   async_status: jid="{{ item.ansible_job_id }}"
@@ -22,7 +22,7 @@
   retries: 300
   delay: 10
   with_items: "{{ poweroff.results }}"
-  when: (nodes is defined) and (item.name in inventory_hostname) and (hostvars[inventory_hostname].config.uuid in inventory_hostname)
+  when: (nodes is defined) and (item.name in inventory_hostname)
 
 - name: delete vm
   vmware_guest:
@@ -34,8 +34,7 @@
     uuid: "{{ hostvars[inventory_hostname].config.uuid }}"
     state: absent
   delegate_to: 127.0.0.1
-  when: (systems | changed) and (item.systems is defined) and (nodes is defined) and (item.name in inventory_hostname) and (hostvars[inventory_hostname].config.uuid in inventory_hostname)
-
+  when: (systems | changed) and (item.systems is defined) and (nodes is defined) and (item.name in inventory_hostname) and (hostvars[inventory_hostname].config.uuid is defined)
 
 
 
