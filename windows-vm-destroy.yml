@@ -1,0 +1,9 @@
+- name: Destroy Windows Servers VMs
+  hosts: all
+  gather_facts: False
+  become: no
+  vars_files:
+    - "win-nodes.yml"
+    
+  roles:
+  - undeploy

@@ -1,0 +1,29 @@
+
+- name: poweroff vm
+  vmware_guest:
+    hostname: "{{ lookup('env', 'VMWARE_HOST') }}"
+    username: "{{ lookup('env', 'VMWARE_USER') }}"
+    password: "{{ lookup('env', 'VMWARE_PASSWORD') }}"
+    validate_certs: no
+    name: "{{ inventory_hostname }}"
+    uuid: "{{ hostvars[inventory_hostname].config.uuid }}"
+    state: poweredoff
+  delegate_to: 127.0.0.1
+  when: (vm_name in inventory_hostname) and (hostvars[inventory_hostname].config.uuid in inventory_hostname)
+
+- name: delete vm
+  vmware_guest:
+    hostname: "{{ lookup('env', 'VMWARE_HOST') }}"
+    username: "{{ lookup('env', 'VMWARE_USER') }}"
+    password: "{{ lookup('env', 'VMWARE_PASSWORD') }}"
+    validate_certs: no
+    name: "{{ inventory_hostname }}"
+    uuid: "{{ hostvars[inventory_hostname].config.uuid }}"
+    state: absent
+  delegate_to: 127.0.0.1
+  when: (vm_name in inventory_hostname) and (hostvars[inventory_hostname].config.uuid in inventory_hostname)
+
+
+
+
+
