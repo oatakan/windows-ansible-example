@@ -34,24 +34,24 @@
     state: present
   register: disk_image_out
 
-#- name: Create SQL 2016 Install Script
-#  win_template:
-#    src: templates/installSQL2016.bat
-#    dest: C:\installSQL2016.bat
-#
-#- name: Install SQL 2016
-#  win_command: c:\installSQL2016.bat
-#  args:
-#    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+- name: Create SQL 2016 Install Script
+  win_template:
+    src: templates/installSQL2016.bat
+    dest: C:\installSQL2016.bat
+
+- name: Install SQL 2016
+  win_command: c:\installSQL2016.bat
+  args:
+    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
 
 # using win_package
-- name: Install SQL 2016
-  win_package:
-    path: "{{ disk_image_out.mount_path }}setup.exe"
-    product_id: '{0AE831BC-F2A8-4DE2-8FBF-68B220611A7F}'
-    arguments: /Q /ACTION=Install /IACCEPTSQLSERVERLICENSETERMS /ENU /UPDATEENABLED=false /FEATURES=SQLENGINE /INSTANCENAME=MSSQLSERVER /SECURITYMODE=SQL /SAPWD=Password1! /AGTSVCSTARTUPTYPE=automatic /BROWSERSVCSTARTUPTYPE=automatic /SQLSYSADMINACCOUNTS=sqladmin /SQLBACKUPDIR=C:\Backup /SQLUSERDBDIR=C:\Databases /SQLUSERDBLOGDIR=C:\UserDatabases
-    state: present
-    expected_return_code: [0,3010]
+#- name: Install SQL 2016
+#  win_package:
+#    path: "{{ disk_image_out.mount_path }}setup.exe"
+#    product_id: '{0AE831BC-F2A8-4DE2-8FBF-68B220611A7F}'
+#    arguments: /Q /ACTION=Install /IACCEPTSQLSERVERLICENSETERMS /ENU /UPDATEENABLED=false /FEATURES=SQLENGINE /INSTANCENAME=MSSQLSERVER /SECURITYMODE=SQL /SAPWD=Password1! /AGTSVCSTARTUPTYPE=automatic /BROWSERSVCSTARTUPTYPE=automatic /SQLSYSADMINACCOUNTS=sqladmin /SQLBACKUPDIR=C:\Backup /SQLUSERDBDIR=C:\Databases /SQLUSERDBLOGDIR=C:\UserDatabases
+#    state: present
+#    expected_return_code: [0,3010]
 
 - name: unmount iso
   win_disk_image:
