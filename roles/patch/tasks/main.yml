@@ -1,0 +1,23 @@
+- name: Copy a Windows Update file from remote directory to local
+  win_copy:
+    src: \\172.16.32.239\Installs\windows10.0-kb4013418-x64.msu
+    dest: c:\windows10.0-kb4013418-x64.msu
+    remote_src: True
+
+- name: Install Windows Update for KB4013418
+  win_shell: c:\windows10.0-kb4013418-x64.msu /quiet /norestart
+  register: patch
+
+
+
+#- name: Install Windows Update for KB4013418
+#  win_package:
+#    path: c:\windows10.0-kb4013418-x64.msu
+#    productid: '{D64B6984-242F-32BC-B008-752806E5FC44}.KB4013418'
+#    arguments: '/quiet /norestart'
+#    ensure: present
+#    expected_return_code: [0,3010]
+#  register: patch
+
+- debug:
+    msg: "{{ patch }}"

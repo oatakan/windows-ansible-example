@@ -1,0 +1,18 @@
+# Setup services
+
+
+- name: Copy Example Service EXE to Server
+  win_copy:
+    src: files/ServiceExample.exe
+    dest: C:\Windows\ServiceExample.exe
+
+
+
+- name: Create a new service 
+  win_service:
+    name: service name
+    path: C:\Windows\ServiceExample.exe
+    display_name: Example Service
+    description: This is an example service
+    username: LocalSystem
+    password: ""

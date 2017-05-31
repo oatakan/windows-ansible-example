@@ -1,0 +1,65 @@
+
+
+# Clone a VM from a Template or existing running machine and customize
+- name: clone template and customize
+  vmware_guest:
+    hostname: "{{ lookup('env', 'VMWARE_HOST')|default(providers.vcenter.hostname) }}"
+    username: "{{ lookup('env', 'VMWARE_USER')|default(providers.vcenter.username) }}"
+    password: "{{ lookup('env', 'VMWARE_PASSWORD')|default(providers.vcenter.password) }}"
+    validate_certs: no
+    datacenter: "{{ providers.vcenter.datacenter }}"
+    cluster: "{{ providers.vcenter.cluster }}"
+    resource_pool: "{{ providers.vcenter.resource_pool|default('') }}"
+    name: "{{ item.name }}"
+    template: "{{ item.template }}"
+    snapshot_src: "{{ item.snapshot_src|default(omit) }}"
+    linked_clone: "{{ item.linked_clone|default(omit) }}"
+    customvalues: "{{ item.customvalues|default(omit) }}"
+    state: poweredon
+    wait_for_ip_address: yes
+    disk: "{{ item.disk|default(omit) }}"
+    hardware:
+      memory_mb: "{{ item.memory }}"
+      num_cpus: "{{ item.cpu }}"
+      scsi: paravirtual
+    networks: "{{ item.networks }}"
+    customization:
+      autologon: True
+      orgname: Ansible
+      fullname: Ansible
+      # timezone 20 = Central Standard Time
+      # For more info see https://msdn.microsoft.com/en-us/library/ms912391(v=winembedded.11).aspx[msdn.microsoft.com]
+      timezone: 20
+      password: Password!1
+      dns_servers: "{{ item.dns_servers|default([]) }}"
+      runonce:
+      - winrm set winrm/config/service/auth @{Basic="true"}
+      - winrm set winrm/config/service @{AllowUnencrypted="true"}
+  async: 7200
+  poll: 0
+  register: deploy
+  with_items: "{{ nodes }}"
+  when: nodes is defined
+
+- name: Wait for instance creation to complete
+  async_status: jid="{{ item.ansible_job_id }}"
+  register: instances
+  until: instances.finished
+  retries: 300
+  delay: 10
+  with_items: "{{ deploy.results }}"
+
+- name: Waiting for servers to come online
+  wait_for:
+    host: "{{ item.instance.hw_eth0.ipaddresses[0] }}"
+    port: 5986
+    delay: 120
+    timeout: 600
+  with_items: "{{ instances.results }}"
+  when: (instances | changed) and (item.instance is defined)
+
+
+
+
+
+

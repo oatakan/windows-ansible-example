@@ -1,0 +1,27 @@
+---
+providers:
+  vcenter:
+    datacenter: cloud
+    cluster: mylab
+    resource_pool: manageto
+
+nodes:
+  - name: wintest1
+    networks:
+    - name: mgmt
+      ip: 192.168.1.55
+      netmask: 255.255.255.0
+      gateway: 192.168.1.254
+      domain: home.ad
+      dns_servers:
+      - 192.168.1.254
+      - 8.8.4.4
+    domain: home.ad
+    dns_servers:
+    - 192.168.1.254
+    - 8.8.4.4
+    memory: 4096
+    cpu: 2
+    template: windows-2012-r2
+    snapshot_src: Linked
+    linked_clone: True

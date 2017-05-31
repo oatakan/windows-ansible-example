@@ -1,0 +1,11 @@
+- name: Create SQL 2016 Install Script
+  win_template:
+    src: templates/upgradeSQL2016.bat
+    dest: C:\upgradeSQL2016.bat
+
+
+- name: Upgrade to SQL 2016
+  win_command: c:\upgradeSQL2016.bat
+  args:
+    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+  ignore_errors: true

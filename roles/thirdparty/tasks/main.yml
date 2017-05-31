@@ -1,0 +1,20 @@
+- name: Install latest Firefox
+  win_chocolatey:
+    name: firefox
+    state: latest
+
+- name: Install latest Flash Player Plugin
+  win_chocolatey:
+    name: flashplayerplugin
+    state: latest
+
+- name: Install latest 7 Zip
+  win_chocolatey:
+    name: 7zip.install
+    state: latest
+
+- name: Install latest Java
+  win_chocolatey:
+    name: jre8
+    state: latest
+

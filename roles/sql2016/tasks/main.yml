@@ -1,0 +1,43 @@
+# Install SQL 2016
+
+- name: Set up sqladmin user
+  win_user:
+    name: sqladmin
+    password: Password!1
+    password_never_expires: True
+    state: present
+    groups:
+      - Administrators
+
+- name: Install .Net
+  win_feature:
+    name: "{{ item }}"
+    state: present
+    include_sub_features: True
+    include_management_tools: True
+  with_items:
+    - NET-Framework-Core
+    - NET-Framework-Features
+
+- name: Create directory structure
+  win_file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - C:\Backup
+    - C:\Databases
+    - C:\UserDatabases
+
+
+- name: Create SQL 2016 Install Script
+  win_template:
+    src: templates/installSQL2016.bat
+    dest: C:\installSQL2016.bat
+
+
+- name: Install SQL 2016
+  win_command: c:\installSQL2016.bat
+  args:
+    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+
+

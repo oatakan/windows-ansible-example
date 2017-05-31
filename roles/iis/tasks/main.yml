@@ -1,0 +1,29 @@
+- name: Install IIS Web-Server with sub features and management tools
+  win_feature:
+    name: Web-Server
+    state: present
+    restart: True
+    include_sub_features: True
+    include_management_tools: True
+
+- name: Firewall rule to allow http on TCP port 80
+  action: win_firewall_rule
+  args:
+      name: http
+      enable: yes
+      state: present
+      localport: 80
+      action: allow
+      direction: In
+      protocol: TCP
+
+- name: Firewall rule to allow https on TCP port 443
+  action: win_firewall_rule
+  args:
+      name: https
+      enable: yes
+      state: present
+      localport: 443
+      action: allow
+      direction: In
+      protocol: TCP

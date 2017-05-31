@@ -1,0 +1,50 @@
+- name: Generate Self Sign CSR Request
+  raw: New-SelfSignedCertificate -certstorelocation cert:\localmachine\my -dnsname {{ inventory_hostname }}.lab.rhlabs.net | select Thumbprint | ft -HideTableHeaders
+  register: csr
+
+- debug:
+    msg: "{{ csr.stdout | trim  }}"
+
+- name: Remove Default Web Site
+  win_iis_website:
+    name: "Default Web Site"
+    state: absent
+
+- name: Create directory structure
+  win_file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - C:\sites
+    - C:\sites\Ansible
+    - C:\sites\logs
+
+- name: Create Ansible IIS site
+  win_iis_website:
+    name: Ansible
+    state: started
+    physical_path: c:\sites\Ansible
+    parameters: logfile.directory:c:\sites\logs
+    ssl: True
+  register: website
+
+- debug:
+    msg: "{{ website }}"
+
+- name: Add HTTPS Webbinding to IIS
+  win_iis_webbinding:
+    name: Ansible
+    protocol: https
+    certificate_hash: "{{ csr.stdout | trim }}"
+    state: present
+
+- name: Remove the HTTP binding on port 80
+  win_iis_webbinding:
+    name: Ansible
+    port: 80
+    state: absent
+
+- name: Create directory structure
+  win_template:
+    src: template/index.html.j2
+    dest: c:\sites\Ansible\index.html

@@ -2,6 +2,8 @@
   hosts: all
   gather_facts: False
   connection: local
+  vars_files:
+    - "win-nodes.yml"
     
   roles:
   - deploy

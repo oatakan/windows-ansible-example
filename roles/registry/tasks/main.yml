@@ -1,0 +1,20 @@
+- name: Registry - Disable System Tray, Clock and Calendar UI
+  win_regedit:
+    path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\ImmersiveShell
+    name: UseWin32TrayClockExperience
+    data: 1
+    type: dword
+
+- name: Registry - Disable Login Screen Background Image
+  win_regedit:
+    path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\System
+    name: DisableLogonBackgroundImage
+    data: 1
+    type: dword
+
+- name: Registry - Disable One Drive
+  win_regedit:
+    path: HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}
+    name: System.IsPinnedToNameSpaceTree
+    data: 0
+    type: dword
