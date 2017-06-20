@@ -4,7 +4,7 @@
     ansible_port: 5986
     ansible_connection: winrm
 
-  roles:
+  tasks:
   - name: Install an app
     win_chocolatey:
       name: "{{ windows_app_name }}"
