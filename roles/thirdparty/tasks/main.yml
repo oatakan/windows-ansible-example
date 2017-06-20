@@ -17,4 +17,3 @@
   win_chocolatey:
     name: jre8
     state: latest
-
