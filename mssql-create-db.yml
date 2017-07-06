@@ -1,5 +1,6 @@
 - name: Create a db on MSSQL
   hosts: all
+  gather_facts: no
   tasks:
   - name: Create a db
     mssql_db:
