@@ -57,8 +57,9 @@
     dest: C:\installSQL2016.bat
 
 - name: Install SQL 2016
-  win_command: c:\installSQL2016.bat
+  win_shell: c:\installSQL2016.bat
   args:
+    executable: cmd
     creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
 
 # using win_package
