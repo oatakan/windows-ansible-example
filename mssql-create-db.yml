@@ -9,3 +9,4 @@
     mssql_db:
       name: chevron
       state: present
+    delegate_to: 127.0.0.1
