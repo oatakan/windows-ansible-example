@@ -1,6 +1,9 @@
 - name: Create a db on MSSQL
   hosts: all
   gather_facts: no
+  vars:
+    login_user: Administrator
+    login_password: "{{ ansible_password }}"
   tasks:
   - name: Create a db
     mssql_db:
