@@ -1,9 +1,5 @@
 - name: Create a db on MSSQL
   hosts: all
-  vars:
-    ansible_port: 5986
-    ansible_connection: winrm
-
   tasks:
   - name: Create a db
     mssql_db:
