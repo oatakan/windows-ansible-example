@@ -2,7 +2,7 @@
   hosts: all
   gather_facts: no
   vars:
-    login_user: sqladmin
+    login_user: sa
     login_password: Password1!
   tasks:
   - name: Create a db
