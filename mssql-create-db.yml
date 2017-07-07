@@ -7,7 +7,7 @@
   tasks:
   - name: Create a db
     mssql_db:
-      login_host: 54.164.96.56
+      login_host: "{{ ansible_ssh_host | default(inventory_hostname) }}"
       login_user: "{{ login_user | default(omit) }}"
       login_password: "{{ login_password | default(omit) }}"
       name: redhatdemo
