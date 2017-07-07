@@ -11,7 +11,7 @@ Param(
 )
 
 # Ensure SQL Power Shell Modules are in the path
-$env:PSModulePath = $env:PSModulePath + ";C:\Program Files (x86)\Microsoft SQL Server\110\Tools\PowerShell\Modules"
+$env:PSModulePath = $env:PSModulePath + ";C:\Program Files (x86)\Microsoft SQL Server\130\Tools\PowerShell\Modules"
 
 # Import SQL Server Module called SQLPS
 Import-Module SQLPS -DisableNameChecking
