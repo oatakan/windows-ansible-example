@@ -59,6 +59,7 @@
 - name: Install SQL 2016
   win_shell: c:\installSQL2016.ps1
   args:
+    chdir: c:\
     creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
 
 # using win_package
