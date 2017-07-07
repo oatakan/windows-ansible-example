@@ -7,5 +7,6 @@
     ansible_winrm_server_cert_validation: ignore
     login_user: sqladmin
     login_password: Password1!
+    instance_name: "{{ ansible_hostname }}"
   roles:
   - sql2016_create_db_with_script
