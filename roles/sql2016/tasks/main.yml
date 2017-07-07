@@ -3,7 +3,7 @@
 - name: Set up sqladmin user
   win_user:
     name: sqladmin
-    password: Password!1
+    password: Password1!
     password_never_expires: True
     state: present
     groups:

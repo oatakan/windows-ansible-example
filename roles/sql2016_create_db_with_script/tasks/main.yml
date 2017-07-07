@@ -1,0 +1,2 @@
+- name: Run create DB Script
+  script: create_db.ps1 -instanceName {{ instance_name }} -dbName {{ db_name }}
