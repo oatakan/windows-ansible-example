@@ -8,8 +8,8 @@
   - name: Create a db
     mssql_db:
       login_host: "{{ ansible_ssh_host | default(inventory_hostname) }}"
-      login_user: "{{ login_user | default(omit) }}"
-      login_password: "{{ login_password | default(omit) }}"
+      login_user: sa
+      login_password: Password1!
       name: redhatdemo
       state: present
     delegate_to: 127.0.0.1
