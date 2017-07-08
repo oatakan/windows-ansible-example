@@ -5,10 +5,10 @@
   tasks:
     - name: Set windows connection variables
       set_fact:
-        hostvars["{{ inventory_hostname }}"]["ansible_port"]: 5986
-        hostvars["{{ inventory_hostname }}"]["ansible_connection"]: winrm
-        hostvars["{{ inventory_hostname }}"]["ansible_winrm_transport"]: credssp
-        hostvars["{{ inventory_hostname }}"]["ansible_winrm_server_cert_validation"]: ignore
+        hostvars[{{ inventory_hostname }}][ansible_port]: 5986
+        hostvars[{{ inventory_hostname }}][ansible_connection]: winrm
+        hostvars[{{ inventory_hostname }}][ansible_winrm_transport]: credssp
+        hostvars[{{ inventory_hostname }}][ansible_winrm_server_cert_validation]: ignore
 
     - name: Enable port for MSSQL
       win_firewall_rule:
