@@ -1,6 +1,8 @@
 - name: Create a db on MSSQL
   hosts: all
   gather_facts: no
+  vars:
+    db_name: rhdemo1
 
   tasks:
     - name: Set windows connection variables
@@ -25,6 +27,6 @@
         login_host: "{{ ansible_ssh_host | default(inventory_hostname) }}"
         login_user: sa
         login_password: Password1!
-        name: redhatdemo2
+        name: "{{ db_name }}"
         state: present
       delegate_to: 127.0.0.1
