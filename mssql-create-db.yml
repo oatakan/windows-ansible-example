@@ -1,13 +1,11 @@
 - name: Create a db on MSSQL
   hosts: all
   gather_facts: no
-  vars:
-    login_user: sa
-    login_password: Password1!
+
   tasks:
-  - name: Create a db
-    mssql_db:
-      login_host: "{{ ansible_ssh_host | default(inventory_hostname) }}"
-      name: redhatdemo
-      state: present
-    delegate_to: 127.0.0.1
+    - name: Create a db
+      mssql_db:
+        login_host: "{{ ansible_ssh_host | default(inventory_hostname) }}"
+        name: redhatdemo
+        state: present
+      delegate_to: 127.0.0.1
