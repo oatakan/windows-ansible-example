@@ -3,6 +3,17 @@
   gather_facts: no
 
   tasks:
+    - name: Enable port for MSSQL
+      win_firewall_rule:
+        name: MSSQL
+        localport: 1433
+        action: allow
+        direction: in
+        protocol: tcp
+        profiles: public
+        state: present
+        enabled: yes
+
     - name: Create a db
       mssql_db:
         login_host: "{{ ansible_ssh_host | default(inventory_hostname) }}"
