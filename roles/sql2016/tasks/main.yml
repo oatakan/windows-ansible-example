@@ -60,6 +60,11 @@
   debug:
     msg: "{{ execution_policy }}"
 
+- name: Download ConfigureRemotingForAnsible.ps1
+  win_get_url:
+    url: https://github.com/ansible/ansible/raw/devel/examples/scripts/ConfigureRemotingForAnsible.ps1
+    dest: C:\ConfigureRemotingForAnsible2.ps1
+
 - name: Enable CredSSP
   win_shell: powershell –ExecutionPolicy Bypass -File C:\ConfigureRemotingForAnsible2.ps1 -EnableCredSSP
   args:
