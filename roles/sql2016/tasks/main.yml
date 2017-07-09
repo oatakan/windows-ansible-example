@@ -68,16 +68,17 @@
 
 - name: Create SQL 2016 Install Script
   win_template:
-    src: templates/installSQL2016.ps1
-    dest: C:\installSQL2016.ps1
+    src: templates/installSQL2016.bat
+    dest: C:\installSQL2016.bat
 
-- name: Unblock script
-  win_shell: |
-    Unblock-File C:\installSQL2016.ps1
+#- name: Unblock script
+#  win_shell: |
+#    Unblock-File C:\installSQL2016.bat
 
 - name: Install SQL 2016
-  win_shell: c:\installSQL2016.ps1
+  win_shell: c:\installSQL2016.bat
   args:
+    executable: cmd
     chdir: c:\
     creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
 
