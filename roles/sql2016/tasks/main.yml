@@ -9,7 +9,7 @@
     groups:
       - Administrators
 
-- name: Install latest Google Chrome
+- name: Install latest RegShot
   win_chocolatey:
     name: regshot
     state: latest
