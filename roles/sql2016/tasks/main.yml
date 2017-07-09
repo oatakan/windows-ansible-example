@@ -56,6 +56,9 @@
     state: present
   register: disk_image_out
 
+- name: Enable CredSSP
+  win_shell: C:\ConfigureRemotingForAnsible.ps1 -EnableCredSSP
+
 - name: Create SQL 2016 Install Script
   win_template:
     src: templates/installSQL2016.bat
