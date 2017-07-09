@@ -64,6 +64,7 @@
   win_shell: powershell –ExecutionPolicy Bypass -File C:\ConfigureRemotingForAnsible2.ps1 -EnableCredSSP
   args:
     executable: cmd
+  ignore_errors: yes
 
 - name: Create SQL 2016 Install Script
   win_template:
