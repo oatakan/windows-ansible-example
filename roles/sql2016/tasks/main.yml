@@ -70,9 +70,9 @@
     src: templates/installSQL2016.ps1
     dest: C:\installSQL2016.ps1
 
-#- name: Unblock script
-#  win_shell: |
-#    Unblock-File C:\installSQL2016.ps1
+- name: Unblock script
+  win_shell: |
+    Unblock-File C:\installSQL2016.ps1
 
 - name: Install SQL 2016
   win_shell: c:\installSQL2016.ps1
