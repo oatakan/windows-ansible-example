@@ -56,18 +56,21 @@
     state: present
   register: disk_image_out
 
-#- name: Enable CredSSP
-#  win_shell: C:\ConfigureRemotingForAnsible.ps1 -EnableCredSSP
+- name: Enable CredSSP
+  win_shell: C:\ConfigureRemotingForAnsible2.ps1 -EnableCredSSP
 
 - name: Create SQL 2016 Install Script
   win_template:
-    src: templates/installSQL2016.bat
-    dest: C:\installSQL2016.bat
+    src: templates/installSQL2016.ps1
+    dest: C:\installSQL2016.ps1
+
+- name: Unblock script
+  win_shell: |
+    Unblock-File C:\installSQL2016.ps1
 
 - name: Install SQL 2016
-  win_shell: c:\installSQL2016.bat
+  win_shell: c:\installSQL2016.ps1
   args:
-    executable: cmd
     chdir: c:\
     creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
 
