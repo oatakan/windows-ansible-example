@@ -80,6 +80,10 @@
 #  win_shell: |
 #    Unblock-File C:\installSQL2016.bat
 
+- name: Start internet explorer
+  win_shell: |
+    Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe"
+
 - name: Install SQL 2016
   win_shell: c:\installSQL2016.bat
   args:
