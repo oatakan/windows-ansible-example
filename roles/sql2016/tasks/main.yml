@@ -51,8 +51,19 @@
     state: present
   register: disk_image_out
 
-#- name: Enable CredSSP
-#  win_shell: C:\ConfigureRemotingForAnsible2.ps1 -EnableCredSSP
+- name: Get execution policy
+  win_shell: |
+    Get-ExecutionPolicy
+  register: execution_policy
+
+- name: debug execution policy
+  debug:
+    msg: "{{ execution_policy }}"
+
+- name: Enable CredSSP
+  win_shell: powershell –ExecutionPolicy Bypass -File C:\ConfigureRemotingForAnsible2.ps1 -EnableCredSSP
+  args:
+    executable: cmd
 
 - name: Create SQL 2016 Install Script
   win_template:
