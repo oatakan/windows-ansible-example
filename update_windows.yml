@@ -5,7 +5,7 @@
     ansible_connection: winrm
 
   roles:
-  - deekayen.win_updates
+  - role: deekayen.win_updates
     win_updates_reboot: true
     win_updates_category_names:
       - "CriticalUpdates"
