@@ -1,0 +1,12 @@
+- name: Install Windows Updates
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+
+  roles:
+  - deekayen.win_updates
+    win_updates_reboot: true
+    win_updates_category_names:
+      - "CriticalUpdates"
+      - "SecurityUpdates"
