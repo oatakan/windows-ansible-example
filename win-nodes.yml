@@ -25,6 +25,3 @@ nodes:
     template: windows-2012-r2-v2
     snapshot_src: Linked
     linked_clone: True
-    tower_callback:
-      url: "{{ tower_callback.url | default(omit) }}"
-      host_config_key: "{{ tower_callback.host_config_key | default(omit) }}"
