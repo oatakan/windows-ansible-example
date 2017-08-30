@@ -115,7 +115,7 @@
 #    image_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
 #    state: absent
 
-- name: mount iso
+- name: unmount iso
   win_disk_image:
     image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
     state: absent
