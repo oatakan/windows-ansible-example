@@ -1,3 +1,8 @@
+- name: Install latest Google Chrome
+  win_chocolatey:
+    name: googlechrome
+    state: latest
+
 - name: Install latest Firefox
   win_chocolatey:
     name: firefox
