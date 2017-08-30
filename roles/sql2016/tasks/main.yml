@@ -110,9 +110,12 @@
 #    state: present
 #    expected_return_code: [0,3010]
 
-- name: unmount iso
+#- name: unmount iso
+#  win_disk_image:
+#    image_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
+#    state: absent
+
+- name: mount iso
   win_disk_image:
-    image_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
+    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
     state: absent
-
-
