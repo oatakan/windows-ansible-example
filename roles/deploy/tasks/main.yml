@@ -37,9 +37,7 @@
       - powershell.exe -ExecutionPolicy Unrestricted -File C:\ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert -EnableCredSSP
       - winrm set winrm/config/service/auth @{Basic="true"}
       - winrm set winrm/config/service @{AllowUnencrypted="true"}
-      {% if tower_callback is defined and tower_callback.host_config_key and tower_callback.url %}
-      - powershell.exe -executionpolicy bypass -command '&Invoke-WebRequest -Body @{"host_config_key"={{ tower_callback.host_config_key}}}  -Method Post -Uri {{ tower_callback.url }}'
-      {% endif %}
+      {% if tower_callback is defined %}- powershell.exe -executionpolicy bypass -command '&Invoke-WebRequest -Body @{"host_config_key"={{ tower_callback.host_config_key}}}  -Method Post -Uri {{ tower_callback.url }}'{% endif %}
   async: 7200
   poll: 0
   register: deploy
