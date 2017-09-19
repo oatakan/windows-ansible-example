@@ -1,0 +1,9 @@
+- name: Deploy Windows Instances on ec2
+  hosts: localhost
+  gather_facts: False
+  connection: local
+  become: no
+  vars_files:
+    - win-nodes-ec2.yml
+  roles:
+    - ansible-role-ec2
