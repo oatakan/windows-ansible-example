@@ -1,0 +1,15 @@
+<powershell>
+$admin = [adsi]("WinNT://./administrator, user")
+$admin.PSBase.Invoke("SetPassword", "{{ ansible_password }}")
+$RegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+$RegROPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce"
+Set-ItemProperty $RegPath "AutoAdminLogon" -Value "1" -type String
+Set-ItemProperty $RegPath "DefaultUsername" -Value "{{ ansible_hostname }}\Administrator" -type String
+Set-ItemProperty $RegPath "DefaultPassword" -Value "{{ ansible_password }}" -type String
+Set-ItemProperty $RegPath "AutoLogonCount" -Value "3" -type DWord
+(new-object system.net.webclient).DownloadFile('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1','C:\ConfigureRemotingForAnsible.ps1')
+$command = "C:\ConfigureRemotingForAnsible.ps1 -EnableCredSSP"
+Set-ExecutionPolicy Bypass -Force
+Unblock-File C:\ConfigureRemotingForAnsible.ps1
+Invoke-Expression $command
+</powershell>
