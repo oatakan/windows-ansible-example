@@ -38,28 +38,28 @@
     - C:\Databases
     - C:\UserDatabases
 
-- name: mount iso
-  win_disk_image:
-    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
-    state: present
-  register: disk_image_out
-
-#- name: Check ISO file
-#  win_stat:
-#    path: "{{ ansible_env.TEMP }}\\sql2016.iso"
-#  register: iso_file
-#
-#- name: Download ISO file
-#  win_get_url:
-#    dest: "{{ ansible_env.TEMP }}\\sql2016.iso"
-#    url: "http://care.dlservice.microsoft.com/dl/download/F/E/9/FE9397FA-BFAB-4ADD-8B97-91234BC774B2/SQLServer2016-x64-ENU.iso"
-#  when: not iso_file.stat.exists
-#
 #- name: mount iso
 #  win_disk_image:
-#    image_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
+#    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
 #    state: present
 #  register: disk_image_out
+
+- name: Check ISO file
+  win_stat:
+    path: "{{ ansible_env.TEMP }}\\sql2016.iso"
+  register: iso_file
+
+- name: Download ISO file
+  win_get_url:
+    dest: "{{ ansible_env.TEMP }}\\sql2016.iso"
+    url: "http://care.dlservice.microsoft.com/dl/download/F/E/9/FE9397FA-BFAB-4ADD-8B97-91234BC774B2/SQLServer2016-x64-ENU.iso"
+  when: not iso_file.stat.exists
+
+- name: mount iso
+  win_disk_image:
+    image_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
+    state: present
+  register: disk_image_out
 
 - name: Get execution policy
   win_shell: |
@@ -110,12 +110,12 @@
 #    state: present
 #    expected_return_code: [0,3010]
 
-#- name: unmount iso
-#  win_disk_image:
-#    image_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
-#    state: absent
-
 - name: unmount iso
   win_disk_image:
-    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
+    image_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
     state: absent
+
+#- name: unmount iso
+#  win_disk_image:
+#    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
+#    state: absent

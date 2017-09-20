@@ -7,5 +7,6 @@
     - win-nodes-ec2.yml
   vars:
     ansible_port: 5986
+    windows: yes
   roles:
     - ansible-role-ec2
