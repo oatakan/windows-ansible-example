@@ -72,15 +72,14 @@
     dest: "{{ ansible_env.TEMP }}\\pstools"
     rm: true
 
-#- name: Copy config file
-#  win_copy:
-#    src: sqlconfigfile.ini
-#    dest: c:\sqlconfigfile.ini
+- name: Copy config file
+  win_copy:
+    src: sqlconfigfile.ini
+    dest: c:\sqlconfigfile.ini
 
 - name: Install SQL 2016
   win_psexec:
-   #command: '{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False'
-   command: powershell.exe -ExecutionPolicy Unrestricted -File C:\install2.ps1
+   command: d:\\setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False'
    priority: high
    executable: "{{ ansible_env.TEMP }}\\pstools\\PsExec.exe"
 
