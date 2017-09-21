@@ -77,11 +77,12 @@
 #    src: sqlconfigfile.ini
 #    dest: c:\sqlconfigfile.ini
 
-#- name: Install SQL 2016
-#  win_psexec:
-#   command: '{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False'
-#   priority: high
-#   executable: "{{ ansible_env.TEMP }}\\pstools\\PsExec.exe"
+- name: Install SQL 2016
+  win_psexec:
+   #command: '{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False'
+   command: C:\install2.ps1
+   priority: high
+   executable: "{{ ansible_env.TEMP }}\\pstools\\PsExec.exe"
 
 - name: Install SQL 2016
   win_shell: C:\install2.ps1 >> c:\install_log.txt
