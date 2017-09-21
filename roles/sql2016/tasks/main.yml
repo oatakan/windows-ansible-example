@@ -51,40 +51,37 @@
 
 - name: Create SQL 2016 Install Script
   win_template:
-    src: templates/install.ps1
-    dest: C:\install.ps1
+    src: installSQL2016.bat
+    dest: C:\installSQL2016.bat
+
+- name: Install SQL 2016
+  win_shell: c:\installSQL2016.bat
+  args:
+    executable: cmd
+    chdir: c:\
+    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+
+#- name: Download PsTools
+#  win_get_url:
+#    dest: "{{ ansible_env.TEMP }}\\pstools.zip"
+#    url: "https://download.sysinternals.com/files/PSTools.zip"
+
+#- name: Extract PSTools
+#  win_unzip:
+#    src: "{{ ansible_env.TEMP }}\\pstools.zip"
+#    dest: "{{ ansible_env.TEMP }}\\pstools"
+#    rm: true
+
+#- name: Copy config file
+#  win_copy:
+#    src: sqlconfigfile.ini
+#    dest: c:\sqlconfigfile.ini
 
 #- name: Install SQL 2016
-#  win_shell: c:\installSQL2016.bat
-#  args:
-#    executable: cmd
-#    chdir: c:\
-#    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
-
-- name: Download PsTools
-  win_get_url:
-    dest: "{{ ansible_env.TEMP }}\\pstools.zip"
-    url: "https://download.sysinternals.com/files/PSTools.zip"
-
-- name: Extract PSTools
-  win_unzip:
-    src: "{{ ansible_env.TEMP }}\\pstools.zip"
-    dest: "{{ ansible_env.TEMP }}\\pstools"
-    rm: true
-
-- name: Copy config file
-  win_copy:
-    src: sqlconfigfile.ini
-    dest: c:\sqlconfigfile.ini
-
-- name: Install SQL 2016
-  win_psexec:
-   command: d:\\setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False'
-   priority: high
-   executable: "{{ ansible_env.TEMP }}\\pstools\\PsExec.exe"
-
-- name: Install SQL 2016
-  win_shell: C:\install2.ps1 >> c:\install_log.txt
+#  win_psexec:
+#   command: d:\\setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False'
+#   priority: high
+#   executable: "{{ ansible_env.TEMP }}\\pstools\\PsExec.exe"
 
 # using win_package
 #- name: Install SQL 2016
