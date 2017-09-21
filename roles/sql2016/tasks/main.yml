@@ -59,8 +59,8 @@
     src: sqlconfigfile.ini
     dest: c:\sqlconfigfile.ini
 
-- name: Install SQL 2016
-  win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False"
+#- name: Install SQL 2016
+#  win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False"
 
 #- name: Install SQL
 #  win_chocolatey:
@@ -74,22 +74,22 @@
 #    chdir: c:\
 #    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
 
-#- name: Download PsTools
-#  win_get_url:
-#    dest: "{{ ansible_env.TEMP }}\\pstools.zip"
-#    url: "https://download.sysinternals.com/files/PSTools.zip"
+- name: Download PsTools
+  win_get_url:
+    dest: "{{ ansible_env.TEMP }}\\pstools.zip"
+    url: "https://download.sysinternals.com/files/PSTools.zip"
 
-#- name: Extract PSTools
-#  win_unzip:
-#    src: "{{ ansible_env.TEMP }}\\pstools.zip"
-#    dest: "{{ ansible_env.TEMP }}\\pstools"
-#    rm: true
+- name: Extract PSTools
+  win_unzip:
+    src: "{{ ansible_env.TEMP }}\\pstools.zip"
+    dest: "{{ ansible_env.TEMP }}\\pstools"
+    rm: true
 
-#- name: Install SQL 2016
-#  win_psexec:
-#   command: d:\\setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False'
-#   priority: high
-#   executable: "{{ ansible_env.TEMP }}\\pstools\\PsExec.exe"
+- name: Install SQL 2016
+  win_psexec:
+   command: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False"
+   priority: high
+   executable: "{{ ansible_env.TEMP }}\\pstools\\PsExec.exe"
 
 # using win_package
 #- name: Install SQL 2016
