@@ -60,6 +60,9 @@
   register: disk_image_out
   when: not local_install
 
+- debug:
+    var: disk_image_out
+
 - name: Create SQL 2016 Install Script
   win_template:
     src: templates/installSQL2016.bat
