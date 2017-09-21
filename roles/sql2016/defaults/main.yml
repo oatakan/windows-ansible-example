@@ -1,2 +1,2 @@
 ---
-local_install: no
+iso_path: "{{ ansible_env.TEMP }}\\sql2016.iso"

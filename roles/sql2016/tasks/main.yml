@@ -31,37 +31,22 @@
     - C:\Databases
     - C:\UserDatabases
 
-- name: mount iso
-  win_disk_image:
-    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
-    state: present
-  register: disk_image_out
-  when: local_install
-
-- debug:
-    var: disk_image_out
-
 - name: Check ISO file
   win_stat:
-    path: "{{ ansible_env.TEMP }}\\sql2016.iso"
+    path: "{{ iso_path }}"
   register: iso_file
-  when: not local_install
 
 - name: Download ISO file
   win_get_url:
-    dest: "{{ ansible_env.TEMP }}\\sql2016.iso"
+    dest: "{{ iso_path }}"
     url: "http://care.dlservice.microsoft.com/dl/download/F/E/9/FE9397FA-BFAB-4ADD-8B97-91234BC774B2/SQLServer2016-x64-ENU.iso"
-  when: not local_install and not iso_file.stat.exists
+  when: not iso_file.stat.exists
 
 - name: mount iso
   win_disk_image:
-    image_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
+    image_path: "{{ iso_path }}"
     state: present
   register: disk_image_out
-  when: not local_install
-
-- debug:
-    var: disk_image_out
 
 - name: Create SQL 2016 Install Script
   win_template:
