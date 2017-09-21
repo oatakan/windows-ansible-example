@@ -53,7 +53,7 @@
   win_template:
     src: templates/installSQL2016.ps1
     dest: C:\installSQL2016.ps1
-    newline_sequence: '\n'
+    newline_sequence: '\r\n'
 
 #- name: Install SQL 2016
 #  win_shell: c:\installSQL2016.bat
