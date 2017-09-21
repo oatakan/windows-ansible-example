@@ -18,9 +18,9 @@
   with_items:
     - NET-Framework-Core
     - NET-Framework-Features
-    - NET-Framework-45-Features
-    - NET-Framework-45-Core
-    - NET-Framework-45-ASPNET
+    #- NET-Framework-45-Features
+    #- NET-Framework-45-Core
+    #- NET-Framework-45-ASPNET
 
 - name: Create directory structure
   win_file:
@@ -68,6 +68,11 @@
     executable: cmd
     chdir: c:\
     creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+
+- name: Install SQL 2016
+  win_psexec:
+   command: c:\installSQL2016.bat
+   priority: high
 
 # using win_package
 #- name: Install SQL 2016
