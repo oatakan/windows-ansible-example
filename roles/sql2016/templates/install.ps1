@@ -1,4 +1,3 @@
-# Usage: 
 # create_mssql_db.ps1 -instanceName YourInstanceName -dbName YOURDB
 Enable-WSManCredSSP –Role Client –DelegateComputer wintest1 -Force
 # Load command line parameters
