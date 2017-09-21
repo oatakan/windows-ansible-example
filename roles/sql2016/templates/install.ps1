@@ -5,6 +5,5 @@ $p = Start-Process {{ disk_image_out.mount_path }}setup.exe -ArgumentList '/Q /A
 
 # Ensure SQL Power Shell Modules are in the path
 $p.HasExited
-# Import SQL Server Module called SQLPS
+# Import SQL Server Module called SQLP
 $p.ExitCode
-
