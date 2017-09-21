@@ -61,7 +61,7 @@
     dest: c:\sqlconfigfile.ini
 
 - name: Install SQL 2016
-  win_shell: "{{ disk_image_out.mount_path }}"setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False
+  win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False"
 
 #- name: Install SQL
 #  win_chocolatey:
