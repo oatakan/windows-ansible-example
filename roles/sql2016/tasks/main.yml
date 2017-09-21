@@ -9,16 +9,6 @@
     groups:
       - Administrators
 
-- name: Install latest RegShot
-  win_chocolatey:
-    name: regshot
-    state: latest
-
-- name: Install latest Google Chrome
-  win_chocolatey:
-    name: googlechrome
-    state: latest
-
 - name: Install .Net
   win_feature:
     name: "{{ item }}"
@@ -28,6 +18,9 @@
   with_items:
     - NET-Framework-Core
     - NET-Framework-Features
+    - NET-Framework-45-Features
+    - NET-Framework-45-Core
+    - NET-Framework-45-ASPNET
 
 - name: Create directory structure
   win_file:
@@ -38,61 +31,36 @@
     - C:\Databases
     - C:\UserDatabases
 
-#- name: mount iso
-#  win_disk_image:
-#    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
-#    state: present
-#  register: disk_image_out
+- name: mount iso
+  win_disk_image:
+    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
+    state: present
+  register: disk_image_out
+  when: local_install
 
 - name: Check ISO file
   win_stat:
     path: "{{ ansible_env.TEMP }}\\sql2016.iso"
   register: iso_file
+  when: not local_install
 
 - name: Download ISO file
   win_get_url:
     dest: "{{ ansible_env.TEMP }}\\sql2016.iso"
     url: "http://care.dlservice.microsoft.com/dl/download/F/E/9/FE9397FA-BFAB-4ADD-8B97-91234BC774B2/SQLServer2016-x64-ENU.iso"
-  when: not iso_file.stat.exists
+  when: not iso_file.stat.exists and not local_install
 
 - name: mount iso
   win_disk_image:
     image_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
     state: present
   register: disk_image_out
-
-- name: Get execution policy
-  win_shell: |
-    Get-ExecutionPolicy
-  register: execution_policy
-
-- name: debug execution policy
-  debug:
-    msg: "{{ execution_policy }}"
-
-- name: Download ConfigureRemotingForAnsible.ps1
-  win_get_url:
-    url: https://github.com/ansible/ansible/raw/devel/examples/scripts/ConfigureRemotingForAnsible.ps1
-    dest: C:\ConfigureRemotingForAnsible2.ps1
-
-- name: Enable CredSSP
-  win_shell: powershell –ExecutionPolicy Bypass -File C:\ConfigureRemotingForAnsible2.ps1 -EnableCredSSP
-  args:
-    executable: cmd
-  ignore_errors: yes
+  when: not local_install
 
 - name: Create SQL 2016 Install Script
   win_template:
     src: templates/installSQL2016.bat
     dest: C:\installSQL2016.bat
-
-#- name: Unblock script
-#  win_shell: |
-#    Unblock-File C:\installSQL2016.bat
-
-#- name: Start internet explorer
-#  win_shell: |
-#    Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe"
 
 - name: Install SQL 2016
   win_shell: c:\installSQL2016.bat
@@ -114,8 +82,10 @@
   win_disk_image:
     image_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
     state: absent
+  when: not local_install
 
-#- name: unmount iso
-#  win_disk_image:
-#    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
-#    state: absent
+- name: unmount iso
+  win_disk_image:
+    image_path: \\192.168.1.103\iso\SQLServer2016SP1-FullSlipstream-x64-ENU-DEV.iso
+    state: absent
+  when: local_install
