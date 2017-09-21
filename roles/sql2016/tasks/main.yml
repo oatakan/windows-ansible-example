@@ -35,14 +35,13 @@
   win_stat:
     path: "{{ iso_path }}"
   register: iso_file
-  #when: ("{{ '\\' }}" not in iso_path)
+  when: ("{{ '\\' }}" not in iso_path)
 
 - name: Download ISO file
   win_get_url:
     dest: "{{ iso_path }}"
     url: "http://care.dlservice.microsoft.com/dl/download/F/E/9/FE9397FA-BFAB-4ADD-8B97-91234BC774B2/SQLServer2016-x64-ENU.iso"
-  #when: ("{{ '\\' }}" not in iso_path) and (not iso_file.stat.exists)
-  when: not iso_file.stat.exists
+  when: ("{{ '\\' }}" not in iso_path) and (not iso_file.stat.exists)
 
 - name: mount iso
   win_disk_image:
@@ -50,10 +49,15 @@
     state: present
   register: disk_image_out
 
-- name: Create SQL 2016 Install Script
-  win_template:
-    src: installSQL2016.bat
-    dest: C:\installSQL2016.bat
+#- name: Create SQL 2016 Install Script
+#  win_template:
+#    src: installSQL2016.bat
+#    dest: C:\installSQL2016.bat
+
+- name: Copy config file
+  win_copy:
+    src: sqlconfigfile.ini
+    dest: c:\sqlconfigfile.ini
 
 - name: Install SQL 2016
   win_shell: '{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False'
@@ -80,11 +84,6 @@
 #    src: "{{ ansible_env.TEMP }}\\pstools.zip"
 #    dest: "{{ ansible_env.TEMP }}\\pstools"
 #    rm: true
-
-#- name: Copy config file
-#  win_copy:
-#    src: sqlconfigfile.ini
-#    dest: c:\sqlconfigfile.ini
 
 #- name: Install SQL 2016
 #  win_psexec:
