@@ -12,9 +12,4 @@ $command = "C:\ConfigureRemotingForAnsible.ps1 -EnableCredSSP"
 Set-ExecutionPolicy Bypass -Force
 Unblock-File C:\ConfigureRemotingForAnsible.ps1
 Invoke-Expression $command
-$command2 = 'winrm set winrm/config/client/auth @{CredSSP="true"}'
-Invoke-Expression $command2
-$command3 = 'winrm set winrm/config/service/auth @{CredSSP="true"}'
-Invoke-Expression $command3
-Enable-WSManCredSSP –Role Server
 </powershell>
