@@ -80,7 +80,7 @@
 - name: Install SQL 2016
   win_psexec:
    #command: '{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False'
-   command: C:\install2.ps1
+   command: powershell.exe -ExecutionPolicy Unrestricted -File C:\install2.ps1
    priority: high
    executable: "{{ ansible_env.TEMP }}\\pstools\\PsExec.exe"
 
