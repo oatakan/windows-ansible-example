@@ -73,7 +73,7 @@
     rm: true
 
 - name: Copy config file
-  copy:
+  win_copy:
     src: sqlconfigfile.ini
     dest: c:\sqlconfigfile.ini
 
