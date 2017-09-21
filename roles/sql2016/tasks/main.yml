@@ -35,13 +35,13 @@
   win_stat:
     path: "{{ iso_path }}"
   register: iso_file
-  when: "\\\\" not in iso_path
+  when: "/\/\" not in iso_path
 
 - name: Download ISO file
   win_get_url:
     dest: "{{ iso_path }}"
     url: "http://care.dlservice.microsoft.com/dl/download/F/E/9/FE9397FA-BFAB-4ADD-8B97-91234BC774B2/SQLServer2016-x64-ENU.iso"
-  when: "\\\\" not in iso_path and not iso_file.stat.exists
+  when: "/\/\" not in iso_path and not iso_file.stat.exists
 
 - name: mount iso
   win_disk_image:
