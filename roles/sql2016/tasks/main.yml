@@ -54,17 +54,17 @@
     src: installSQL2016.bat
     dest: C:\installSQL2016.bat
 
-- name: Install SQL
-  win_chocolatey:
-    name: mssqlserver2014express
-    state: latest
+#- name: Install SQL
+#  win_chocolatey:
+#    name: mssqlserver2014express
+#    state: latest
 
-#- name: Install SQL 2016
-#  win_shell: c:\installSQL2016.bat
-#  args:
-#    executable: cmd
-#    chdir: c:\
-#    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+- name: Install SQL 2016
+  win_shell: c:\installSQL2016.bat
+  args:
+    executable: cmd
+    chdir: c:\
+    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
 
 #- name: Download PsTools
 #  win_get_url:
