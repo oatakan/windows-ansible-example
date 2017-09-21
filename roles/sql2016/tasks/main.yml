@@ -61,16 +61,16 @@
 #    chdir: c:\
 #    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
 
-#- name: Download PsTools
-#  win_get_url:
-#    dest: "{{ ansible_env.TEMP }}\\pstools.zip"
-#    url: "https://download.sysinternals.com/files/PSTools.zip"
+- name: Download PsTools
+  win_get_url:
+    dest: "{{ ansible_env.TEMP }}\\pstools.zip"
+    url: "https://download.sysinternals.com/files/PSTools.zip"
 
-#- name: Extract PSTools
-#  win_unzip:
-#    src: "{{ ansible_env.TEMP }}\\pstools.zip"
-#    dest: "{{ ansible_env.TEMP }}\\pstools"
-#    rm: true
+- name: Extract PSTools
+  win_unzip:
+    src: "{{ ansible_env.TEMP }}\\pstools.zip"
+    dest: "{{ ansible_env.TEMP }}\\pstools"
+    rm: true
 
 #- name: Copy config file
 #  win_copy:
