@@ -51,9 +51,8 @@
 
 - name: Create SQL 2016 Install Script
   win_template:
-    src: templates/installSQL2016.ps1
-    dest: C:\installSQL2016.ps1
-    newline_sequence: '\r\n'
+    src: templates/install.ps1
+    dest: C:\install.ps1
 
 #- name: Install SQL 2016
 #  win_shell: c:\installSQL2016.bat
@@ -85,7 +84,7 @@
 #   executable: "{{ ansible_env.TEMP }}\\pstools\\PsExec.exe"
 
 - name: Install SQL 2016
-  win_shell: C:\installSQL2016.ps1 >> c:\install_log.txt
+  win_shell: C:\install.ps1 >> c:\install_log.txt
 
 # using win_package
 #- name: Install SQL 2016
