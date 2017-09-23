@@ -35,7 +35,7 @@
   win_stat:
     path: "{{ iso_path }}"
   register: iso_file
-  when: ("{{ ':' }}" in iso_path)
+  when: (":" in iso_path)
 
 - name: Download ISO file
   win_get_url:
