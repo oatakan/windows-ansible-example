@@ -61,6 +61,10 @@
 
 - name: Install SQL 2016
   win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlsilent.ini /INDICATEPROGRESS=False"
+  args:
+    executable: cmd
+    chdir: c:\
+    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
 
 #- name: Install SQL
 #  win_chocolatey:
