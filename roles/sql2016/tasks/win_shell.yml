@@ -11,8 +11,8 @@
 - debug:
     var: command2
 
-#- set_fact:
-#    command: "{{ disk_image_out.mount_path }}setup.exe /Q /ACTION=Install /IACCEPTSQLSERVERLICENSETERMS /ENU /UPDATEENABLED=false /FEATURES=SQLENGINE /INSTANCENAME=MSSQLSERVER /SECURITYMODE=SQL /SAPWD=Password1! /AGTSVCSTARTUPTYPE=automatic /BROWSERSVCSTARTUPTYPE=automatic /SQLSYSADMINACCOUNTS=sqladmin /SQLBACKUPDIR=C:\\Backup /SQLUSERDBDIR=C:\\Databases /SQLUSERDBLOGDIR=C:\\UserDatabases"
+- set_fact:
+    command: "{{ disk_image_out.mount_path }}setup.exe /Q /ACTION=Install /IACCEPTSQLSERVERLICENSETERMS /ENU /UPDATEENABLED=false /FEATURES=SQLENGINE /INSTANCENAME=MSSQLSERVER /SECURITYMODE=SQL /SAPWD=Password1! /AGTSVCSTARTUPTYPE=automatic /BROWSERSVCSTARTUPTYPE=automatic /SQLSYSADMINACCOUNTS=sqladmin /SQLBACKUPDIR=C:\\Backup /SQLUSERDBDIR=C:\\Databases /SQLUSERDBLOGDIR=C:\\UserDatabases"
 
 #- debug:
 #    var: command
