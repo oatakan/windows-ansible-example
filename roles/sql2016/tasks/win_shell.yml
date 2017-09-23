@@ -1,9 +1,9 @@
 ---
 - debug:
-    var: "{{ disk_image_out.mount_path }}"
-
-- debug:
     var: "{{ ansible_version }}"
+
+#- debug:
+#    var: "{{ disk_image_out.mount_path }}"
 
 - set_fact:
     command1: "whoami"
