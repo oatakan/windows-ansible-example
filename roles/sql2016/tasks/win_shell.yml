@@ -3,7 +3,7 @@
     var: "{{ disk_image_out.mount_path }}"
 
 - set_fact:
-    command1: "d:\\setup.exe"
+    command1: "whoami"
 
 - set_fact:
     command2: "{{ disk_image_out.mount_path }}setup.exe /Q /ACTION=Install /IACCEPTSQLSERVERLICENSETERMS /ENU /UPDATEENABLED=false /FEATURES=SQLENGINE /INSTANCENAME=MSSQLSERVER"
