@@ -18,9 +18,6 @@
   with_items:
     - NET-Framework-Core
     - NET-Framework-Features
-    #- NET-Framework-45-Features
-    #- NET-Framework-45-Core
-    #- NET-Framework-45-ASPNET
 
 - name: Create directory structure
   win_file:
@@ -49,60 +46,7 @@
     state: present
   register: disk_image_out
 
-- name: Create SQL 2016 Install Script
-  win_template:
-    src: installSQL2016.bat
-    dest: C:\installSQL2016.bat
-
-- name: Copy config file
-  win_copy:
-    src: sqlsilent.ini
-    dest: c:\sqlsilent.ini
-
-- name: Install SQL 2016
-  win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlsilent.ini /INDICATEPROGRESS=False"
-  args:
-    executable: cmd
-    chdir: c:\
-    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
-
-#- name: Install SQL
-#  win_chocolatey:
-#    name: mssqlserver2014express
-#    state: latest
-
-#- name: Install SQL 2016
-#  win_shell: c:\installSQL2016.bat
-#  args:
-#    executable: cmd
-#    chdir: c:\
-#    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
-
-#- name: Download PsTools
-#  win_get_url:
-#    dest: "{{ ansible_env.TEMP }}\\pstools.zip"
-#    url: "https://download.sysinternals.com/files/PSTools.zip"
-
-#- name: Extract PSTools
-#  win_unzip:
-#    src: "{{ ansible_env.TEMP }}\\pstools.zip"
-#    dest: "{{ ansible_env.TEMP }}\\pstools"
-#    rm: true
-
-#- name: Install SQL 2016
-#  win_psexec:
-#   command: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False"
-#   priority: high
-#   executable: "{{ ansible_env.TEMP }}\\pstools\\PsExec.exe"
-
-# using win_package
-#- name: Install SQL 2016
-#  win_package:
-#    path: '{{ disk_image_out.mount_path }}\setup.exe'
-#    product_id: '{0AE831BC-F2A8-4DE2-8FBF-68B220611A7F}'
-#    arguments: '/Q /ACTION=Install /IACCEPTSQLSERVERLICENSETERMS /ENU /UPDATEENABLED=false /FEATURES=SQLENGINE /INSTANCENAME=MSSQLSERVER /SECURITYMODE=SQL /SAPWD=Password1! /AGTSVCSTARTUPTYPE=automatic /BROWSERSVCSTARTUPTYPE=automatic /SQLSYSADMINACCOUNTS=sqladmin /SQLBACKUPDIR=C:\Backup /SQLUSERDBDIR=C:\Databases /SQLUSERDBLOGDIR=C:\UserDatabases'
-#    state: present
-#    expected_return_code: [0,3010]
+- include: "{{ install_with }}.yml"
 
 - name: unmount iso
   win_disk_image:

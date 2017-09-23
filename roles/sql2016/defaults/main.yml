@@ -1,2 +1,3 @@
 ---
 iso_path: "{{ ansible_env.TEMP }}\\sql2016.iso"
+install_with: ini # ini, batch, powershell, psexec or win_package

@@ -1,0 +1,12 @@
+---
+- name: Create SQL 2016 Install Script
+  win_template:
+    src: installSQL2016.bat
+    dest: C:\installSQL2016.bat
+
+- name: Install SQL 2016
+  win_shell: c:\installSQL2016.bat
+  args:
+    executable: cmd
+    chdir: c:\
+    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
