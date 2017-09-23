@@ -18,8 +18,8 @@
 #    var: command
 
 - name: Install SQL 2016
-  win_command: '{{ command1 }}'
-   args:
-    executable: cmd
-    chdir: c:\
-    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+  win_shell: '{{ command1 }}'
+    args:
+      executable: cmd
+      chdir: c:\
+      creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
