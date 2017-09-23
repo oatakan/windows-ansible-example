@@ -6,7 +6,7 @@
     var: command1
 
 - set_fact:
-    command2: "{{ disk_image_out.mount_path }}setup.exe /Q"
+    command2: "{{ disk_image_out.mount_path }}setup.exe /Q /ACTION=Install /IACCEPTSQLSERVERLICENSETERMS /ENU /UPDATEENABLED=false /FEATURES=SQLENGINE /INSTANCENAME=MSSQLSERVER"
 
 - debug:
     var: command2
@@ -18,7 +18,7 @@
     var: command
 
 - name: Install SQL 2016
-  win_shell: "{{ command }}"
+  win_command: "{{ command }}"
    args:
     executable: cmd
     chdir: c:\
