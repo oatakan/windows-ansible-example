@@ -18,7 +18,7 @@
     var: command
 
 - name: Install SQL 2016
-  win_command: "{{ command1 }}"
+  win_command: '{{ command1 }}'
    args:
     executable: cmd
     chdir: c:\
