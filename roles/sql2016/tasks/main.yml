@@ -41,7 +41,7 @@
   win_get_url:
     dest: "{{ iso_path }}"
     url: "http://care.dlservice.microsoft.com/dl/download/F/E/9/FE9397FA-BFAB-4ADD-8B97-91234BC774B2/SQLServer2016-x64-ENU.iso"
-  when: ("{{ ':' }}" in iso_path) and (not iso_file.stat.exists)
+  when: (":" in iso_path) and (not iso_file.stat.exists)
 
 - name: mount iso
   win_disk_image:
@@ -56,34 +56,34 @@
 
 - name: Copy config file
   win_copy:
-    src: sqlconfigfile.ini
-    dest: c:\sqlconfigfile.ini
+    src: sqlsilent.ini
+    dest: c:\sqlsilent.ini
 
-#- name: Install SQL 2016
-#  win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlconfigfile.ini /INDICATEPROGRESS=False"
+- name: Install SQL 2016
+  win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlsilent.ini /INDICATEPROGRESS=False"
 
 #- name: Install SQL
 #  win_chocolatey:
 #    name: mssqlserver2014express
 #    state: latest
 
-- name: Install SQL 2016
-  win_shell: c:\installSQL2016.bat
-  args:
-    executable: cmd
-    chdir: c:\
-    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+#- name: Install SQL 2016
+#  win_shell: c:\installSQL2016.bat
+#  args:
+#    executable: cmd
+#    chdir: c:\
+#    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
 
-- name: Download PsTools
-  win_get_url:
-    dest: "{{ ansible_env.TEMP }}\\pstools.zip"
-    url: "https://download.sysinternals.com/files/PSTools.zip"
+#- name: Download PsTools
+#  win_get_url:
+#    dest: "{{ ansible_env.TEMP }}\\pstools.zip"
+#    url: "https://download.sysinternals.com/files/PSTools.zip"
 
-- name: Extract PSTools
-  win_unzip:
-    src: "{{ ansible_env.TEMP }}\\pstools.zip"
-    dest: "{{ ansible_env.TEMP }}\\pstools"
-    rm: true
+#- name: Extract PSTools
+#  win_unzip:
+#    src: "{{ ansible_env.TEMP }}\\pstools.zip"
+#    dest: "{{ ansible_env.TEMP }}\\pstools"
+#    rm: true
 
 #- name: Install SQL 2016
 #  win_psexec:
