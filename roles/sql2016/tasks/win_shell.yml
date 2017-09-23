@@ -1,7 +1,25 @@
 ---
-- name: Install SQL 2016
-  win_shell: '{{ disk_image_out.mount_path }}'setup.exe /Q /ACTION=Install /IACCEPTSQLSERVERLICENSETERMS /ENU /UPDATEENABLED=false /FEATURES=SQLENGINE /INSTANCENAME=MSSQLSERVER /SECURITYMODE=SQL /SAPWD=Password1! /AGTSVCSTARTUPTYPE=automatic /BROWSERSVCSTARTUPTYPE=automatic /SQLSYSADMINACCOUNTS=sqladmin /SQLBACKUPDIR=C:\\Backup /SQLUSERDBDIR=C:\\Databases /SQLUSERDBLOGDIR=C:\\UserDatabases
-   args:
-    executable: cmd
-    chdir: c:\
-    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+- set_fact:
+    command1: "{{ disk_image_out.mount_path }}setup.exe"
+
+- debug:
+    var: command1
+
+- set_fact:
+    command2: "{{ disk_image_out.mount_path }}setup.exe /Q"
+
+- debug:
+    var: command2
+
+#- set_fact:
+#    command: "{{ disk_image_out.mount_path }}setup.exe /Q /ACTION=Install /IACCEPTSQLSERVERLICENSETERMS /ENU /UPDATEENABLED=false /FEATURES=SQLENGINE /INSTANCENAME=MSSQLSERVER /SECURITYMODE=SQL /SAPWD=Password1! /AGTSVCSTARTUPTYPE=automatic /BROWSERSVCSTARTUPTYPE=automatic /SQLSYSADMINACCOUNTS=sqladmin /SQLBACKUPDIR=C:\\Backup /SQLUSERDBDIR=C:\\Databases /SQLUSERDBLOGDIR=C:\\UserDatabases"
+
+#- debug:
+#    var: command
+
+#- name: Install SQL 2016
+#  win_shell: "{{ command }}"
+#   args:
+#    executable: cmd
+#    chdir: c:\
+#    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
