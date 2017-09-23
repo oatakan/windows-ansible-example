@@ -60,7 +60,7 @@
     dest: c:\sqlsilent.ini
 
 - name: Install SQL 2016
-  win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlsilent.ini"
+  win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlsilent.ini /Q /INDICATEPROGRESS=False"
   args:
     executable: cmd
     chdir: c:\
