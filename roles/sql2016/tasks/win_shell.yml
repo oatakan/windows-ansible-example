@@ -2,6 +2,9 @@
 - debug:
     var: "{{ disk_image_out.mount_path }}"
 
+- debug:
+    var: "{{ ansible_version }}"
+
 - set_fact:
     command1: "whoami"
 
@@ -19,7 +22,7 @@
 
 - name: Install SQL 2016
   win_shell: '{{ command1 }}'
-    args:
-      executable: cmd
-      chdir: c:\
-      creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+  args:
+    executable: cmd
+    chdir: c:\
+    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
