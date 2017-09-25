@@ -40,7 +40,7 @@
       #- winrm set winrm/config/service @{AllowUnencrypted="true"}
       #- winrm set winrm/config/client/auth @{CredSSP="true"}
       - winrm set winrm/config/service/auth @{CredSSP="true"}
-      #- powershell.exe -executionpolicy bypass -command '&Invoke-WebRequest -Body @\{\"host_config_key\"=\"{{ tower_callback.host_config_key|default('') }}\"\} -Method Post -Uri \"{{ tower_callback.url|default('') }}\"'
+      #- powershell.exe -command "& Invoke-WebRequest -Body @{'host_config_key'='{{ tower_callback.host_config_key|default(omit) }}'} -Method Post -Uri '{{ tower_callback.url|default(omit) }}'"
   async: 7200
   poll: 0
   register: deploy
