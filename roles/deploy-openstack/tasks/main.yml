@@ -1,4 +1,15 @@
 ---
+- name: check openstack config file
+  stat: path="{{ config_file }}"
+  register: st
+
+- name: include openstack details
+  include_vars: "{{ config_file }}"
+  when: st.stat.exists and st.stat.isreg
+
+- name: "Print out clouds variable"
+  debug: msg="{{ clouds|default('No clouds found') }}"
+
 - name: launch a compute instance
   os_server:
     state: present
