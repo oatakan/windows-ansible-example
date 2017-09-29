@@ -1,0 +1,50 @@
+---
+- name: launch a compute instance
+  os_server:
+    state: present
+    auth:
+      auth_url: "{{ clouds.devstack.auth.auth_url }}"
+      username: "{{ clouds.devstack.auth.username }}"
+      password: "{{ clouds.devstack.auth.password }}"
+      project_name: "{{ clouds.devstack.auth.project_name }}"
+    name: "{{ item.name }}"
+    image: "{{ item.image }}"
+    key_name: "{{ item.key_name }}"
+    timeout: 200
+    flavor: "{{ item.flavor }}"
+    nics: "{{ item.nics }}"
+    meta:
+      hostname: "{{ item.name }}"
+      role: "{{ item.role }}"
+      app_name: "{{ item.app_name }}"
+    auto_ip: yes
+  async: 7200
+  poll: 0
+  register: deploy
+  with_items: "{{ nodes }}"
+  when: nodes is defined
+
+- name: Wait for instance creation to complete
+  async_status: jid="{{ item.ansible_job_id }}"
+  register: instances
+  until: instances.finished
+  retries: 300
+  delay: 10
+  with_items: "{{ deploy.results }}"
+
+- debug:
+    var: instances
+
+#- name: Waiting for servers to come online
+#  wait_for:
+#    host: "{{ item.networks[0].ip }}"
+#    port: 5986
+#    timeout: 600
+#  with_items: "{{ nodes }}"
+#  when: (instances | changed) and (nodes is defined)
+
+
+
+
+
+
