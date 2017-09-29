@@ -3,7 +3,7 @@ nodes:
   - name: windows
     role: windows
     app_name: windows_demo
-    flavor: m1.medium
+    flavor: m1.small
     image: Windows Server 2012 R2 Std Eval
     key_name: ansible-oatakan
     nics:
