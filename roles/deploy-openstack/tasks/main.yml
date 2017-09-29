@@ -40,16 +40,13 @@
   delay: 10
   with_items: "{{ deploy.results }}"
 
-- debug:
-    var: instances
-
-#- name: Waiting for servers to come online
-#  wait_for:
-#    host: "{{ item.networks[0].ip }}"
-#    port: 5986
-#    timeout: 600
-#  with_items: "{{ nodes }}"
-#  when: (instances | changed) and (nodes is defined)
+- name: Waiting for servers to come online
+  wait_for:
+    host: "{{ item.openstack.public_v4|default(item.openstack.interface_ip) }}"
+    port: 5986
+    timeout: 600
+  with_items: "{{ instances.results }}"
+  when: (instances | changed) and (nodes is defined)
 
 
 
