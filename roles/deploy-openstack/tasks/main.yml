@@ -28,7 +28,7 @@
       hostname: "{{ item.name }}"
       role: "{{ item.role }}"
       app_name: "{{ item.app_name }}"
-    auto_ip: yes
+    auto_ip: no
     wait: yes
   async: 7200
   poll: 0
