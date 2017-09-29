@@ -6,7 +6,6 @@ nodes:
     flavor: m1.small
     image: Windows Server 2012 R2 Std Eval
     key_name: ansible-oatakan
-    volume_size: 20
     nics:
       - net-name: private_network
     user_data: "{{ lookup('template', 'templates/userdata.txt.j2') }}"

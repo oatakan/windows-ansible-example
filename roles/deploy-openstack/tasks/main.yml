@@ -23,7 +23,6 @@
     nics: "{{ item.nics }}"
     boot_from_volume: yes
     terminate_volume: yes
-    volume_size: "{{ item.volume_size }}"
     meta:
       hostname: "{{ item.name }}"
       role: "{{ item.role }}"
