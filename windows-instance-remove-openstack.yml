@@ -1,0 +1,12 @@
+- name: Delete openstack instance
+  hosts: all
+  gather_facts: False
+  become: no
+  vars_files:
+    - win-nodes-openstack.yml
+  vars:
+    config_file: "{{ lookup('env', 'OS_CLIENT_CONFIG_FILE') }}"
+    ansible_port: 5986
+    windows: yes
+  roles:
+    - undeploy-openstack
