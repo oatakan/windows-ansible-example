@@ -1,0 +1,18 @@
+---
+- name: remove intances
+  os_server:
+    state: absent
+    auth:
+      auth_url: "{{ clouds.devstack.auth.auth_url }}"
+      username: "{{ clouds.devstack.auth.username }}"
+      password: "{{ clouds.devstack.auth.password }}"
+      project_name: "{{ clouds.devstack.auth.project_name }}"
+    name: "{{ hostvars[inventory_hostname].name }}"
+  delegate_to: 127.0.0.1
+  with_items: "{{ nodes }}"
+  when: (nodes is defined) and (hostvars[inventory_hostname].name is defined) and (item.name == hostvars[inventory_hostname].name)
+
+
+
+
+
