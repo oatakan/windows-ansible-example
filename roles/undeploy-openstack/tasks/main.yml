@@ -7,10 +7,10 @@
       username: "{{ clouds.devstack.auth.username }}"
       password: "{{ clouds.devstack.auth.password }}"
       project_name: "{{ clouds.devstack.auth.project_name }}"
-    name: "{{ hostvars[inventory_hostname].name }}"
+    name: "{{ hostvars[inventory_hostname].openstack.name }}"
   delegate_to: 127.0.0.1
   with_items: "{{ nodes }}"
-  when: (nodes is defined) and (hostvars[inventory_hostname].name is defined) and (item.name == hostvars[inventory_hostname].name)
+  when: (nodes is defined) and (hostvars[inventory_hostname].openstack.name is defined) and (item.name == hostvars[inventory_hostname].openstack.name)
 
 
 
