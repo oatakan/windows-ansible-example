@@ -1,4 +1,12 @@
 ---
+- name: check openstack config file
+  stat: path="{{ config_file }}"
+  register: st
+
+- name: include openstack details
+  include_vars: "{{ config_file }}"
+  when: st.stat.exists and st.stat.isreg
+
 - name: remove intances
   os_server:
     state: absent
