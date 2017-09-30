@@ -1,6 +1,6 @@
 - name: Delete openstack instance
   hosts: all
-  gather_facts: False
+  gather_facts: no
   become: no
   vars_files:
     - win-nodes-openstack.yml

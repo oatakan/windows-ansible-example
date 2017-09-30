@@ -2,6 +2,7 @@
 - name: check openstack config file
   stat: path="{{ config_file }}"
   register: st
+  delegate_to: 127.0.0.1
 
 - name: include openstack details
   include_vars: "{{ config_file }}"
