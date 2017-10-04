@@ -14,7 +14,7 @@
     - name: Enable port for MSSQL
       win_firewall_rule:
         name: MSSQL
-        localport: 1433
+        localport: 1434
         action: allow
         direction: in
         protocol: tcp
@@ -27,6 +27,7 @@
         login_host: "{{ ansible_ssh_host | default(inventory_hostname) }}"
         login_user: sa
         login_password: Password1!
+        login_port: 1434
         name: "{{ db_name }}"
         state: present
       delegate_to: 127.0.0.1
