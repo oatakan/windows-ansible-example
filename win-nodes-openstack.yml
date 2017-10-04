@@ -4,7 +4,7 @@ nodes:
     role: windows
     app_name: windows_demo
     flavor: m1.medium
-    image: Windows Server 2012 R2 Std Eval
+    image: Windows Server 2016
     key_name: ansible-oatakan
     volume_size: 40
     nics:
