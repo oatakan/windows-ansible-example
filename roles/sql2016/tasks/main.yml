@@ -69,3 +69,4 @@
   win_service:
     name: MSSQLSERVER
     state: restarted
+    force_dependent_services: yes
