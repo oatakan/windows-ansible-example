@@ -57,15 +57,15 @@
     image_path: "{{ iso_path }}"
     state: absent
 
-#- name: copy script file
-#  win_copy:
-#    src: enableSQLTCP.ps1
-#    dest: c:\enableSQLTCP.ps1
-#
-#- name: enable tcp on SQL server instance
-#  win_shell: c:\enableSQLTCP.ps1
-#
-#- name: restart SQL Server instance
-#  win_service:
-#    name: MSSQLSERVER
-#    state: restarted
+- name: copy script file
+  win_copy:
+    src: enableSQLTCP.ps1
+    dest: c:\enableSQLTCP.ps1
+
+- name: enable tcp on SQL server instance
+  win_shell: c:\enableSQLTCP.ps1
+
+- name: restart SQL Server instance
+  win_service:
+    name: MSSQLSERVER
+    state: restarted
