@@ -1,6 +1,6 @@
 # Install SQL 2016
 
-- name: Set up sqladmin user
+- name: set up sqladmin user
   win_user:
     name: sqladmin
     password: Password1!
@@ -9,7 +9,7 @@
     groups:
       - Administrators
 
-- name: Install .Net
+- name: install .Net
   win_feature:
     name: "{{ item }}"
     state: present
@@ -19,7 +19,7 @@
     - NET-Framework-Core
     - NET-Framework-Features
 
-- name: Create directory structure
+- name: create directory structure
   win_file:
     path: "{{ item }}"
     state: directory
@@ -28,13 +28,13 @@
     - C:\Databases
     - C:\UserDatabases
 
-- name: Check ISO file
+- name: check ISO file
   win_stat:
     path: "{{ iso_path }}"
   register: iso_file
   when: (":" in iso_path)
 
-- name: Download ISO file
+- name: download ISO file
   win_get_url:
     dest: "{{ iso_path }}"
     url: "http://care.dlservice.microsoft.com/dl/download/F/E/9/FE9397FA-BFAB-4ADD-8B97-91234BC774B2/SQLServer2016-x64-ENU.iso"
@@ -56,3 +56,16 @@
   win_disk_image:
     image_path: "{{ iso_path }}"
     state: absent
+
+#- name: copy script file
+#  win_copy:
+#    src: enableSQLTCP.ps1
+#    dest: c:\enableSQLTCP.ps1
+#
+#- name: enable tcp on SQL server instance
+#  win_shell: c:\enableSQLTCP.ps1
+#
+#- name: restart SQL Server instance
+#  win_service:
+#    name: MSSQLSERVER
+#    state: restarted

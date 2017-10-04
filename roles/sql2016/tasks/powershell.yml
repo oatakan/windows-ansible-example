@@ -1,10 +1,10 @@
 ---
-- name: Create SQL 2016 Install Script
+- name: create SQL 2016 Install Script
   win_template:
     src: installSQL2016.ps1
     dest: C:\installSQL2016.ps1
 
-- name: Install SQL 2016
+- name: install SQL 2016
   win_shell: c:\installSQL2016.ps1
   args:
     chdir: c:\

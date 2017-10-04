@@ -1,10 +1,10 @@
 ---
-- name: Copy config file
+- name: copy config file
   win_copy:
     src: sqlsilent.ini
     dest: c:\sqlsilent.ini
 
-- name: Install SQL 2016
+- name: install SQL 2016
   win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlsilent.ini /INDICATEPROGRESS=False"
   args:
     executable: cmd
