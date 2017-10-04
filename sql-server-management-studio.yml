@@ -1,0 +1,11 @@
+- name: Install SQL Server Management Studio
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+
+  tasks:
+  - name: Install SQL Server Management Studio
+    win_chocolatey:
+      name: sql-server-management-studio
+      state: latest
