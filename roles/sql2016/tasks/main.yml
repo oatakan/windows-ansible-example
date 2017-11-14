@@ -18,6 +18,10 @@
   with_items:
     - NET-Framework-Core
     - NET-Framework-Features
+  register: install_dotnet
+  until: install_dotnet|success
+  delay: 3
+  retries: 5
 
 - name: create directory structure
   win_file:
