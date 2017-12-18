@@ -5,4 +5,4 @@
     ansible_connection: winrm
 
   roles:
-  - bahaula.win_sqlexpress2014
+  - ionut-maxim.win_sqlexpress2014
