@@ -61,7 +61,6 @@
         resource_group: myResourceGroup
         name: AnsibleWin2
         vm_size: Standard_A1
-        enable_winrm: yes
         public_ip_allocation_method: Dynamic
         open_ports:
           - 3389
