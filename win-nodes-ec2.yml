@@ -4,7 +4,7 @@ nodes:
     role: windows
     app_name: windows_demo
     instance_type: m1.small
-    image: ami-15e4ea03 #windows 2016
+    image: ami-603b1c1a #windows 2016
     volumes:
       - device_name: /dev/xvda
         volume_type: gp2
