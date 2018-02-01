@@ -88,10 +88,6 @@
         settings: '{"fileUris": ["https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"],"commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert -EnableCredSSP"}'
         auto_upgrade_minor_version: true
 
-    - name: Debug variable
-      debug:
-        msg: "ip address: {{ azure.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
-
     - name: Waiting for server to come online
       wait_for:
         host: "{{ azure.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
