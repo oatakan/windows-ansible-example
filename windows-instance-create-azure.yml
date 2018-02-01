@@ -74,6 +74,12 @@
           offer: WindowsServer
       register: azure
 
-    - name: Debug Azure output
+    - name: Debug variable
       debug:
-        var: azure
+        msg: "ip address: {{ azure.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+
+    - name: Waiting for server to come online
+      wait_for:
+        host: "{{ azure.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+        port: "{{ ansible_port }}"
+        timeout: 600
