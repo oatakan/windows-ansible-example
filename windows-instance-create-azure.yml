@@ -72,3 +72,8 @@
           publisher: MicrosoftWindowsServer
           version: latest
           offer: WindowsServer
+      register: azure
+
+    - name: Debug Azure output
+      debug:
+        var: azure
