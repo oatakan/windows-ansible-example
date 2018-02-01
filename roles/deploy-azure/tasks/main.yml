@@ -61,7 +61,7 @@
     admin_username: ansible
     admin_password: "{{ ansible_password }}"
     image:
-      sku: 2016-Datacenter-Core
+      sku: 2016-Datacenter-Server-Core
       publisher: MicrosoftWindowsServer
       version: latest
       offer: WindowsServer
