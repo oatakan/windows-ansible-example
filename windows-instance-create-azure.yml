@@ -76,6 +76,17 @@
           offer: WindowsServer
       register: azure
 
+    - name: Create VM Extension 0
+      azure_rm_virtualmachine_extension:
+        name: myvmextension0
+        resource_group: myResourceGroup
+        virtual_machine_name: AnsibleWin2
+        publisher: Microsoft.Azure.Extensions
+        virtual_machine_extension_type: CustomScript
+        type_handler_version: 2.0
+        settings: '{"commandToExecute": "hostname"}'
+        auto_upgrade_minor_version: true
+
     - name: Create VM Extension
       azure_rm_virtualmachine_extension:
         name: myvmextension
