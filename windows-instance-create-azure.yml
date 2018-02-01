@@ -65,7 +65,7 @@
         open_ports:
           - 3389
         os_type: Windows
-        admin_username: Administrator
+        admin_username: ansible
         admin_password: "{{ ansible_password }}"
         image:
           sku: 2012-R2-Datacenter
