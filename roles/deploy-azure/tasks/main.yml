@@ -56,6 +56,7 @@
     public_ip_allocation_method: Dynamic
     open_ports:
       - 3389
+      - 1433
       - "{{ ansible_port }}"
     os_type: Windows
     admin_username: ansible
