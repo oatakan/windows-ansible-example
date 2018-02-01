@@ -5,9 +5,11 @@ nodes:
     app_name: windows_demo
     instance_type: m1.small
     image: ami-603b1c1a #windows 2016
+    #image: ami-013e197b #windows 2012 R2
     volumes:
       - device_name: /dev/xvda
         volume_type: gp2
         volume_size: 50
         delete_on_termination: true
     user_data: "{{ lookup('template', 'templates/userdata.txt.j2') }}"
+
