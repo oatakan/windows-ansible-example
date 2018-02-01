@@ -76,6 +76,7 @@
         tags:
           role: windows
           app_name: windows_demo
+      register: azure
 
     - name: Create VM Extension
       azure_rm_virtualmachine_extension:
