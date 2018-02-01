@@ -2,8 +2,8 @@
 
 - name: set up sqladmin user
   win_user:
-    name: sqladmin
-    password: Password1!
+    name: "{{ mssql_username }}"
+    password: "{{ mssql_password }}"
     password_never_expires: True
     state: present
     groups:

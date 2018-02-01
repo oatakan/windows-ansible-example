@@ -25,8 +25,8 @@
     - name: Create a db
       mssql_db:
         login_host: "{{ ansible_ssh_host | default(inventory_hostname) }}"
-        login_user: sqladmin
-        login_password: Password1!
+        login_user: sa
+        login_password: "{{ mssql_password }}"
         name: "{{ db_name }}"
         state: present
       delegate_to: 127.0.0.1

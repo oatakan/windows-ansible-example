@@ -6,10 +6,5 @@
   vars:
     ansible_port: 5986
     windows: yes
-  tasks:
-    - name: Delete a resource group
-      azure_rm_resourcegroup:
-        name: myResourceGroup
-        location: southcentralus
-        state: absent
-        force: yes
+  roles:
+    - undeploy-azure

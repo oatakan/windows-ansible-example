@@ -5,8 +5,8 @@
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
-    login_user: sqladmin
-    login_password: Password1!
+    login_user: "{{ mssql_username }}"
+    login_password: "{{ mssql_password }}"
     instance_name: "{{ ansible_hostname }}"
   roles:
   - sql2016_create_db_with_script

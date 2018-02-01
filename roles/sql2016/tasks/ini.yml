@@ -1,6 +1,6 @@
 ---
-- name: copy config file
-  win_copy:
+- name: create config file
+  win_template:
     src: sqlsilent.ini
     dest: c:\sqlsilent.ini
 
