@@ -1,0 +1,12 @@
+---
+nodes:
+  - name: windows
+    role: windows
+    app_name: windows_demo
+    vm_size: Standard_A1
+    os_type: Windows
+    image:
+      sku: 2016-Datacenter-Server-Core
+      publisher: MicrosoftWindowsServer
+      version: latest
+      offer: WindowsServer

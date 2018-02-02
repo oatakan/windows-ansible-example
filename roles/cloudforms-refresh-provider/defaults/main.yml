@@ -1,0 +1,5 @@
+---
+provider_id: 3
+max_retries: 10
+retry_interval: 20
+verbose: false
