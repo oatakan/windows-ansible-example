@@ -11,7 +11,7 @@
     provider_id: 99000000000007
   tasks:
     - debug:
-        var: extra_vars
+        var: manageiq
   #roles:
   #  - deploy-azure
   #  - { role: cloudforms-refresh-provider, when: manageiq is defined and provider_id is defined }
