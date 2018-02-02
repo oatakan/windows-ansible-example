@@ -1,6 +1,6 @@
 ---
 nodes:
-  - name: mywindows01
+  - name: MyWin01
     role: windows
     app_name: windows_demo
     vm_size: Standard_A1
