@@ -1,0 +1,264 @@
+---
+# tasks file for windows-ad-controller---
+- name: Install AD 
+  win_feature:
+    name: AD-Domain-Services
+    state: present
+    include_management_tools: True
+    include_sub_features: True
+  register: winfeature
+   
+- debug: var=winfeature
+
+- name: Reboot if needed
+  win_reboot:
+  when: winfeature.reboot_required
+
+#- name: Sleep 180 seconds to wait for DNS config
+#  pause:
+#    minutes: 3
+#  when: winfeature.changed
+
+- name: Install AD
+  win_feature:
+    name: AD-Certificate
+    state: present
+    include_management_tools: True
+    include_sub_features: True
+  register: wincertfeature
+
+- debug: var=wincertfeature
+
+- name: Reboot if needed
+  win_reboot:
+  when: wincertfeature.reboot_required
+
+- name: Install DNS
+  win_feature: 
+    name: DNS
+    state: present
+    include_management_tools: True
+  register: windnsfeature
+
+- debug: var=windnsfeature
+
+- name: Reboot if needed
+  win_reboot:
+  when: windnsfeature.reboot_required
+
+- name: Sleep 180 seconds to wait for DNS config
+  pause:
+    minutes: 3
+  when: windnsfeature.changed
+ 
+- name: Ensure AD services are started - will fail if install not complete
+  win_service:
+    name: "{{ item }}"
+    state: started
+    start_mode: auto
+    force_dependent_services: yes
+  with_items:
+    - adws
+    - dns
+    - kdc
+    - netlogon
+  ignore_errors: yes
+ 
+# Validate? 
+# DCDIAG 
+# Get-Service adws,kdc,netlogon,dns     # Services are running?
+# Get-smbshare          # sysvol & netlogin shares
+# get-eventlog "Directory Service" | select entrytype, source, eventid, message
+
+# get-eventlog "Active Directory Web Services" | select entrytype, source, eventid, message
+
+- name: Create DNS Domain
+  win_domain: 
+    dns_domain_name: "{{ dns_domain_name }}"
+    safe_mode_password: "{{ domain_admin_password }}"
+  register: windomain
+
+- debug: var=windomain
+
+- name: Reboot if needed
+  win_reboot:
+  when: windomain.reboot_required
+
+# For some reason on a run after reboot I'm getting an error sometimes 
+# Error message was MODULE FAILURE: 
+# Exception calling \"Run\" with \"1\" argument(s): \"Exception calling \"Invoke\" with \"0\" argument(s): \"The running command \r\nstopped because the preference variable \"ErrorActionPreference\" or common parameter is set to Stop: The specified \r\nargument 'InstallDNS' was not recognized.
+# I added this sleep to see if it helps
+- name: Sleep 3 minutes after reboot from DNS configuration
+  pause:
+    minutes: 3
+  when: windomain.reboot_required
+
+#- name: Ensure DNS services are started
+#  win_service:
+#    name: "{{ item }}"
+#    state: started
+#    start_mode: auto
+#  with_items:
+#    - dns
+
+#- name: Get current DNS zones
+#  win_shell: Get-DnsServerZone | Select ZoneName
+#  changed_when: false
+#  register: dnsserverzone
+#
+#- debug: var=dnsserverzone
+#
+#- debug: var=ptr_zone_cidr
+#
+#- name: Set Reverse Lookup Zone
+#  win_shell: Add-DnsServerPrimaryZone -NetworkId "{{ ptr_zone_cidr }}" -DynamicUpdate Secure -ReplicationScope Domain
+#  when: "ptr_zone_name not in dnsserverzone.stdout"
+
+#- name: Ensure AD services are started - will fail if install not complete
+#  win_service:
+#    name: "{{ item }}"
+#    state: started
+#    start_mode: auto
+#  with_items:
+#    - adws
+#    - dns
+#    - kdc
+#    - netlogon
+
+
+- name: Promote to Domain Controller
+  win_domain_controller:
+    dns_domain_name: "{{ dns_domain_name }}"
+    domain_admin_user: "Admin@{{ dns_domain_name }}"
+    domain_admin_password: "{{ domain_admin_password }}"
+    safe_mode_password: "{{ domain_admin_password }}"
+    state: domain_controller
+    log_path: c:\ansible_win_domain_controller.txt
+  register: windc
+
+- debug: var=windc
+
+- name: Reboot if needed
+  win_reboot:
+  when: windc.reboot_required
+
+- name: Sleep 60 seconds before adding windows group... sigh...
+  pause:
+    minutes: 1
+
+- name: Ensure AD services are started - will fail if install not complete
+  win_service:
+    name: "{{ item }}"
+    state: started
+    start_mode: auto
+  with_items:
+    - adws
+    - dns
+#    - kdc
+#    - netlogon
+
+- name: Get current DNS zones
+  win_shell: Get-DnsServerZone | Select ZoneName
+  changed_when: false
+  register: dnsserverzone
+
+- debug: var=dnsserverzone
+
+- name: Set Reverse Lookup Zone - fails first time
+  win_shell: Add-DnsServerPrimaryZone -NetworkId "{{ ptr_zone_cidr }}" -DynamicUpdate Secure -ReplicationScope Domain
+  when: "ptr_zone_name not in dnsserverzone.stdout"
+  ignore_errors: true
+
+- name: Sleep 60 seconds before adding reverse zone lookup. sigh...
+  pause:
+    minutes: 1
+  when: "ptr_zone_name not in dnsserverzone.stdout"
+
+- name: Set Reverse Lookup Zone - 2nd run
+  win_shell: Add-DnsServerPrimaryZone -NetworkId "{{ ptr_zone_cidr }}" -DynamicUpdate Secure -ReplicationScope Domain
+  when: "ptr_zone_name not in dnsserverzone.stdout"
+
+- name: Get A records for zone 
+  win_shell: Get-DnsServerResourceRecord -ZoneName {{ dns_domain_name }} -RRType A | Format-Table -AutoSize -Wrap
+  changed_when: false
+  register: arecords
+
+- debug: var=arecords
+
+- name: Create A record for gitlab
+  win_shell: Add-DnsServerResourceRecordA -Name "gitlab" -ZoneName "{{ dns_domain_name }}" -AllowUpdateAny -Ipv4Address "{{ hostvars['gitlab']['ec2_private_ip_address'] }}" -TimeToLive 01:00:00 -AgeRecord
+  when: "'gitlab' not in arecords.stdout"
+
+- name: Get PTR Records for zone 
+  win_shell: Get-DnsServerResourceRecord -ZoneName {{ ptr_zone_name }} -RRType PTR | Format-Table -AutoSize -Wrap
+  register: ptr_records
+
+#- debug: var=ptr_records 
+#
+#- debug: msg="item = {{ item }}"
+#  with_items: "{{ groups.all }}"
+
+# Add-DnsServerResourceRecordPtr -Name "17" -ZoneName "1.168.192.in-addr.arpa" -AllowUpdateAny -TimeToLive 01:00:00 -AgeRecord -PtrDomainName "hostname.example.com"
+- name: Set PTR Record for each host 
+  win_shell: Add-DnsServerResourceRecordPtr -Name "{{ hostvars[item]['ec2_private_ip_address'].split('.')[3] }}" -ZoneName "{{ ptr_zone_name }}" -AllowUpdateAny -TimeToLive 01:00:00 -AgeRecord -PtrDomainName "{{ item + '.' + dns_domain_name}}"
+  when: "item not in ptr_records.stdout"
+  with_items: "{{groups.all}}"
+
+- name: Add windows group
+  win_domain_group: 
+    name: Ansible Users
+    scope: global
+    #path: OU=Users,DC=ansibleworkshop,DC=com
+
+- name: Add windows domain admin
+  win_domain_user: 
+    name: "Admin"
+    upn: "Admin@{{ dns_domain_name }}"
+    state: present
+    enabled: yes
+    account_locked: no 
+    groups:
+      - Domain Admins
+    password: "{{ domain_admin_password }}"
+    update_password: on_create
+    password_expired: false
+    firstname: admin
+    surname: user
+    company: AnsibleByRedHat
+    email: "Admin@{{ dns_domain_name }}"
+    #path: ou=Users,dc=ansibleworkshop,dc=com
+
+
+- name: Add windows AD users 
+  win_domain_user:
+    name: "{{ user_prefix }}{{ item }}" 
+    upn: "{{ user_prefix}}{{ item }}@{{ dns_domain_name }}"
+    #name: "{{ item }}" 
+    #upn: "{{ item }}@{{ dns_domain_name }}"
+    state: present
+    enabled: yes
+    account_locked: no 
+    groups:
+      - Ansible Users
+    password: "{{ users_password }}"
+    update_password: on_create
+    password_expired: false
+    firstname: user
+    surname: user
+    company: AnsibleByRedHat
+    email: "{{user_prefix}}{{ item }}@{{ dns_domain_name }}"
+    #email: "{{ item }}@{{ dns_domain_name }}"
+  #with_items: "{{ users }}"
+  with_sequence: count="{{ user_count }}"
+
+- name: Get current DNS search string
+  win_shell: Get-DnsClientGlobalSetting | Select SuffixSearchList
+  changed_when: false
+  register: suffixsearchlist
+
+- debug: var=suffixsearchlist
+
+- name: Set DNS search string
+  win_shell: Set-DnsClientGlobalSetting -SuffixSearchList {{ dns_domain_name }}, ec2.internal
+  when: "dns_domain_name not in suffixsearchlist.stdout"
+
