@@ -14,10 +14,10 @@
   win_reboot:
   when: winfeature.reboot_required
 
-#- name: Sleep 180 seconds to wait for DNS config
-#  pause:
-#    minutes: 3
-#  when: winfeature.changed
+- name: Sleep 180 seconds to wait for DNS config
+  pause:
+    minutes: 3
+  when: winfeature.changed
 
 #- name: Install AD
 #  win_feature:
@@ -46,10 +46,10 @@
   win_reboot:
   when: windnsfeature.reboot_required
 
-#- name: Sleep 180 seconds to wait for DNS config
-#  pause:
-#    minutes: 3
-#  when: windnsfeature.changed
+- name: Sleep 180 seconds to wait for DNS config
+  pause:
+    minutes: 3
+  when: windnsfeature.changed
  
 #- name: Ensure AD services are started - will fail if install not complete
 #  win_service:
