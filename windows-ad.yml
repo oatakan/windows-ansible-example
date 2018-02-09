@@ -7,4 +7,6 @@
     ansible_winrm_server_cert_validation: ignore
     install_with: ini
   roles:
-  - windows-ad-controller
+    - role: windows-hostname
+      hostname: windc
+    - windows-ad-controller

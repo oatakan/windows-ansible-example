@@ -1,0 +1,6 @@
+---
+- name: change hostname
+  win_shell: Rename-Computer -NewName {{ hostname }}
+  when: hostname|lower != ansible_hostname|lower
+  ignore_errors: yes
+  notify: windows reboot
