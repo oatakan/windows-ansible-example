@@ -19,19 +19,19 @@
 #    minutes: 3
 #  when: winfeature.changed
 
-- name: Install AD
-  win_feature:
-    name: AD-Certificate
-    state: present
-    include_management_tools: True
-    include_sub_features: True
-  register: wincertfeature
+#- name: Install AD
+#  win_feature:
+#    name: AD-Certificate
+#    state: present
+#    include_management_tools: True
+#    include_sub_features: True
+#  register: wincertfeature
 
-- debug: var=wincertfeature
+#- debug: var=wincertfeature
 
-- name: Reboot if needed
-  win_reboot:
-  when: wincertfeature.reboot_required
+#- name: Reboot if needed
+#  win_reboot:
+#  when: wincertfeature.reboot_required
 
 - name: Install DNS
   win_feature: 
@@ -46,23 +46,21 @@
   win_reboot:
   when: windnsfeature.reboot_required
 
-- name: Sleep 180 seconds to wait for DNS config
-  pause:
-    minutes: 3
-  when: windnsfeature.changed
+#- name: Sleep 180 seconds to wait for DNS config
+#  pause:
+#    minutes: 3
+#  when: windnsfeature.changed
  
-- name: Ensure AD services are started - will fail if install not complete
-  win_service:
-    name: "{{ item }}"
-    state: started
-    start_mode: auto
-    force_dependent_services: yes
-  with_items:
-    - adws
-    - dns
-    - kdc
-    - netlogon
-  ignore_errors: yes
+#- name: Ensure AD services are started - will fail if install not complete
+#  win_service:
+#    name: "{{ item }}"
+#    state: started
+#    start_mode: auto
+#  with_items:
+#    - adws
+#    - dns
+#    - kdc
+#    - netlogon
  
 # Validate? 
 # DCDIAG 
@@ -145,6 +143,7 @@
 - name: Sleep 60 seconds before adding windows group... sigh...
   pause:
     minutes: 1
+  when: windc.changed
 
 - name: Ensure AD services are started - will fail if install not complete
   win_service:
@@ -169,14 +168,18 @@
   when: "ptr_zone_name not in dnsserverzone.stdout"
   ignore_errors: true
 
-- name: Sleep 60 seconds before adding reverse zone lookup. sigh...
+- name: Sleep 120 seconds before adding reverse zone lookup. sigh...
   pause:
-    minutes: 1
+    minutes: 2
   when: "ptr_zone_name not in dnsserverzone.stdout"
 
 - name: Set Reverse Lookup Zone - 2nd run
   win_shell: Add-DnsServerPrimaryZone -NetworkId "{{ ptr_zone_cidr }}" -DynamicUpdate Secure -ReplicationScope Domain
   when: "ptr_zone_name not in dnsserverzone.stdout"
+  register: revsersedns2
+  ignore_errors: true
+
+- debug: var=revsersedns2
 
 - name: Get A records for zone 
   win_shell: Get-DnsServerResourceRecord -ZoneName {{ dns_domain_name }} -RRType A | Format-Table -AutoSize -Wrap
@@ -186,7 +189,7 @@
 - debug: var=arecords
 
 - name: Create A record for gitlab
-  win_shell: Add-DnsServerResourceRecordA -Name "gitlab" -ZoneName "{{ dns_domain_name }}" -AllowUpdateAny -Ipv4Address "{{ hostvars['gitlab']['ec2_private_ip_address'] }}" -TimeToLive 01:00:00 -AgeRecord
+  win_shell: Add-DnsServerResourceRecordA -Name "gitlab" -ZoneName "{{ dns_domain_name }}" -AllowUpdateAny -Ipv4Address "{{ hostvars['gitlab']['private_ip'] }}" -TimeToLive 01:00:00 -AgeRecord
   when: "'gitlab' not in arecords.stdout"
 
 - name: Get PTR Records for zone 
@@ -200,7 +203,7 @@
 
 # Add-DnsServerResourceRecordPtr -Name "17" -ZoneName "1.168.192.in-addr.arpa" -AllowUpdateAny -TimeToLive 01:00:00 -AgeRecord -PtrDomainName "hostname.example.com"
 - name: Set PTR Record for each host 
-  win_shell: Add-DnsServerResourceRecordPtr -Name "{{ hostvars[item]['ec2_private_ip_address'].split('.')[3] }}" -ZoneName "{{ ptr_zone_name }}" -AllowUpdateAny -TimeToLive 01:00:00 -AgeRecord -PtrDomainName "{{ item + '.' + dns_domain_name}}"
+  win_shell: Add-DnsServerResourceRecordPtr -Name "{{ hostvars[item]['private_ip'].split('.')[3] }}" -ZoneName "{{ ptr_zone_name }}" -AllowUpdateAny -TimeToLive 01:00:00 -AgeRecord -PtrDomainName "{{ item + '.' + dns_domain_name}}"
   when: "item not in ptr_records.stdout"
   with_items: "{{groups.all}}"
 
