@@ -9,4 +9,4 @@
   roles:
     - role: windows-hostname
       hostname: windc11
-    #- windows-ad-controller
+    - windows-ad-controller
