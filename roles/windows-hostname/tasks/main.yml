@@ -1,4 +1,10 @@
 ---
+- debug:
+    msg: "hostname is {{ hostname }}"
+
+- debug:
+    msg: "ansible_hostname is {{ ansible_hostname }}"
+
 - name: change hostname
   win_shell: Rename-Computer -NewName {{ hostname }}
   when: hostname|lower != ansible_hostname|lower
