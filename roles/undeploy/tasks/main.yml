@@ -1,6 +1,6 @@
 ---
 - debug:
-    msg: "uuid is {{ hostvars[inventory_hostname].config.uuid }}"
+    msg: "uuid is {{ hostvars[inventory_hostname].config }}"
 
 - debug:
     msg: "uuid is {{ hostvars[inventory_hostname].guest }}"
