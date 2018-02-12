@@ -1,10 +1,4 @@
 ---
-- debug:
-    msg: "uuid is {{ hostvars[inventory_hostname].config }}"
-
-- debug:
-    msg: "uuid is {{ hostvars[inventory_hostname].guest }}"
-
 - name: poweroff vm
   vmware_guest:
     hostname: "{{ lookup('env', 'VMWARE_HOST') }}"

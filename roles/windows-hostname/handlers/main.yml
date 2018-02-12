@@ -1,0 +1,3 @@
+---
+- name: windows reboot
+  win_reboot:
