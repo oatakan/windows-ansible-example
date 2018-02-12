@@ -3,7 +3,7 @@
     msg: "uuid is {{ hostvars[inventory_hostname].config.uuid }}"
 
 - debug:
-    msg: "uuid is {{ hostvars[inventory_hostname].guest.hostname }}"
+    msg: "uuid is {{ hostvars[inventory_hostname].guest }}"
 
 - name: poweroff vm
   vmware_guest:
