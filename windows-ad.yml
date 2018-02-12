@@ -8,5 +8,5 @@
     install_with: ini
   roles:
     - role: windows-hostname
-      hostname: windc
+      hostname: windc11
     #- windows-ad-controller
