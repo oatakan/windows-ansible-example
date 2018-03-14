@@ -25,10 +25,13 @@
     resource_name: xWebsite
     ensure: Present
     name: "{{ item.name }}"
-    bindinginfo:
-      - Protocol: http
-        Port: "{{ item.port }}"
-        IPAddress: '*'
+    bindinginfo:bindings: |
+      MSFT_xWebBindingInformation
+      {
+        Port = "{{ item.port }}"
+        Protocol = HTTP
+        HostName = *
+      }
     state: started
     physicalpath: "{{ item.path }}"
   with_items: "{{ iis_sites }}"
