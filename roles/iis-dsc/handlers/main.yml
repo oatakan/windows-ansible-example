@@ -1,0 +1,6 @@
+- name: restart iis service
+  win_dsc:
+    resource_name: service
+    name: W3Svc
+    state: restarted
+    startuptype: auto

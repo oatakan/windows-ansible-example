@@ -1,0 +1,54 @@
+---
+- name: Install required DSC modules
+  win_psmodule:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - xWebAdministration
+    - xNetworking
+
+- name: Install IIS
+  win_dsc:
+    resource_name: windowsfeature
+    name: Web-Server
+
+- name: Create site directory structure
+  win_dsc:
+    resource_name: file
+    ensure: Present
+    type: Directory
+    destinationpath: "{{ item.path }}"
+  with_items: "{{ iis_sites }}"
+
+- name: Create IIS site
+  win_dsc:
+    resource_name: xWebsite
+    ensure: Present
+    name: "{{ item.name }}"
+    bindinginfo:
+      - Protocol: http
+        Port: "{{ item.port }}"
+        IPAddress: '*'
+    state: started
+    physicalpath: "{{ item.path }}"
+  with_items: "{{ iis_sites }}"
+  notify: restart iis service
+
+- name: Open port for site on the firewall
+  win_dsc:
+    resource_name: xFirewall
+    ensure: Present
+    name: "iisport{{ item.port }}"
+    enabled: True
+    localport: "{{ item.port }}"
+    action: Allow
+    direction: Inbound
+    protocol: TCP
+  with_items: "{{ iis_sites }}"
+  notify: restart iis service
+
+- name: Template simple web site to iis_site_path as index.html
+  win_template:
+    src: 'index.html.j2'
+    dest: '{{ item.path }}\index.html'
+  with_items: "{{ iis_sites }}"
