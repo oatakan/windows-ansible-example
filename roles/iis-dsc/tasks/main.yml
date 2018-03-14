@@ -23,7 +23,7 @@
 - name: Create IIS site
   win_dsc:
     resource_name: xWebsite
-    ensure: Absent
+    ensure: Present
     name: "{{ item.name }}"
     bindinginfo: |
       MSFT_xWebBindingInformation
