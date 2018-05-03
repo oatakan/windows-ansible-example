@@ -3,7 +3,7 @@ nodes:
   - name: windows
     role: windows
     app_name: windows_demo
-    instance_type: m1.small
+    instance_type: t2.large
     image: ami-603b1c1a #windows 2016
     #image: ami-013e197b #windows 2012 R2
     volumes:
