@@ -5,6 +5,6 @@
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
-    install_with: ini
+    install_with: powershell
   roles:
   - sql2016
