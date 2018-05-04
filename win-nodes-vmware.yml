@@ -31,7 +31,9 @@ nodes:
       fullname: Ansible
       timezone: 20
       password: "{{ ansible_password }}"
-      dns_servers: "{{ item.dns_servers|default([]) }}"
+      dns_servers:
+      - 192.168.1.254
+      - 8.8.4.4
       runonce:
       - powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
       - winrm set winrm/config/service/auth @{CredSSP="true"}
