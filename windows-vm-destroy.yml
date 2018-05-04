@@ -3,7 +3,7 @@
   gather_facts: False
   become: no
   vars_files:
-    - "win-nodes.yml"
+    - win-nodes-vmware.yml
     
   roles:
   - undeploy
