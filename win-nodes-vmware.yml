@@ -25,3 +25,13 @@ nodes:
     template: windows-2016
     snapshot_src: Linked
     linked_clone: True
+    customization:
+      autologon: True
+      orgname: Ansible
+      fullname: Ansible
+      timezone: 20
+      password: "{{ ansible_password }}"
+      dns_servers: "{{ item.dns_servers|default([]) }}"
+      runonce:
+      - powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
+      - winrm set winrm/config/service/auth @{CredSSP="true"}
