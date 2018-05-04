@@ -30,7 +30,7 @@ nodes:
       orgname: Ansible
       fullname: Ansible
       timezone: 20
-      password: "{{ ansible_password }}"
+      password: Password!1
       dns_servers:
       - 192.168.1.254
       - 8.8.4.4
