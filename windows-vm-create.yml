@@ -3,11 +3,8 @@
   gather_facts: False
   connection: local
   become: no
-  vars:
-    ansible_port: 5986
   vars_files:
     - win-nodes-vmware.yml
     
   roles:
-  #- deploy
-  - ansible-role-vmware
+  - deploy
