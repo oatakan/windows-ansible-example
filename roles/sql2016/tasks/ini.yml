@@ -9,4 +9,4 @@
   args:
     executable: cmd
     chdir: c:\
-    creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
+    #creates: c:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER
