@@ -8,5 +8,4 @@
     
   roles:
   #- deploy
-  - role: ansible-role-vmware
-    ansible_port: 5986
+  - ansible-role-vmware
