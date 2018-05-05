@@ -4,7 +4,7 @@
   connection: local
   become: no
   vars:
-    ansible_port: 5986
+    ansible_port: 5985
     instance_wait_connection_timeout: 1200
   vars_files:
     - win-nodes-vmware.yml
