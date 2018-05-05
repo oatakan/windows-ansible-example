@@ -3,12 +3,10 @@
   gather_facts: False
   connection: local
   become: no
-  vars:
-    ansible_port: 5985
-    instance_wait_connection_timeout: 1200
   vars_files:
     - win-nodes-vmware.yml
     
   roles:
   #- deploy
-  - ansible-role-vmware
+  - role: ansible-role-vmware
+    ansible_port: 5986
