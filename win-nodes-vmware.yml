@@ -31,12 +31,6 @@ nodes:
       fullname: Ansible
       timezone: 20
       password: '{{ ansible_password | default(ansible_ssh_password) }}'
-      dns_servers:
-      - 192.168.1.254
-      - 8.8.4.4
       runonce:
-      #- net stop wuauserv
-      #- sc config wuauserv start= disabled
-      #- reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v NoAutoUpdate /t REG_DWORD /d 1 /f net stop wuauserv
       - powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
       - winrm set winrm/config/service/auth @{CredSSP="true"}
