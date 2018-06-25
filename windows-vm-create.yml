@@ -11,4 +11,3 @@
   roles:
   #- deploy
   - ansible-role-vmware
-  - notify_me
