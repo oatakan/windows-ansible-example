@@ -41,7 +41,7 @@
 - name: download ISO file
   win_get_url:
     dest: "{{ iso_path }}"
-    url: "http://care.dlservice.microsoft.com/dl/download/F/E/9/FE9397FA-BFAB-4ADD-8B97-91234BC774B2/SQLServer2016-x64-ENU.iso"
+    url: "{{ iso_url }}"
   register: download_iso
   until: download_iso is success
   delay: 3
