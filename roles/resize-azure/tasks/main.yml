@@ -6,6 +6,3 @@
     vm_size: "{{ vm_size }}"
     state: present
   register: vm
-
-- debug:
-    var: vm

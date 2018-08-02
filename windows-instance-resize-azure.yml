@@ -7,4 +7,4 @@
     ansible_port: 5986
     windows: yes
   roles:
-    - change-size-azure
+    - resize-azure
