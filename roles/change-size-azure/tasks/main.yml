@@ -5,11 +5,17 @@
     name: MyWin01
     started: no
 
+#- name: Deallocate
+#  azure_rm_virtualmachine:
+#    resource_group: myResourceGroup
+#    name: MyWin01
+#    allocated: no
+
 - name: Change VM Size
   azure_rm_virtualmachine:
     resource_group: myResourceGroup
     name: MyWin01
-    vm_size: Standard_A2_v2
+    vm_size: "{{ vm_size }}"
     state: present
 
 - name: Power On
