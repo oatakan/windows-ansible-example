@@ -1,0 +1,17 @@
+---
+- name: Power Off VM
+  azure_rm_virtualmachine:
+    resource_group: myResourceGroup
+    name: MyWin01
+    started: no
+
+- name: Change VM Size
+  azure_rm_virtualmachine:
+    resource_group: myResourceGroup
+    name: MyWin01
+    vm_size: "{{ vm_size }}"
+
+- name: Power On
+  azure_rm_virtualmachine:
+    resource_group: myResourceGroup
+    name: MyWin01
