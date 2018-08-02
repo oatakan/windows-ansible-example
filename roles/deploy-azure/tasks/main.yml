@@ -59,6 +59,7 @@
       - 1433
       - "{{ ansible_port }}"
     os_type: "{{ item.os_type }}"
+    network_interfaces: myNIC
     admin_username: ansible
     admin_password: "{{ ansible_password }}"
     image: "{{ item.image }}"
