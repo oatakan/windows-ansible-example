@@ -5,11 +5,11 @@
     name: MyWin01
     started: no
 
-#- name: Deallocate
-#  azure_rm_virtualmachine:
-#    resource_group: myResourceGroup
-#    name: MyWin01
-#    allocated: no
+- name: Deallocate
+  azure_rm_virtualmachine:
+    resource_group: myResourceGroup
+    name: MyWin01
+    allocated: no
 
 - name: Change VM Size
   azure_rm_virtualmachine:
