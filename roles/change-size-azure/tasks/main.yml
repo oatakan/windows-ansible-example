@@ -19,8 +19,8 @@
     state: present
   register: vm
 
-debug:
-  var: vm
+- debug:
+    var: vm
 
 #- name: Power On
 #  azure_rm_virtualmachine:
