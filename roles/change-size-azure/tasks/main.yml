@@ -9,7 +9,8 @@
   azure_rm_virtualmachine:
     resource_group: myResourceGroup
     name: MyWin01
-    vm_size: "{{ vm_size }}"
+    vm_size: Standard_A2_v2
+    state: present
 
 - name: Power On
   azure_rm_virtualmachine:
