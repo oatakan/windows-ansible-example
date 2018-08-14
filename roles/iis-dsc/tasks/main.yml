@@ -32,6 +32,9 @@
       Port: 8080
       IPAddress: '*'
   with_items: "{{ iis_sites }}"
+  notify:
+    - stop iis service
+    - start iis service
 
 - name: Open port for site on the firewall
   win_dsc:
@@ -44,26 +47,15 @@
     direction: Inbound
     protocol: TCP
   with_items: "{{ iis_sites }}"
+  notify:
+    - stop iis service
+    - start iis service
 
 - name: Template simple web site to iis_site_path as index.html
   win_template:
     src: 'index.html.j2'
     dest: '{{ item.path }}\index.html'
   with_items: "{{ iis_sites }}"
-
-- name: stop iis service
-  win_dsc:
-    resource_name: service
-    name: W3Svc
-    state: stopped
-    startuptype: auto
-
-- name: start iis service
-  win_dsc:
-    resource_name: service
-    name: W3Svc
-    state: Running
-    startuptype: auto
 
 - name: proper response from iis is received
   uri:
