@@ -63,7 +63,7 @@
     return_content: yes
     validate_certs: no
   register: response
-  until: "'{{ iis_test_message }}' in response.content"
+  until: iis_test_message in response.content
   retries: 10
   delay: 1
   ignore_errors: yes
