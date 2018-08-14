@@ -58,7 +58,7 @@
   with_items: "{{ iis_sites }}"
 
 - name: proper response from iis is received
-  uri:
+  win_uri:
     url: http://{{ ansible_hostname }}:8080/
     return_content: yes
     validate_certs: no
