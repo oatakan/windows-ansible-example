@@ -59,7 +59,7 @@
 
 - name: proper response from iis is received
   win_uri:
-    url: http://{{ ansible_hostname }}:8080/
+    url: http://{{ ansible_host }}:8080/
     return_content: yes
     validate_certs: no
   register: response
@@ -70,5 +70,5 @@
 
 - name: output url
   debug:
-    msg: 'application is available at http://{{ ansible_hostname }}:8080/'
+    msg: 'application is available at http://{{ ansible_host }}:8080/'
   when: response | success
