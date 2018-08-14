@@ -1,5 +1,0 @@
-- include: windows.yml
-  when: tags.role == 'windows'
-
-- include: linux.yml
-  when: tags.role == 'linux'
