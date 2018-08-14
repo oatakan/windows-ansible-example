@@ -20,23 +20,6 @@
     destinationpath: "{{ item.path }}"
   with_items: "{{ iis_sites }}"
 
-#- name: Create IIS site
-#  win_dsc:
-#    resource_name: xWebsite
-#    ensure: Present
-#    name: "{{ item.name }}"
-#    bindinginfo: |
-#      MSFT_xWebBindingInformation
-#      {
-#        Port = "{{ item.port }}"
-#        Protocol = HTTP
-#        HostName = *
-#      }
-#    state: started
-#    physicalpath: "{{ item.path }}"
-#  with_items: "{{ iis_sites }}"
-#  notify: restart iis service
-
 - name: Create IIS Website
   win_dsc:
     resource_name: xWebsite
@@ -73,3 +56,19 @@
     src: 'index.html.j2'
     dest: '{{ item.path }}\index.html'
   with_items: "{{ iis_sites }}"
+
+- name: proper response from iis is received
+  uri:
+    url: http://{{ ansible_hostname }}:8080/
+    return_content: yes
+    validate_certs: no
+  register: response
+  until: "{{ iis_test_message }}" in response.content
+  retries: 10
+  delay: 1
+  ignore_errors: yes
+
+- name: output url
+  debug:
+    msg: 'application is available at http://{{ ansible_hostname }}:8080/'
+  when: response | success
