@@ -7,5 +7,5 @@
     ansible_winrm_server_cert_validation: ignore
     install_with: ini
   roles:
-  #- iis-dsc
-  - iis
+  - iis-dsc
+  #- iis
