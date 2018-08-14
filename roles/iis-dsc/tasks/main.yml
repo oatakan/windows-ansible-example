@@ -46,7 +46,7 @@
     PhysicalPath: "{{ item.path }}"
     BindingInfo:
     - Protocol: http
-      Port: '{{ item.port }}'
+      Port: 8080
       IPAddress: '*'
   with_items: "{{ iis_sites }}"
   notify: restart iis service
