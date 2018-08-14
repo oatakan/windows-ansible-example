@@ -49,7 +49,9 @@
       Port: 8080
       IPAddress: '*'
   with_items: "{{ iis_sites }}"
-  notify: restart iis service
+  notify:
+    - stop iis service
+    - start iis service
 
 - name: Open port for site on the firewall
   win_dsc:
