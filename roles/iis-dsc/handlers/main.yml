@@ -1,6 +1,13 @@
-- name: restart iis service
+- name: stop iis service
   win_dsc:
     resource_name: service
     name: W3Svc
-    state: restarted
+    state: stopped
+    startuptype: auto
+
+- name: start iis service
+  win_dsc:
+    resource_name: service
+    name: W3Svc
+    state: Running
     startuptype: auto

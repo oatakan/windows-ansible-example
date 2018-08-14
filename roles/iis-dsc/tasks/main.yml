@@ -62,7 +62,9 @@
     direction: Inbound
     protocol: TCP
   with_items: "{{ iis_sites }}"
-  notify: restart iis service
+  notify:
+    - stop iis service
+    - start iis service
 
 - name: Template simple web site to iis_site_path as index.html
   win_template:
