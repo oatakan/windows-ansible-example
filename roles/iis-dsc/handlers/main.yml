@@ -3,7 +3,6 @@
     resource_name: service
     name: W3Svc
     state: stopped
-    startuptype: Automatic
 
 - name: start iis service
   win_dsc:
