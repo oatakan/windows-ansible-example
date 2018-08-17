@@ -10,11 +10,11 @@
 - name: launch a compute instance
   os_server:
     state: present
-    auth:
-      auth_url: "{{ clouds.devstack.auth.auth_url | default(lookup('env', 'OS_AUTH_URL')) }}"
-      username: "{{ clouds.devstack.auth.username | default(lookup('env', 'OS_USERNAME')) }}"
-      password: "{{ clouds.devstack.auth.password | default(lookup('env', 'OS_PASSWORD')) }}"
-      project_name: "{{ clouds.devstack.auth.project_name | default(lookup('env', 'OS_PROJECT_NAME')) }}"
+    #auth:
+    #  auth_url: "{{ clouds.devstack.auth.auth_url | default(lookup('env', 'OS_AUTH_URL')) }}"
+    #  username: "{{ clouds.devstack.auth.username | default(lookup('env', 'OS_USERNAME')) }}"
+    #  password: "{{ clouds.devstack.auth.password | default(lookup('env', 'OS_PASSWORD')) }}"
+    #  project_name: "{{ clouds.devstack.auth.project_name | default(lookup('env', 'OS_PROJECT_NAME')) }}"
     name: "{{ item.name }}"
     image: "{{ item.image }}"
     key_name: "{{ item.key_name }}"
