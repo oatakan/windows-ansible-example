@@ -4,9 +4,5 @@
     ansible_port: 5986
     ansible_connection: winrm
 
-  tasks:
-    - debug:
-        var: ansible_connection
-
-  #roles:
-  #- juju4.harden-windows
+  roles:
+  - juju4.harden-windows
