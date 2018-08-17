@@ -1,6 +1,7 @@
 - name: Create a db on MSSQL
   hosts: all
   gather_facts: no
+  become: no
   vars:
     db_name: rhdemo1
 
@@ -10,6 +11,7 @@
         ansible_port: 5986
         ansible_connection: winrm
         ansible_winrm_server_cert_validation: ignore
+      delegate_to: 127.0.0.1
 
     - name: Enable port for MSSQL
       win_firewall_rule:
