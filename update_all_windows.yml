@@ -1,0 +1,24 @@
+- name: Install Windows Updates
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+  tasks:
+    - name: Install all security, critical, and rollup updates without a scheduled task
+      win_updates:
+        category_names:
+          - Application
+          - Connectors
+          - CriticalUpdates
+          - DefinitionUpdates
+          - DeveloperKits
+          - FeaturePacks
+          - Guidance
+          - SecurityUpdates
+          - ServicePacks
+          - Tools
+          - UpdateRollups
+          - Updates
+        reboot: yes
