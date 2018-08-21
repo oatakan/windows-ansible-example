@@ -6,9 +6,6 @@
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
   tasks:
-    - name: reboot system first
-      win_reboot:
-
     - name: install all windows updates
       win_updates:
         category_names:
