@@ -9,16 +9,9 @@
     - name: install all windows updates
       win_updates:
         category_names:
-          - Application
-          - Connectors
           - CriticalUpdates
           - DefinitionUpdates
-          - DeveloperKits
-          - FeaturePacks
-          - Guidance
           - SecurityUpdates
-          - ServicePacks
-          - Tools
           - UpdateRollups
           - Updates
         reboot: yes
