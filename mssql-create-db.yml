@@ -27,7 +27,7 @@
     - name: Create a db
       mssql_db:
         login_host: "{{ ansible_ssh_host | default(inventory_hostname) }}"
-        login_user: "{{ mssql_username }}"
+        login_user: sa
         login_password: "{{ mssql_password }}"
         name: "{{ db_name }}"
         state: present
