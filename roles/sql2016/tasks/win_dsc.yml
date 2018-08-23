@@ -4,6 +4,7 @@
     resource_name: Package
     Path: '{{ disk_image_out.mount_path }}setup.exe'
     ProductId: '{0AE831BC-F2A8-4DE2-8FBF-68B220611A7F}'
+    Name: Microsoft SQL Server 2016
     Arguments: >
       /Q
       /ACTION=Install
