@@ -3,7 +3,7 @@
   win_dsc:
     resource_name: Package
     Path: '{{ disk_image_out.mount_path }}setup.exe'
-    ProductId: '{1ca29225-1d60-4199-b502-eed97d1eafb5}'
+    ProductId: '{0AE831BC-F2A8-4DE2-8FBF-68B220611A7F}'
     Arguments: >
       /Q
       /ACTION=Install
