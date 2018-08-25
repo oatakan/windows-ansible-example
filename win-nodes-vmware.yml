@@ -19,7 +19,7 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    template: windows-2016
+    template: windows-2016-gen
     snapshot_src: Linked
     linked_clone: True
     customization:
