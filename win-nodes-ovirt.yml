@@ -1,7 +1,7 @@
 ---
 providers:
   ovirt:
-    cluster: pele-Local2
+    cluster: pele-Local
 nodes:
   - name: wintest2
     networks:
