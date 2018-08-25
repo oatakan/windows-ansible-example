@@ -1,5 +1,5 @@
 - name: remove vms
-  hosts: localhost
+  hosts: all
   become: no
   gather_facts: no
   connection: local
@@ -26,6 +26,7 @@
       poll: 0
       register: remove_instances
       with_items: "{{ nodes }}"
+      delegate_to: localhost
       when: nodes is defined
 
     - name: wait for intances to finish deleting
