@@ -1,0 +1,22 @@
+---
+providers:
+  ovirt:
+    cluster: pele-Local2
+nodes:
+  - name: wintest2
+    networks:
+    - name: ovirtmgmt
+      ip: 192.168.1.54
+      netmask: 255.255.255.0
+      gateway: 192.168.1.254
+      domain: home.ad
+      dns_servers:
+      - 192.168.1.254
+      - 8.8.4.4
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    type: server
+    user_name: vagrant
+    template: win2016_x64_template
+    sysprep: yes

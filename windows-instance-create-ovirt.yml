@@ -1,0 +1,12 @@
+- name: Deploy Windows Instances on Ovirt
+  hosts: localhost
+  gather_facts: False
+  connection: local
+  become: no
+  vars_files:
+    - win-nodes-ovirt.yml
+  vars:
+    ansible_port: 5986
+    windows: yes
+  roles:
+    - ansible-role-ovirt
