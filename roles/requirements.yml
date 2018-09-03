@@ -13,3 +13,6 @@
 - src: https://github.com/oatakan/ansible-role-ovirt
   version: origin/master
 
+- src: https://github.com/oatakan/ansible-role-windows-ad-controller
+  version: origin/master
+
