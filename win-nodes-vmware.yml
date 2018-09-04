@@ -22,6 +22,11 @@ nodes:
     template: windows-2016
     snapshot_src: Linked
     linked_clone: True
+    customvalues:
+      - key: app_name
+        value: windemo
+      - key: role
+        value: sqlserver
     customization:
       autologon: True
       orgname: Ansible
