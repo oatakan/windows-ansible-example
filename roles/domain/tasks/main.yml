@@ -5,12 +5,26 @@
     adapter_names: "*"
     ipv4_addresses: "{{ dns_servers | default([]) }}"
 
+#- name: add windows server to the domain
+#  win_domain_membership:
+#    dns_domain_name: "{{ dns_domain_name }}"
+#    domain_admin_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+#    domain_admin_password: "{{ domain_admin_password }}"
+#    state: domain
+#  register: join_domain
+
+- name: Add a powershell module
+  win_psmodule:
+    name: xComputerManagement
+    state: present
+
 - name: add windows server to the domain
-  win_domain_membership:
-    dns_domain_name: "{{ dns_domain_name }}"
-    domain_admin_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
-    domain_admin_password: "{{ domain_admin_password }}"
-    state: domain
+  win_dsc:
+    resource_name: xComputer
+    Name: "{{ hostname }}"
+    DomainName: "{{ dns_domain_name }}"
+    credential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+    credential_password: "{{ domain_admin_password }}"
   register: join_domain
 
 - name: reboot server if required
