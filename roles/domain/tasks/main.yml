@@ -1,11 +1,11 @@
-- name: Add Windows Server to the Domain
+- name: add windows server to the domain
   win_domain_membership:
-    dns_domain_name: lab.rhlabs.net
-    domain_admin_user: "{{ DomainAdminUser }}"
-    domain_admin_password: "{{ DomainAdminPassword }}"
+    dns_domain_name: "{{ dns_domain_name }}"
+    domain_admin_user: "{{ domain_admin_username }}"
+    domain_admin_password: "{{ domain_admin_password }}"
     state: domain
-  register: domain_state
+  register: join_domain
 
-- name: Reboot Server if required
+- name: reboot server if required
   win_reboot:
-  when: domain_state.reboot_required
+  when: join_domain.reboot_required
