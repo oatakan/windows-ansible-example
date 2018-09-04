@@ -17,7 +17,7 @@ nodes:
       - 192.168.1.254
       - 8.8.4.4
     domain: home.ad
-    memory: 4096
+    memory: 8192
     cpu: 2
     template: windows-2016
     snapshot_src: Linked
