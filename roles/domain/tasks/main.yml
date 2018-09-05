@@ -18,22 +18,12 @@
     name: xComputerManagement
     state: present
 
-#- name: add windows server to the domain
-#  win_domain_membership:
-#    dns_domain_name: "{{ dns_domain_name }}"
-#    domain_ou_path: 'OU=Dev,DC=lab,DC=home,DC=ad'
-#    domain_admin_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
-#    domain_admin_password: "{{ domain_admin_password }}"
-#    state: domain
-#  register: join_domain
-
 - name: add windows server to the domain
   win_dsc:
     resource_name: xComputer
     Name: "{{ ansible_hostname }}"
     DomainName: "{{ dns_domain_name }}"
-    #JoinOU: "{{ join_ou_path | default('') }}"
-    JoinOU: 'OU=Dev,DC=lab,DC=home,DC=ad'
+    JoinOU: '{{ join_ou_path | default("") }}'
     credential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
     credential_password: "{{ domain_admin_password }}"
   register: join_domain
