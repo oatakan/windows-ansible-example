@@ -1,4 +1,4 @@
-- name: add computer object to the domain
+- name: remove computer object to the domain
   hosts: all
   vars:
     ansible_port: 5986
@@ -11,12 +11,12 @@
         name: xActiveDirectory
         state: present
 
-    - name: add computer object
+    - name: remove computer object
       win_dsc:
         resource_name: xADComputer
         ComputerName: "{{ computer_name }}"
         Path: '{{ join_ou_path }}'
-        Ensure: Present
+        Ensure: Absent
       when:
-        - computer_name is defined
-        - join_ou_path is defined
+      - computer_name is defined
+      - join_ou_path is defined
