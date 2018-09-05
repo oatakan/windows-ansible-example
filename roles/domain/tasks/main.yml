@@ -21,7 +21,7 @@
 - name: add windows server to the domain
   win_domain_membership:
     dns_domain_name: "{{ dns_domain_name }}"
-    domain_ou_path: 'DC=Company OU,DC=lab,DC=home,DC=ad'
+    domain_ou_path: 'DC=Dev,DC=lab,DC=home,DC=ad'
     domain_admin_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
     domain_admin_password: "{{ domain_admin_password }}"
     state: domain
@@ -33,7 +33,7 @@
     Name: "{{ ansible_hostname }}"
     DomainName: "{{ dns_domain_name }}"
     #JoinOU: "{{ join_ou_path | default('') }}"
-    JoinOU: "DC=Company OU,DC=lab,DC=home,DC=ad"
+    JoinOU: "DC=Dev,DC=lab,DC=home,DC=ad"
     credential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
     credential_password: "{{ domain_admin_password }}"
   register: join_domain
