@@ -24,6 +24,7 @@
     Name: "{{ ansible_hostname }}"
     DomainName: "{{ dns_domain_name }}"
     #JoinOU: "{{ join_ou_path | default('') }}"
+    JoinOU: "DC=Company OU,DC=lab,DC=home,DC=ad"
     credential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
     credential_password: "{{ domain_admin_password }}"
   register: join_domain
