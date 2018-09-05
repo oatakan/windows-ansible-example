@@ -1,0 +1,20 @@
+- name: add computer object to the domain
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+  tasks:
+    - name: add a powershell module
+      win_psmodule:
+        name: xActiveDirectory
+        state: present
+
+    - name: add windows server to the domain
+      win_dsc:
+        resource_name: xADComputer
+        ComputerName: "{{ computer_name }}"
+        Path: '{{ join_ou_path | default("") }}'
+        Ensure: Present
+      when: computer_name is defined
