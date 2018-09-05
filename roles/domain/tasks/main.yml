@@ -13,7 +13,14 @@
 #    state: domain
 #  register: join_domain
 
-- name: Add a powershell module
+- name: check to see which ou computer belongs to before
+  script: computer_check_ou_belongs_to.ps1
+  register: computer_check_ou_belongs_to_before
+
+- debug:
+    msg: "Before: {{ computer_check_ou_belongs_to_before.stdout }}"
+
+- name: add a powershell module
   win_psmodule:
     name: xComputerManagement
     state: present
@@ -31,3 +38,10 @@
 - name: reboot server if required
   win_reboot:
   when: join_domain.reboot_required
+
+- name: check to see which ou computer belongs to after
+  script: computer_check_ou_belongs_to.ps1
+  register: computer_check_ou_belongs_to_after
+
+- debug:
+    msg: "After: {{ computer_check_ou_belongs_to_after.stdout }}"
