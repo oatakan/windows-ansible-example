@@ -11,6 +11,12 @@
         name: xActiveDirectory
         state: present
 
+    - debug:
+        var: miq_provision_options
+
+    - debug:
+        msg: "{{ miq_provision_options[':vm_name'] }}"
+
     - name: add computer object
       win_dsc:
         resource_name: xADComputer
