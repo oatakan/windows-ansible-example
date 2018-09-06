@@ -11,10 +11,6 @@
         name: xActiveDirectory
         state: present
 
-    - debug:
-        var: miq_provision_options
-      when: miq_provision_options is defined
-
     - name: remove computer object
       win_dsc:
         resource_name: xADComputer
