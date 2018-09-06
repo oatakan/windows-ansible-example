@@ -15,10 +15,6 @@
         var: miq_provision_options
       when: miq_provision_options is defined
 
-    - debug:
-        msg: "{{ miq_provision_options[':vm_name'] }}"
-      when: miq_provision_options is defined
-
     - name: add computer object
       win_dsc:
         resource_name: xADComputer
