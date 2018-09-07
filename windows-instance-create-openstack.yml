@@ -10,4 +10,4 @@
     ansible_port: 5986
     windows: yes
   roles:
-    - deploy-openstack
+    - ansible-role-openstack

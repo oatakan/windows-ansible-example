@@ -9,4 +9,5 @@
     ansible_port: 5986
     windows: yes
   roles:
-    - undeploy-openstack
+    - role: ansible-role-openstack
+      role_action: deprovision
