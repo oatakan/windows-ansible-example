@@ -9,4 +9,4 @@ nodes:
     volume_size: 40
     nics:
       - net-name: private_network
-    user_data: "{{ lookup('template', 'templates/userdata.txt.j2') }}"
+    #user_data: "{{ lookup('template', 'templates/userdata.txt.j2') }}"
