@@ -1,4 +1,5 @@
 <powershell>
+Resize-Partition -DriveLetter c -Size  (Get-PartitionSupportedSize -DriveLetter c).sizeMax -ErrorAction SilentlyContinue
 $admin = [adsi]("WinNT://./administrator, user")
 {% if ansible_password is defined %}
 $admin.PSBase.Invoke("SetPassword", "{{ ansible_password }}")
