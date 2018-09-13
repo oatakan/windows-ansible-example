@@ -1,5 +1,4 @@
 <powershell>
-Resize-Partition -DriveLetter c -Size  (Get-PartitionSupportedSize -DriveLetter c).sizeMax -ErrorAction SilentlyContinue
 $admin = [adsi]("WinNT://./administrator, user")
 {% if ansible_password is defined %}
 $admin.PSBase.Invoke("SetPassword", "{{ ansible_password }}")
@@ -9,4 +8,5 @@ $admin.PSBase.Invoke("SetPassword", "{{ ansible_ssh_password }}")
 & $([scriptblock]::Create((New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"))) -ForceNewSSLCert -EnableCredSSP
 Enable-WSManCredSSP -Role Server -Force
 Set-Item -Path "WSMan:\localhost\Service\Auth\CredSSP" -Value $true
+Resize-Partition -DriveLetter c -Size  (Get-PartitionSupportedSize -DriveLetter c).sizeMax -ErrorAction SilentlyContinue
 </powershell>
