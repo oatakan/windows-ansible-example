@@ -19,7 +19,7 @@
     - NET-Framework-Core
     - NET-Framework-Features
   register: install_dotnet
-  until: install_dotnet|success
+  until: install_dotnet is success
   delay: 3
   retries: 5
 
