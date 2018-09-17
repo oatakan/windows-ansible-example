@@ -7,4 +7,5 @@
     ansible_winrm_server_cert_validation: ignore
     install_with: ini
   roles:
-  - sql2016
+    - role: sql2016
+      when: "'2016' in ansible_distribution"
