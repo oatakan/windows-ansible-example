@@ -71,4 +71,4 @@
 - name: output url
   debug:
     msg: 'application is available at http://{{ ansible_host }}:8080/'
-  when: response | success
+  when: response is success
