@@ -1,8 +1,4 @@
 ---
 
 - name: enable LCM configuration
-  win_dsc:
-    resource_name: lcmconfig
-    ActionAfterReboot: ContinueConfiguration
-    ConfigurationMode: ApplyAndAutoCorrect
-    RefreshMode: Push
+  script: configure_lcm.ps1
