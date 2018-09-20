@@ -13,6 +13,6 @@ Configuration LCM {
     }
 }
 
-md c:\lcmconfig
+md c:\lcmconfig -ErrorAction SilentlyContinue
 lcm -OutputPath c:\lcmconfig
 Set-DscLocalConfigurationManager -Path c:\lcmconfig -Force -Verbose
