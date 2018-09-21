@@ -1,0 +1,50 @@
+- name: Windows Patches
+  host: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+    reboot_method: auto
+    patch_method: auto
+    reboot_window: thu0000
+    patch_window: thu0000
+    patch_enabled: True
+    blacklist:
+      - Windows Malicious Software Removal Tool for Windows
+      - \d{4}-\d{2} Cumulative Update for Windows Server 2016
+  tasks:
+    - block:
+      - name: apply windows updates
+        win_updates:
+          category_name:
+            - SecurityUpdates
+            - CriticalUpdates
+          blacklist: "{{ blacklist }}"
+          reboot: no
+        register: patching_output
+
+      - name: reboot if necessary
+        win_reboot:
+        when:
+          - patching_output.reboot_required
+          - reboot_method == 'auto'
+          - patch_window == reboot_window
+
+      - name: check missing updates
+        win_updates:
+          category_names:
+            - SecurityUpdates
+            - CriticalUpdates
+          state: searched
+        register: missing_output
+
+      - name: warn if missed updates
+        debug:
+          msg: "Yo yo yo - We missed some ( {{ missing_output.found_update_count }} updates ) "
+        when:
+          - missing_output.found_update_count is defined
+          - missing_output.found_update_count > 0
+    when:
+      - patch_enabled
+      - patch_method == 'auto'
