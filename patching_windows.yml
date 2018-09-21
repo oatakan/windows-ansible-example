@@ -55,7 +55,6 @@
         - missing_output.found_update_count is defined
         - missing_output.found_update_count > 0
         - missing_output.updates is defined
-        - not item.installed
       when:
         - patch_enabled
         - patch_method == 'auto'
