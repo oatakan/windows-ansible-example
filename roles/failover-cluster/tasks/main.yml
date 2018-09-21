@@ -1,0 +1,38 @@
+---
+
+- name: add a powershell module
+  win_psmodule:
+    name: xFailOverCluster
+    state: present
+
+- name: add windows features
+  win_dsc:
+    resource_name: WindowsFeature
+    Name: "{{ item }}"
+    Ensure: Present
+  loop: "{{ required_features }}"
+
+- name: create windows cluster
+  win_dsc:
+    resource_name: xCluster
+    Name: "{{ cluster_name }}"
+    StaticIPAddress: "{{ cluster_ip_address }}"
+    DomainAdministratorCredential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+    DomainAdministratorCredential_password: "{{ domain_admin_password }}"
+  register: create_windows_cluster
+
+- name: wait for cluster
+  win_dsc:
+    resource_name: xWaitForCluster
+    Name: "{{ cluster_name }}"
+    RetryIntervalSec: "{{ retry_interval_sec }}"
+    RetryCount: "{{ retry_count }}"
+  when: create_windows_cluster is not changed
+
+
+- name: join windows cluster
+  win_dsc:
+    resource_name: xCluster
+    Name: "{{ cluster_name }}"
+    StaticIPAddress: "{{ cluster_ip_address }}"
+  when: create_windows_cluster is not changed

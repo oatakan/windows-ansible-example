@@ -1,0 +1,15 @@
+---
+
+- name: add a powershell module
+  win_psmodule:
+    name: xActiveDirectory
+    state: present
+
+- name: remove computer object
+  win_dsc:
+    resource_name: xADComputer
+    ComputerName: "{{ computer_name }}"
+    Path: '{{ join_ou_path | default("") }}'
+    Ensure: Absent
+  when:
+  - computer_name is defined

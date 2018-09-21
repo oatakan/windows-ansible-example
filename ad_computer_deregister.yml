@@ -5,18 +5,6 @@
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
-  tasks:
-    - name: add a powershell module
-      win_psmodule:
-        name: xActiveDirectory
-        state: present
-
-    - name: remove computer object
-      win_dsc:
-        resource_name: xADComputer
-        ComputerName: "{{ computer_name }}"
-        Path: '{{ join_ou_path }}'
-        Ensure: Absent
-      when:
-      - computer_name is defined
-      - join_ou_path is defined
+  roles:
+    - role: ad-computer-registration
+      role_action: deregister

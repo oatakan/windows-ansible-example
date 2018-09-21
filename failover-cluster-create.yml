@@ -1,4 +1,4 @@
-- name: add computer object to the domain
+- name: Create failover cluster
   hosts: all
   vars:
     ansible_port: 5986
@@ -6,4 +6,4 @@
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
   roles:
-    - ad-computer-registration
+    - failover-cluster

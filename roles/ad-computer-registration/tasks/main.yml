@@ -1,0 +1,7 @@
+---
+
+- include_tasks: register.yml
+  when: role_action == 'register'
+
+- include_tasks: deregister.yml
+  when: role_action == 'deregister'
