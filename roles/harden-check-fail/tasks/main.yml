@@ -18,6 +18,14 @@
     - { u: 'Users', r: 'CreateDirectories, AppendData', t: 'allow', i: 'None', p: 'NoPropagateInherit', s: absent }
   register: check_c_acl
 
+- name: Disable Remote Desktop
+  win_regedit:
+    key: 'HKLM:\System\CurrentControlSet\Control\Terminal Server'
+    value: fDenyTSConnections
+    data: 1
+    datatype: dword
+  register: check_rdp_disable
+
 - fail:
-    msg: "There is a drift on permissions for C - failing"
-  when: check_c_acl is changed
+    msg: "There is a drift in rdp configuration- failing"
+  when: check_rdp_disable is changed
