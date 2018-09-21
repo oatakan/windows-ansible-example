@@ -1,0 +1,13 @@
+- name: Remove Windows Cluster Servers
+  hosts: all
+  gather_facts: False
+  connection: local
+  become: no
+  vars:
+    ansible_port: 5986
+  vars_files:
+    - node-config/cluster-nodes-vmware.yml
+
+  roles:
+    - role: ansible-role-vmware
+      role_action: deprovision
