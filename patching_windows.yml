@@ -48,7 +48,7 @@
 
       - name: list of updates not installed (skipped)
         debug:
-          msg: "{{ item .title }}"
+          msg: "{{ item.title }}"
         loop:
           - "{{ missing_output.updates }}"
         when:
