@@ -18,8 +18,8 @@
       - name: apply windows updates
         win_updates:
           category_name:
-            - SecurityUpdates
-            - CriticalUpdates
+          - SecurityUpdates
+          - CriticalUpdates
           blacklist: "{{ blacklist }}"
           reboot: no
         register: patching_output
@@ -27,15 +27,15 @@
       - name: reboot if necessary
         win_reboot:
         when:
-          - patching_output.reboot_required
-          - reboot_method == 'auto'
-          - patch_window == reboot_window
+        - patching_output.reboot_required
+        - reboot_method == 'auto'
+        - patch_window == reboot_window
 
       - name: check missing updates
         win_updates:
           category_names:
-            - SecurityUpdates
-            - CriticalUpdates
+          - SecurityUpdates
+          - CriticalUpdates
           state: searched
         register: missing_output
 
@@ -43,8 +43,8 @@
         debug:
           msg: "Yo yo yo - We missed some ( {{ missing_output.found_update_count }} updates ) "
         when:
-          - missing_output.found_update_count is defined
-          - missing_output.found_update_count > 0
+        - missing_output.found_update_count is defined
+        - missing_output.found_update_count > 0
       when:
         - patch_enabled
         - patch_method == 'auto'
