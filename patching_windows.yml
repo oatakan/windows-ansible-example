@@ -45,6 +45,16 @@
         when:
         - missing_output.found_update_count is defined
         - missing_output.found_update_count > 0
+
+      - name: list of updates not installed (skipped)
+        debug:
+          msg: "{{ item .title }}"
+        loop: "{{ missing_output.updates }}
+        when:
+        - missing_output.found_update_count is defined
+        - missing_output.found_update_count > 0
+        - missing_output.updates is defined
+        - not item.installed
       when:
         - patch_enabled
         - patch_method == 'auto'
