@@ -45,6 +45,6 @@
         when:
           - missing_output.found_update_count is defined
           - missing_output.found_update_count > 0
-    when:
-      - patch_enabled
-      - patch_method == 'auto'
+      when:
+        - patch_enabled
+        - patch_method == 'auto'
