@@ -3,6 +3,8 @@
   vars:
     ansible_port: 5986
     ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
 
   roles:
-  - juju4.harden-windows
+    - harden-check-fail
