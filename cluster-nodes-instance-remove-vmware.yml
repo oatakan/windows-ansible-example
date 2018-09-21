@@ -13,3 +13,4 @@
       role_action: deprovision
       delegate_to: localhost
       run_once: yes
+      become: no
