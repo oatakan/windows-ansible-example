@@ -11,9 +11,9 @@
     inherit: "{{ item.i }}"
     propagation: "{{ item.p }}"
   loop:
-    - { u: 'Administrators', r: 'FullControl', t: 'allow', i: 'ContainerInherit, ObjectInherit', p: 'InheritOnly', s: present }
-    - { u: 'SYSTEM', r: 'FullControl', t: 'allow', i: 'ContainerInherit, ObjectInherit', p: 'InheritOnly', s: present }
-    - { u: 'Users', r: 'ReadAndExecute', t: 'allow', i: 'ContainerInherit, ObjectInherit', p: 'InheritOnly', s: present }
+    #- { u: 'Administrators', r: 'FullControl', t: 'allow', i: 'ContainerInherit, ObjectInherit', p: 'InheritOnly', s: present }
+    #- { u: 'SYSTEM', r: 'FullControl', t: 'allow', i: 'ContainerInherit, ObjectInherit', p: 'InheritOnly', s: present }
+    #- { u: 'Users', r: 'ReadAndExecute', t: 'allow', i: 'ContainerInherit, ObjectInherit', p: 'InheritOnly', s: present }
     - { u: 'Authenticated Users', r: 'Modify', t: 'allow', i: 'ContainerInherit, ObjectInherit', p: 'InheritOnly', s: present }
     - { u: 'Users', r: 'CreateDirectories, AppendData', t: 'allow', i: 'None', p: 'NoPropagateInherit', s: absent }
   register: check_c_acl
@@ -27,5 +27,7 @@
   register: check_rdp_disable
 
 - fail:
-    msg: "There is a drift in rdp configuration- failing"
-  when: check_rdp_disable is changed
+    msg: "There is a drift in rdp configuration - failing"
+  when:
+    - fail_on_drift
+    - check_rdp_disable is changed
