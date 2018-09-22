@@ -1,0 +1,6 @@
+---
+
+required_features:
+  - Failover-clustering
+  - RSAT-Clustering-PowerShell
+  - RSAT-Clustering-CmdInterface
