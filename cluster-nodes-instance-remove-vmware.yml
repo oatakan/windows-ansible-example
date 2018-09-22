@@ -3,8 +3,6 @@
   gather_facts: False
   connection: local
   become: no
-  vars:
-    ansible_port: 5986
   vars_files:
     - node-config/cluster-nodes-vmware.yml
 
@@ -12,5 +10,3 @@
     - role: ansible-role-vmware
       role_action: deprovision
       delegate_to: localhost
-      run_once: yes
-      become: no
