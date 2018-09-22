@@ -12,6 +12,13 @@
     Ensure: Present
   loop: "{{ required_features }}"
 
+- name: ensure registry service is running
+  win_dsc:
+    resource_name: Service
+    Name: TermService
+    StartupType: Automatic
+    State: Running
+
 - name: create windows cluster
   win_dsc:
     resource_name: xCluster
@@ -28,7 +35,6 @@
     RetryIntervalSec: "{{ retry_interval_sec }}"
     RetryCount: "{{ retry_count }}"
   when: create_windows_cluster is not changed
-
 
 - name: join windows cluster
   win_dsc:
