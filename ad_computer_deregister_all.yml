@@ -1,6 +1,6 @@
 - name: remove computer objects
   hosts: all
-  gather_facts: yes
+  gather_facts: no
   serial: 1
   vars:
     ansible_port: 5986
