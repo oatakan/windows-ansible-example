@@ -1,0 +1,28 @@
+---
+providers:
+  vcenter:
+    datacenter: cloud
+    cluster: mylab
+    resource_pool: manageto
+
+nodes:
+  - name: winnode1
+    role: windows
+    app_name: windows_cluster_demo
+    flavor: m1.medium
+    image: Windows 2016 Datacenter Updated
+    key_name: ansible-oatakan
+    volume_size: 40
+    nics:
+      - net-name: private_network
+    os_type: windows
+  - name: winnode2
+    role: windows
+    app_name: windows_cluster_demo
+    flavor: m1.medium
+    image: Windows 2016 Datacenter Updated
+    key_name: ansible-oatakan
+    volume_size: 40
+    nics:
+      - net-name: private_network
+    os_type: windows
