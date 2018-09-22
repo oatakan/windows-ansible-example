@@ -21,7 +21,7 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    template: windows-2016-datacenter-updated
+    template: windows-2016-datacenter
     snapshot_src: Linked
     linked_clone: True
     customvalues:
@@ -53,7 +53,7 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    template: windows-2016-datacenter-updated
+    template: windows-2016-datacenter
     snapshot_src: Linked
     linked_clone: True
     customvalues:
