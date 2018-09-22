@@ -9,4 +9,4 @@
   roles:
     - role: ansible-role-vmware
       role_action: deprovision
-      delegate_to: localhost
+      delegate_to: 127.0.0.1
