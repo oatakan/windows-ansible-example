@@ -9,5 +9,5 @@
   roles:
     - role: ad-computer-registration
       role_action: deregister
-      computer_name: "{{ ansible_hostname }}"
+      computer_name: "{{ ansible_host }}"
       delegate_to: "{{ windows_ad_server_ip }}"
