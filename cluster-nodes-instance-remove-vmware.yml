@@ -1,7 +1,9 @@
 - name: Remove Windows Cluster Servers
   hosts: all
   gather_facts: False
-  #connection: local
+  connection: local
+  vars:
+    ansible_ssh_password: ''
   become: no
   vars_files:
     - node-config/cluster-nodes-vmware.yml
