@@ -42,4 +42,3 @@
     resource_name: xCluster
     Name: "{{ cluster_name }}"
     StaticIPAddress: "{{ cluster_ip_address }}"
-  when: create_windows_cluster is not changed
