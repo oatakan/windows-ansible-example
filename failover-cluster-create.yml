@@ -1,5 +1,5 @@
 - name: Create failover cluster on first node
-  hosts: all[0]
+  hosts: cluster_first
   vars:
     ansible_port: 5986
     ansible_connection: winrm
@@ -10,7 +10,7 @@
       first_node: yes
 
 - name: Join failover clusters on other nodes
-  hosts: all:!all[0]
+  hosts: cluster_other
   vars:
     ansible_port: 5986
     ansible_connection: winrm

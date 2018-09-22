@@ -7,7 +7,7 @@ providers:
 
 nodes:
   - name: winnode1
-    role: windows
+    role: cluster_first
     app_name: windows_cluster_demo
     flavor: m1.medium
     image: Windows 2016 Datacenter Updated
@@ -17,7 +17,7 @@ nodes:
       - net-name: private_network
     os_type: windows
   - name: winnode2
-    role: windows
+    role: cluster_other
     app_name: windows_cluster_demo
     flavor: m1.medium
     image: Windows 2016 Datacenter Updated
