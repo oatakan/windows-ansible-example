@@ -1,7 +1,7 @@
 - name: Remove Windows Cluster Servers
   hosts: all
   gather_facts: False
-  #connection: local
+  connection: local
   become: no
   vars_files:
     - node-config/cluster-nodes-vmware.yml
