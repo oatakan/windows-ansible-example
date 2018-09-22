@@ -1,9 +1,21 @@
-- name: Create failover cluster
-  hosts: all
+- name: Create failover cluster on first node
+  hosts: all[0]
   vars:
     ansible_port: 5986
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
   roles:
-    - failover-cluster
+    - role: failover-cluster
+      first_node: yes
+
+- name: Join failover clusters on other nodes
+  hosts: all:!all[0]
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+  roles:
+    - role: failover-cluster
+      first_node: no

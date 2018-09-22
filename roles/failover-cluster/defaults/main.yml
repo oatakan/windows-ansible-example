@@ -12,3 +12,5 @@ retry_interval_sec: 10
 retry_count: 60
 
 dns_domain_name: example.com
+
+first_node: no
