@@ -1,6 +1,6 @@
 - name: remove computer objects
   hosts: all
-  gather_facts: no
+  gather_facts: yes
   serial: 1
   vars:
     ansible_port: 5986
@@ -9,12 +9,13 @@
     ansible_winrm_server_cert_validation: ignore
   pre_tasks:
     - debug:
-        msg: "{{ ansible_hostname | default(guest.hostname) | default(metadata.hostname) }}"
+        msg: "{{ ansible_hostname | default('') }}"
   roles:
     - role: ad-computer-registration
       role_action: deregister
-      computer_name: "{{ ansible_hostname | default(guest.hostname) | default(metadata.hostname) }}"
+      computer_name: "{{ ansible_hostname }}"
       delegate_to: "{{ windows_ad_server_ip }}"
+      when: ansible_hostname is defined
 
 - name: remove cluster object
   hosts: all
