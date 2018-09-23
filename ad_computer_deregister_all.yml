@@ -30,4 +30,3 @@
       role_action: deregister
       computer_name: "{{ cluster_name }}"
       delegate_to: "{{ windows_ad_server_ip }}"
-      when: cluster_name is defined
