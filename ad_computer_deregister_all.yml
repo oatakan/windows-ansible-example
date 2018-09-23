@@ -17,8 +17,7 @@
       delegate_to: "{{ windows_ad_server_ip }}"
 
 - name: remove cluster object
-  hosts: localhost
-  connection: local
+  hosts: all[0]
   gather_facts: no
   vars:
     ansible_port: 5986
@@ -30,3 +29,4 @@
       role_action: deregister
       computer_name: "{{ cluster_name }}"
       delegate_to: "{{ windows_ad_server_ip }}"
+      run_once: yes
