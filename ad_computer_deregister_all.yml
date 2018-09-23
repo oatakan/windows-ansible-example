@@ -17,7 +17,7 @@
       delegate_to: "{{ windows_ad_server_ip }}"
 
 - name: remove cluster object
-  hosts: all[0]
+  hosts: all
   gather_facts: no
   vars:
     ansible_port: 5986
