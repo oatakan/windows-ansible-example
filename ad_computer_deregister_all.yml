@@ -9,11 +9,11 @@
     ansible_winrm_server_cert_validation: ignore
   pre_tasks:
     - debug:
-        msg: "{{ guest.hostname }}"
+        msg: "{{ ansible_hostname | default('guest.hostname') | default('metadata.hostname') }}"
   roles:
     - role: ad-computer-registration
       role_action: deregister
-      computer_name: "{{ ansible_hostname | default('guest.hostname') }}"
+      computer_name: "{{ ansible_hostname | default('guest.hostname') | default('metadata.hostname') }}"
       delegate_to: "{{ windows_ad_server_ip }}"
 
 - name: remove cluster object
