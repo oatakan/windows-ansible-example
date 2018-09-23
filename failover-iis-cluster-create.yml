@@ -1,0 +1,33 @@
+- name: prereqs
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+  roles:
+    - domain
+    - iis-dsc
+    - role: failover-cluster-common
+
+- name: Create failover cluster on first node
+  hosts: '*cluster_first'
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+  roles:
+    - role: failover-cluster
+      first_node: yes
+
+- name: Join failover clusters on other nodes
+  hosts: '*cluster_other'
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+  roles:
+    - role: failover-cluster
+      first_node: no
