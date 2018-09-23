@@ -14,9 +14,8 @@ nodes:
     key_name: ansible-oatakan
     volume_size: 40
     nics:
-      - net-name: public
+      - net-name: private_network
     os_type: windows
-    auto_ip: no
   - name: winweb2
     role: cluster_other
     app_name: windows_cluster_demo
@@ -25,6 +24,5 @@ nodes:
     key_name: ansible-oatakan
     volume_size: 40
     nics:
-      - net-name: public
+      - net-name: private_network
     os_type: windows
-    auto_ip: no
