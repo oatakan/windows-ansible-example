@@ -16,6 +16,7 @@ nodes:
     nics:
       - net-name: public
     os_type: windows
+    auto_ip: no
   - name: winweb2
     role: cluster_other
     app_name: windows_cluster_demo
@@ -26,3 +27,4 @@ nodes:
     nics:
       - net-name: public
     os_type: windows
+    auto_ip: no
