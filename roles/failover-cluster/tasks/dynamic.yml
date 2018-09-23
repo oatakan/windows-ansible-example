@@ -1,0 +1,28 @@
+---
+
+- name: create windows cluster
+  win_dsc:
+    resource_name: xCluster
+    Name: "{{ cluster_name }}"
+    DomainAdministratorCredential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+    DomainAdministratorCredential_password: "{{ domain_admin_password }}"
+  register: create_windows_cluster
+  ignore_errors: yes
+  when: first_node
+
+- name: wait for cluster
+  win_dsc:
+    resource_name: xWaitForCluster
+    Name: "{{ cluster_name }}"
+    RetryIntervalSec: "{{ retry_interval_sec }}"
+    RetryCount: "{{ retry_count }}"
+  when: not first_node
+
+- name: join windows cluster
+  win_dsc:
+    resource_name: xCluster
+    Name: "{{ cluster_name }}"
+    DomainAdministratorCredential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+    DomainAdministratorCredential_password: "{{ domain_admin_password }}"
+  ignore_errors: yes
+  when: not first_node
