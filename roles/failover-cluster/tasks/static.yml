@@ -11,9 +11,6 @@
   ignore_errors: yes
   when: first_node
 
-- debug:
-    var: create_windows_cluster
-
 - name: wait for cluster
   win_dsc:
     resource_name: xWaitForCluster

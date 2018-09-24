@@ -20,7 +20,7 @@ nodes:
     role: cluster_other
     app_name: windows_cluster_demo
     flavor: o1.small
-    image: Windows 2016 Datacenter Updated
+    image: Windows 2016 Datacenter
     key_name: ansible-oatakan
     volume_size: 30
     nics:
