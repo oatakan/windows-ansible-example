@@ -9,7 +9,7 @@ nodes:
   - name: winweb1
     role: cluster_first
     app_name: windows_cluster_demo
-    flavor: m1.medium
+    flavor: o1.small
     image: Windows 2016 Datacenter Updated
     key_name: ansible-oatakan
     volume_size: 40
@@ -19,7 +19,7 @@ nodes:
   - name: winweb2
     role: cluster_other
     app_name: windows_cluster_demo
-    flavor: m1.medium
+    flavor: o1.small
     image: Windows 2016 Datacenter Updated
     key_name: ansible-oatakan
     volume_size: 40
