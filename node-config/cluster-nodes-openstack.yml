@@ -12,7 +12,7 @@ nodes:
     flavor: o1.small
     image: Windows 2016 Datacenter Updated
     key_name: ansible-oatakan
-    volume_size: 40
+    volume_size: 30
     nics:
       - net-name: private_network
     os_type: windows
@@ -22,7 +22,7 @@ nodes:
     flavor: o1.small
     image: Windows 2016 Datacenter Updated
     key_name: ansible-oatakan
-    volume_size: 40
+    volume_size: 30
     nics:
       - net-name: private_network
     os_type: windows
