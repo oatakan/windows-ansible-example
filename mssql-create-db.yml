@@ -24,6 +24,9 @@
         state: present
         enabled: yes
 
+- debug:
+    msg: "{{ ansible_ssh_host | default(ansible_host) | default(inventory_hostname) }}"
+
     - name: Create a db
       mssql_db:
         login_host: "{{ ansible_ssh_host | default(ansible_host) | default(inventory_hostname) }}"
