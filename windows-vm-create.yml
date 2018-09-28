@@ -9,5 +9,4 @@
     - win-nodes-vmware.yml
 
   roles:
-  #- deploy
   - ansible-role-vmware
