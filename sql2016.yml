@@ -8,4 +8,3 @@
     install_with: ini
   roles:
     - role: sql2016
-      when: "'2016' in ansible_distribution"
