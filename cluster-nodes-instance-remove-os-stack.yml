@@ -9,5 +9,5 @@
     - node-config/cluster-nodes-openstack.yml
 
   roles:
-    - role: ansible-role-os-stack
+    - role: ansible-role-openstack
       role_action: deprovision

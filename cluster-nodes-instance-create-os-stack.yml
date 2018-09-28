@@ -9,4 +9,4 @@
     - node-config/cluster-nodes-openstack.yml
 
   roles:
-  - ansible-role-os-stack
+  - ansible-role-openstack
