@@ -1,9 +1,4 @@
 ---
-providers:
-  vcenter:
-    datacenter: cloud
-    cluster: mylab
-    resource_pool: manageto
 
 nodes:
   - name: oswinad1
