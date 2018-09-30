@@ -1,0 +1,16 @@
+- hosts: localhost
+  become: no
+  tasks:
+    - name: get ec2 instance information
+      ec2_remote_facts:
+        region: "{{ ec2_region }}"
+        filters:
+          vpc-id: "{{ ec2_vpc_id }}"
+          "tag:app": windows_cluster_demo
+      register: ec2_instances
+
+    - name: terminate instances
+      ec2:
+        region: "{{ ec2_region }}"
+        state: "absent"
+        instance_ids: "{{ ec2_instances.instances | map(attribute='id') | list }}"
