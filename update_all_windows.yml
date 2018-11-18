@@ -6,12 +6,47 @@
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
   tasks:
-    - name: install all windows updates
-      win_updates:
-        category_names:
-          - CriticalUpdates
-          - DefinitionUpdates
-          - SecurityUpdates
-          - UpdateRollups
-          - Updates
-        reboot: yes
+    - name: install all updates
+      block:
+
+        - name: check for missing updates.
+          win_updates:
+            state: searched
+          register: update_count
+
+        - name: install all windows updates
+          win_updates:
+            category_names:
+              - CriticalUpdates
+              - DefinitionUpdates
+              - SecurityUpdates
+              - UpdateRollups
+              - Updates
+            reboot: yes
+          when: update_count.found_update_count|int >= 1
+
+      rescue:
+
+        - name: reboot before continue to retry
+          win_reboot:
+
+        - name: install all windows updates (retry)
+          win_updates:
+            category_names:
+            - CriticalUpdates
+            - DefinitionUpdates
+            - SecurityUpdates
+            - UpdateRollups
+            - Updates
+            reboot: yes
+
+      always:
+
+        - name: check for missing updates.
+          win_updates:
+            state: searched
+          register: update_count
+
+        - name: list missing updates
+          debug:
+            var: update_count
