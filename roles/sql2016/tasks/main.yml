@@ -73,6 +73,11 @@
 - name: enable tcp on SQL server instance
   win_shell: c:\enableSQLTCP.ps1
 
+- name: delete the script
+  win_file:
+    path: c:\enableSQLTCP.ps1
+    state: absent
+
 - name: restart SQL Server instance
   win_service:
     name: MSSQLSERVER
