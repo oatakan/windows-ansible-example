@@ -6,8 +6,7 @@
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
   tasks:
-    - name: install all updates
-      block:
+    - block:
 
         - name: check for missing updates.
           win_updates:
