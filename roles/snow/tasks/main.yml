@@ -1,8 +1,5 @@
 ---
 
-- debug:
-    var: hostvars[inventory_hostname]
-
 - name: Create an incident
   snow_record:
     state: present
@@ -11,10 +8,6 @@
     password: "{{ sn_password }}"
     instance: "{{ sn_instance }}"
     data:
-      name: "{{ inventory_hostname }}"
-      host_name: "{{ ansible_hostname | lower }}"
-      ip_address: "{{ ansible_host }}"
-      mac_address: "{{ ansible_interfaces[0].macaddress }}"
       os: windows
   delegate_to: localhost
   vars:
