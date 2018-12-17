@@ -3,12 +3,16 @@
 - name: Create an incident
   snow_record:
     state: present
-    table: cmdb_ci_linux_server
+    table: cmdb_ci_win_server
     username: "{{ sn_username }}"
     password: "{{ sn_password }}"
     instance: "{{ sn_instance }}"
     data:
-      os: redhat
+      name: "{{ inventory_hostname }}"
+      host_name: "{{ ansible_hostname }}"
+      ip_address: "{{ ansible_default_ipv4.address }}"
+      mac_address: "{{ ansible_default_ipv4.macaddress }}"
+      os: windows
   delegate_to: localhost
   vars:
     ansible_connection: local
