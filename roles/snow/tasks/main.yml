@@ -10,8 +10,8 @@
     data:
       name: "{{ inventory_hostname }}"
       host_name: "{{ ansible_hostname }}"
-      ip_address: "{{ ansible_default_ipv4.address }}"
-      mac_address: "{{ ansible_default_ipv4.macaddress }}"
+      ip_address: "{{ hostvars[inventory_hostname].ansible_default_ipv4.address }}"
+      mac_address: "{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}"
       os: windows
   delegate_to: localhost
   vars:
