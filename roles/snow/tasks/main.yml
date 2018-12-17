@@ -1,5 +1,8 @@
 ---
 
+- debug:
+    var: hostvars[inventory_hostname]
+
 - name: Create an incident
   snow_record:
     state: present
