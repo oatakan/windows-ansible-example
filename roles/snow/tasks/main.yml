@@ -1,6 +1,20 @@
 ---
 
-- name: Create an incident
+- name: Check existing CI
+  snow_record:
+    state: present
+    table: cmdb_ci_win_server
+    username: "{{ sn_username }}"
+    password: "{{ sn_password }}"
+    instance: "{{ sn_instance }}"
+    number: "{{ inventory_hostname }}"
+    lookup_field: name
+  delegate_to: localhost
+  vars:
+    ansible_connection: local
+  register: check_host
+
+- name: Create a CI
   snow_record:
     state: present
     table: cmdb_ci_win_server
