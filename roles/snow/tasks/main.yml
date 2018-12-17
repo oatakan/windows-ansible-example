@@ -29,7 +29,7 @@
       ip_address: "{{ ansible_host }}"
       mac_address: "{{ ansible_interfaces[0].macaddress }}"
       os: "{{ ansible_facts.os_family }}"
-    lookup_field: "{{ 'name' if check_host.record is defined else omit }}"
+    lookup_field: name
   delegate_to: localhost
   vars:
     ansible_connection: local
