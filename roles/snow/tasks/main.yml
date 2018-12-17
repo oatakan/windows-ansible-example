@@ -22,7 +22,7 @@
     username: "{{ sn_username }}"
     password: "{{ sn_password }}"
     instance: "{{ sn_instance }}"
-    number: "{{ inventory_hostname }}"
+    number: "{{ inventory_hostname if check_host.record is defined else omit }}"
     data:
       name: "{{ inventory_hostname }}"
       host_name: "{{ ansible_hostname | lower }}"
@@ -34,6 +34,3 @@
   vars:
     ansible_connection: local
   register: new_host
-
-- debug:
-    var: new_host
