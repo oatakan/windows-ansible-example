@@ -12,9 +12,9 @@
     instance: "{{ sn_instance }}"
     data:
       name: "{{ inventory_hostname }}"
-      host_name: "{{ ansible_hostname }}"
-      ip_address: "{{ hostvars[inventory_hostname].ansible_default_ipv4.address }}"
-      mac_address: "{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}"
+      host_name: "{{ ansible_hostname | lower }}"
+      ip_address: "{{ ansible_host }}"
+      mac_address: "{{ ansible_interfaces[0].macaddress }}"
       os: windows
   delegate_to: localhost
   vars:
