@@ -1,0 +1,15 @@
+---
+
+- name: Create an incident
+  snow_record:
+    state: present
+    table: cmdb_ci_linux_server
+    username: "{{ SN_USERNAME }}"
+    password: "{{ SN_PASSWORD }}"
+    instance: "{{ SN_INSTANCE }}"
+    data:
+      os: redhat
+  register: new_host
+
+- debug:
+    var: new_host
