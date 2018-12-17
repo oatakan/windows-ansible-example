@@ -7,14 +7,13 @@
     username: "{{ sn_username }}"
     password: "{{ sn_password }}"
     instance: "{{ sn_instance }}"
-    number: "{{ ansible_host }}"
     data:
       name: "{{ inventory_hostname }}"
       host_name: "{{ ansible_hostname | lower }}"
       ip_address: "{{ ansible_host }}"
       mac_address: "{{ ansible_interfaces[0].macaddress }}"
       os: "{{ ansible_facts.os_family }}"
-    lookup_field: ip_address
+    lookup_field: name
   delegate_to: localhost
   vars:
     ansible_connection: local
