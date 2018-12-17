@@ -9,6 +9,9 @@
     instance: "{{ sn_instance }}"
     data:
       os: redhat
+  delegate_to: localhost
+  vars:
+    ansible_connection: local
   register: new_host
 
 - debug:
