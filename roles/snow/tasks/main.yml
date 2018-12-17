@@ -1,18 +1,18 @@
 ---
 
-- name: check existing CI
-  snow_record:
-    state: present
-    table: cmdb_ci_win_server
-    username: "{{ sn_username }}"
-    password: "{{ sn_password }}"
-    instance: "{{ sn_instance }}"
-    number: "{{ inventory_hostname }}"
-    lookup_field: name
-  delegate_to: localhost
-  vars:
-    ansible_connection: local
-  register: check_host
+#- name: check existing CI
+#  snow_record:
+#    state: present
+#    table: cmdb_ci_win_server
+#    username: "{{ sn_username }}"
+#    password: "{{ sn_password }}"
+#    instance: "{{ sn_instance }}"
+#    number: "{{ inventory_hostname }}"
+#    lookup_field: name
+#  delegate_to: localhost
+#  vars:
+#    ansible_connection: local
+#  register: check_host
 
 - name: ensure CI record exists
   snow_record:
