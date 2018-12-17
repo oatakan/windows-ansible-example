@@ -13,6 +13,7 @@
   vars:
     ansible_connection: local
   register: check_host
+  ignore_errors: yes
 
 - name: ensure CI record exists
   snow_record:
