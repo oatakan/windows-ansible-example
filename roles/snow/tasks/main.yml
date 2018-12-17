@@ -4,9 +4,9 @@
   snow_record:
     state: present
     table: cmdb_ci_linux_server
-    username: "{{ SN_USERNAME }}"
-    password: "{{ SN_PASSWORD }}"
-    instance: "{{ SN_INSTANCE }}"
+    username: "{{ sn_username }}"
+    password: "{{ sn_password }}"
+    instance: "{{ sn_instance }}"
     data:
       os: redhat
   register: new_host
