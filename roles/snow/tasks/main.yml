@@ -1,6 +1,6 @@
 ---
 
-- name: Check existing CI
+- name: check existing CI
   snow_record:
     state: present
     table: cmdb_ci_win_server
@@ -14,13 +14,14 @@
     ansible_connection: local
   register: check_host
 
-- name: Create a CI
+- name: ensure CI record exists
   snow_record:
     state: present
     table: cmdb_ci_win_server
     username: "{{ sn_username }}"
     password: "{{ sn_password }}"
     instance: "{{ sn_instance }}"
+    number: "{{ inventory_hostname }}"
     data:
       name: "{{ inventory_hostname }}"
       host_name: "{{ ansible_hostname | lower }}"
