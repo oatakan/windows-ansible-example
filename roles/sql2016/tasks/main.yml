@@ -32,13 +32,6 @@
     - C:\Databases
     - C:\UserDatabases
 
-- name: enable guest login
-  win_regedit:
-    path: HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters
-    name: AllowInsecureGuestAuth
-    data: 1
-    type: dword
-
 - name: check ISO file
   win_stat:
     path: "{{ iso_path }}"
