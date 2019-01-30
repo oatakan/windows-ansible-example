@@ -6,4 +6,11 @@
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
   roles:
+    - role: ad-computer-registration
+      role_action: deregister
+      computer_name: "{{ inventory_hostname }}"
+      delegate_to: "{{ dns_servers | default(omit) }}"
+      become: yes
+      become_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+      become_password: "{{ domain_admin_password }}"
     - domain
