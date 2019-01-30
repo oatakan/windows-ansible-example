@@ -17,6 +17,13 @@
     - domain
 
   post_tasks:
+    - name: Add Ansible group to a local Administrators
+      win_group_membership:
+        name: Administrators
+        members:
+          - "{{ dns_domain_name.split('.')[0] }}\\user1"
+        state: present
+
     - name: add remote desktop users group to a local Remote Management Users
       win_group_membership:
         name: Remote Management Users
