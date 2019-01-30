@@ -23,3 +23,7 @@
         members:
           - "{{ dns_domain_name }}\\Remote Desktop Users"
         state: present
+        become: yes
+        become_method: runas
+        become_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+        ansible_become_pass: "{{ domain_admin_password }}"
