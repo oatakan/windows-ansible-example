@@ -11,6 +11,7 @@
       computer_name: "{{ inventory_hostname }}"
       delegate_to: "{{ dns_servers | default(omit) }}"
       become: yes
+      become_method: runas
       become_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
-      become_password: "{{ domain_admin_password }}"
+      ansible_become_pass: "{{ domain_admin_password }}"
     - domain
