@@ -32,7 +32,7 @@
   win_reboot:
   when: join_domain.reboot_required
 
-- name: Set DNS search string to {{ dns_domain_name }}
+- name: set DNS search string
   win_dns_searchsuffix:
     suffixes:
       - "{{ dns_domain_name }}"
