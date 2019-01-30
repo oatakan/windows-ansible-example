@@ -21,7 +21,7 @@
       win_group_membership:
         name: Remote Management Users
         members:
-          - "{{ dns_domain_name.split('.')[0] }}\\Remote Desktop Users"
+          - "{{ dns_domain_name.split('.')[0] | upper }}\\Administrators"
         state: present
 #        become: yes
 #        become_method: runas
