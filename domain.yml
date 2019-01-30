@@ -15,3 +15,11 @@
       become_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
       ansible_become_pass: "{{ domain_admin_password }}"
     - domain
+
+  post_tasks:
+    - name: add remote desktop users group to a local Remote Management Users
+      win_group_membership:
+        name: Remote Management Users
+        members:
+          - "{{ dns_domain_name }}\\Remote Desktop Users"
+        state: present
