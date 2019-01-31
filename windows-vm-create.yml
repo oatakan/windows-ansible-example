@@ -10,3 +10,4 @@
 
   roles:
   - ansible-role-vmware
+  - snow
