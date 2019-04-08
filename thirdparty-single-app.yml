@@ -15,6 +15,15 @@
         name: useEnhancedExitCodes
         state: disabled
 
+    - name: install Visual Studio Code, Git, and Putty
+      win_chocolatey:
+        name: "{{ item }}"
+        ignore_checksums: true
+      with_items:
+        - visualstudiocode
+        - git
+        - googlechrome
+
     - name: install an app
       win_chocolatey:
         name: "{{ windows_app_name }}"
