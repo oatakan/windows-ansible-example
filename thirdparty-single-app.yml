@@ -5,6 +5,9 @@
     ansible_connection: winrm
 
   tasks:
+    - name: reboot
+      win_reboot:
+
     - name: install Chocolatey
       win_chocolatey:
         name: chocolatey
