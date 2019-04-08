@@ -5,7 +5,17 @@
     ansible_connection: winrm
 
   tasks:
-  - name: Install an app
-    win_chocolatey:
-      name: "{{ windows_app_name }}"
-      state: latest
+    - name: install Chocolatey
+      win_chocolatey:
+        name: chocolatey
+        state: present
+
+    - name: disable enhanced exit codes
+      win_chocolatey_feature:
+        name: useEnhancedExitCodes
+        state: disabled
+
+    - name: install an app
+      win_chocolatey:
+        name: "{{ windows_app_name }}"
+        state: latest
