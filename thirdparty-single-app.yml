@@ -3,30 +3,40 @@
   vars:
     ansible_port: 5986
     ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+
+  roles:
+    - domain
 
   tasks:
-    - name: reboot
-      win_reboot:
+    - block:
+      - name: install Chocolatey
+        win_chocolatey:
+          name: chocolatey
+          state: present
 
-    - name: install Chocolatey
-      win_chocolatey:
-        name: chocolatey
-        state: present
+      - name: disable enhanced exit codes
+        win_chocolatey_feature:
+          name: useEnhancedExitCodes
+          state: disabled
 
-    - name: disable enhanced exit codes
-      win_chocolatey_feature:
-        name: useEnhancedExitCodes
-        state: disabled
+      - name: install Visual Studio Code, Git, and Putty
+        win_chocolatey:
+          name:
+            - visualstudiocode
+            - git
+            - googlechrome
+          ignore_checksums: true
 
-    - name: install Visual Studio Code, Git, and Putty
-      win_chocolatey:
-        name:
-          - visualstudiocode
-          - git
-          - googlechrome
-        ignore_checksums: true
+      - name: install an app
+        win_chocolatey:
+          name: "{{ windows_app_name }}"
+          state: latest
 
-    - name: install an app
-      win_chocolatey:
-        name: "{{ windows_app_name }}"
-        state: latest
+      become: yes
+      become_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+      become_method: runas
+
+      vars:
+        ansible_become_pass: "{{ domain_admin_password }}"
