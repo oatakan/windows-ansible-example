@@ -21,7 +21,7 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    template: windows-2019-datacenter
+    template: windows-2019
     snapshot_src: Linked
     linked_clone: True
     customvalues:
