@@ -8,5 +8,10 @@
     login_user: "{{ mssql_username }}"
     login_password: "{{ mssql_password }}"
     instance_name: "{{ ansible_hostname }}"
+
+  pre_tasks:
+    - debug:
+        var: ansible_hostname
+
   roles:
   - sql2016_run_sql_script
