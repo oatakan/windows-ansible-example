@@ -13,7 +13,13 @@ Param(
   [string]$dbName,
 
   [Parameter(Mandatory=$True)]
-  [string]$sqlQuery
+  [string]$sqlQuery,
+
+  [Parameter(Mandatory=$False)]
+  [string]$userName,
+
+  [Parameter(Mandatory=$False)]
+  [string]$password
 
 )
 
@@ -26,8 +32,14 @@ Import-Module SQLPS -DisableNameChecking
 if ($dbName)  {
 
   # Your SQL Server Instance Name (Server)
-  $Srvr = New-Object -TypeName Microsoft.SqlServer.Management.Smo.Server -ArgumentList $instanceName
- 
+  $mySrvConn = new-object Microsoft.SqlServer.Management.Common.ServerConnection
+  $mySrvConn.ServerInstance = $instanceName
+  $mySrvConn.LoginSecure = $false
+  $mySrvConn.Login = $userName
+  $mySrvConn.Password = $password
+
+  $Srvr = New-Object -TypeName Microsoft.SqlServer.Management.Smo.Server($mySrvConn)
+
   # Check if the Database Exists
   $dbExists = $FALSE
   foreach ($db in $Srvr.databases) {
@@ -39,10 +51,10 @@ if ($dbName)  {
   # Execute query if the database exists
   if ($dbExists -eq $True) {
     Write-Host "Executing query against database $dbName"
-    Invoke-Sqlcmd -Query "$sqlQuery" -ServerInstance $instanceName -Database $dbName
+    Invoke-Sqlcmd -Username $userName -Password $password -Query "$sqlQuery" -ServerInstance $instanceName -Database $dbName
   }
 } else {
   Write-Host "Executing query against instance $instanceName"
-  Invoke-Sqlcmd -Query "$sqlQuery" -ServerInstance $instanceName
+  Invoke-Sqlcmd -Username $userName -Password $password -Query "$sqlQuery" -ServerInstance $instanceName
 }
 
