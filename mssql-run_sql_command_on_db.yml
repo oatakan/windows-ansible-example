@@ -5,7 +5,7 @@
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
-    login_user: "{{ mssql_username }}"
+    login_user: sa
     login_password: "{{ mssql_password }}"
     instance_name: "{{ ansible_hostname }}"
 
