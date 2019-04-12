@@ -19,8 +19,8 @@ nodes:
       - 192.168.1.254
       - 8.8.4.4
     domain: home.ad
-    memory: 4096
-    cpu: 2
+    memory: "{{ node_memory | default(4096) }}"
+    cpu: "{{ node_cpu | default(2) }}"
     template: windows-2019
     snapshot_src: Linked
     linked_clone: True
