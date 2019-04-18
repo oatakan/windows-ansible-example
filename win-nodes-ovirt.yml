@@ -6,7 +6,7 @@ nodes:
   - name: wintest2
     networks:
     - name: ovirtmgmt
-      ip: 192.168.1.54
+      ip: 192.168.1.64
       netmask: 255.255.255.0
       gateway: 192.168.1.254
       domain: home.ad
