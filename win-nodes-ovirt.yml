@@ -18,5 +18,6 @@ nodes:
     cpu: 2
     type: server
     user_name: vagrant
-    template: windows-2019-standard-core_v2
+    #template: windows-2019-standard-core_v2
+    template: win2016_x64_template
     sysprep: yes
