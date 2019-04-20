@@ -4,6 +4,8 @@ providers:
     cluster: pele-Local
 nodes:
   - name: wintest2
+    role: windows
+    app_name: windows_demo
     networks:
     - name: ovirtmgmt
       ip: 192.168.1.64
@@ -18,7 +20,6 @@ nodes:
     cpu: 2
     type: server
     user_name: vagrant
-    #template: windows-2019-standard-core
-    #template: win2016_x64_template
-    template: windows-2016
+    template: windows-2019-standard-core
+    #template: windows-2016
     sysprep: yes
