@@ -1,0 +1,10 @@
+- name: windows post configuration
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_server_cert_validation: ignore
+    ansible_winrm_transport: credssp
+
+  roles:
+    - post-windows
