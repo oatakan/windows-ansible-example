@@ -15,10 +15,10 @@ nodes:
       dns_servers:
       - 192.168.1.254
       - 8.8.4.4
-    disks:
-    - name: windows-2019-standard-core
-      name_prefix: no
-      size: 140GiB
+#    disks:
+#    - name: windows-2019-standard-core
+#      name_prefix: no
+#      size: 140GiB
     domain: home.ad
     memory: 4096
     cpu: 2
