@@ -3,10 +3,11 @@ nodes:
   - name: MyWin01
     role: windows
     app_name: windows_demo
-    vm_size: Standard_A1_v2
+    #vm_size: Standard_A1_v2
+    vm_size: Standard_D2s_v3
     os_type: Windows
     image:
-      sku: 2016-Datacenter-Server-Core
+      sku: 2019-Datacenter-Server-Core
       publisher: MicrosoftWindowsServer
       version: latest
       offer: WindowsServer
