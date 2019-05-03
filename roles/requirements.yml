@@ -13,6 +13,9 @@
 - src: https://github.com/oatakan/ansible-role-ovirt
   version: origin/master
 
+- src: https://github.com/oatakan/ansible-role-azure
+  version: origin/master
+
 - src: https://github.com/oatakan/ansible-role-openstack
   version: origin/master
 
