@@ -1,0 +1,11 @@
+---
+- name: create SQL 2019 Install Script
+  win_template:
+    src: installSQL2019.ps1
+    dest: C:\installSQL2019.ps1
+
+- name: install SQL 2019
+  win_shell: c:\installSQL2019.ps1
+  args:
+    chdir: c:\
+    creates: c:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER

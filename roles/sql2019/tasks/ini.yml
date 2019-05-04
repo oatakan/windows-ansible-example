@@ -1,0 +1,12 @@
+---
+- name: create config file
+  win_template:
+    src: sqlsilent.ini
+    dest: c:\sqlsilent.ini
+
+- name: install SQL 2019
+  win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlsilent.ini /INDICATEPROGRESS=False"
+  args:
+    executable: cmd
+    chdir: c:\
+    creates: C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER
