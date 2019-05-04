@@ -67,15 +67,17 @@
 
 - name: reboot if required
   win_reboot:
+    pre_reboot_delay: 30
+    post_reboot_delay: 30
   when:
     - sql_install is defined
     - sql_install.reboot_required is defined
     - sql_install.reboot_required
 
-- name: ensure system is reachable
-  wait_for_connection:
-    delay: 5
-    timeout: 120
+#- name: ensure system is reachable
+#  wait_for_connection:
+#    delay: 10
+#    timeout: 120
 
 - name: copy script file
   win_copy:
