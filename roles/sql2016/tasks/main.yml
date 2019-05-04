@@ -67,7 +67,6 @@
 
 - name: reboot if required
   win_reboot:
-    post_reboot_delay: 30
   when:
     - sql_install is defined
     - sql_install.reboot_required is defined
@@ -91,3 +90,7 @@
     name: MSSQLSERVER
     state: restarted
     force_dependent_services: yes
+
+- name: ensure system is reachable
+  wait_for_connection:
+    timeout: 120
