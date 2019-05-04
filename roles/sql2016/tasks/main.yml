@@ -74,7 +74,7 @@
 
 - name: ensure system is reachable
   wait_for_connection:
-    delay: 15
+    delay: 10
     timeout: 120
 
 - name: copy script file
