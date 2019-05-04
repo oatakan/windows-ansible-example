@@ -21,3 +21,4 @@
       /SQLBACKUPDIR=C:\Backup
       /SQLUSERDBDIR=C:\Databases
       /SQLUSERDBLOGDIR=C:\UserDatabases
+  register: sql_install
