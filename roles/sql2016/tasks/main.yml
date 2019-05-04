@@ -72,11 +72,6 @@
     - sql_install.reboot_required is defined
     - sql_install.reboot_required
 
-- name: ensure system is reachable
-  wait_for_connection:
-    delay: 10
-    timeout: 120
-
 - name: copy script file
   win_copy:
     src: enableSQLTCP.ps1
