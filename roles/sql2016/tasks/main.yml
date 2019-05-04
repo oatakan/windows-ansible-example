@@ -67,6 +67,7 @@
 
 - name: reboot if required
   win_reboot:
+    post_reboot_delay: 30
   when:
     - sql_install is defined
     - sql_install.reboot_required is defined
