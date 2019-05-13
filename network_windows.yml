@@ -10,7 +10,7 @@
       win_regedit:
         path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters
         name: EnablePMTUDiscovery
-        data: 0
+        data: 1
         type: dword
 
     - name: get interfaces
@@ -21,13 +21,13 @@
     - debug:
         var: interface_ids
 
-#    - name: set mtu size
-#      win_regedit:
-#        path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{{ item }}
-#        name: MTU
-#        data: 4096
-#        type: dword
-#      loop: "{{ interface_ids.values }}"
+    - name: set mtu size
+      win_regedit:
+        path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{{ item }}
+        name: MTU
+        data: 4096
+        type: dword
+      loop: "{{ interface_ids.sub_keys }}"
 #
 #    - name: change mtu
 #      win_shell: change_mtu 4096 {{ interface_name }}
