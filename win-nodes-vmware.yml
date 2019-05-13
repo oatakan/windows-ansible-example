@@ -22,7 +22,7 @@ nodes:
     memory: "{{ node_memory | default(4096) }}"
     cpu: "{{ node_cpu | default(2) }}"
     #template: windows-2019-standard-core
-    template: windows-2012-r2-v2
+    template: windows-2012-r2
     snapshot_src: Linked
     linked_clone: True
     customvalues:
