@@ -13,6 +13,13 @@
         data: 1
         type: dword
 
+    - name: change tcpip parameter
+      win_regedit:
+        path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters
+        name: EnablePMTUBHDetect
+        data: 1
+        type: dword
+
     - name: get interfaces
       win_reg_stat:
         path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\
