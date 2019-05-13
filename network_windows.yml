@@ -12,3 +12,13 @@
         name: EnablePMTUDiscovery
         data: 0
         type: dword
+
+    - debug:
+        var: hostvars[inventory_hostname]
+
+#    - name: set mtu size
+#      win_regedit:
+#        path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\
+#        name: MTU
+#        data: 0
+#        type: dword
