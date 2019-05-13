@@ -13,8 +13,13 @@
         data: 0
         type: dword
 
+    - name: get interfaces
+      win_reg_stat:
+        path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\
+      register: interface_ids
+
     - debug:
-        var: hostvars[inventory_hostname]
+        var: interface_ids.value
 
 #    - name: set mtu size
 #      win_regedit:
