@@ -13,6 +13,9 @@
             state: searched
           register: update_count
 
+        - debug:
+            var: update_count
+
         - name: install all windows updates
           win_updates:
             category_names:
