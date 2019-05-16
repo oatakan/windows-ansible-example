@@ -3,3 +3,4 @@ temp_directory: '{{ ansible_env.TEMP }}'
 install_file_name: EPO510_2428_5_LR2.zip
 install_file_location: ''
 sql_server_hostname: 127.0.0.1
+product_id: '{E2C3579A-6B3B-40F6-88E8-BE08E78C8D1A}'

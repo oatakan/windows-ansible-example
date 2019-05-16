@@ -1,47 +1,54 @@
 ---
 
-- name: copy setup file
-  win_copy:
-    src: '{{ install_file_location }}\{{ install_file_name }}'
-    dest: '{{ temp_directory }}\'
-    remote_src: yes
+- name: check for existing installation
+  win_reg_stat:
+    path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{{ product_id }}
+  register: existing_installation
 
-- name: create temporary directory
-  win_file:
-    path: '{{ temp_directory }}\mcafee_epo'
-    state: directory
+- block:
 
-- name: unzip file
-  win_unzip:
-    src: '{{ temp_directory }}\{{ install_file_name }}'
-    dest: '{{ temp_directory }}\mcafee_epo'
-    #creates: "{{ install_location }}\\scripts"
-    rm: no
-  ignore_errors: yes
-  register: mcafee_epo_unzip
+    - name: copy setup file
+      win_copy:
+        src: '{{ install_file_location }}\{{ install_file_name }}'
+        dest: '{{ temp_directory }}\'
+        remote_src: yes
 
-- name: create install script
-  win_template:
-    src: installMcAfeeEPO.bat
-    dest: '{{ temp_directory }}\mcafee_epo\installMcAfeeEPO.bat'
+    - name: create temporary directory
+      win_file:
+        path: '{{ temp_directory }}\mcafee_epo'
+        state: directory
 
-- name: install pstools
-  win_chocolatey:
-    name: pstools
-    state: present
+    - name: unzip file
+      win_unzip:
+        src: '{{ temp_directory }}\{{ install_file_name }}'
+        dest: '{{ temp_directory }}\mcafee_epo'
+        rm: no
+      ignore_errors: yes
+      register: mcafee_epo_unzip
 
-- name: install McAfee EPO
-  win_psexec:
-    command: '{{ temp_directory }}\mcafee_epo\installMcAfeeEPO.bat'
-    priority: high
-    interactive: yes
-    #system: yes
-    #session: 1
+    - name: create install script
+      win_template:
+        src: installMcAfeeEPO.bat
+        dest: '{{ temp_directory }}\mcafee_epo\installMcAfeeEPO.bat'
 
+    - name: install pstools
+      win_chocolatey:
+        name: pstools
+        state: present
+
+    - name: install McAfee EPO
+      win_psexec:
+        command: '{{ temp_directory }}\mcafee_epo\installMcAfeeEPO.bat'
+        priority: high
+        interactive: yes
+
+  when: not existing_installation.exists
+
+# keep tasks below for reference. McAfee requires UI access and only seem to work with psexec
 #- name: install McAfee EPO
 #  win_package:
 #    path: '{{ temp_directory }}\mcafee_epo\setup.exe'
-#    product_id: '{E2C3579A-6B3B-40F6-88E8-BE08E78C8D1A}'
+#    product_id: "{{ product_id }}"
 #    arguments:
 #      - /qn
 #      - /l* C:\McAfee_ePO.log
@@ -71,7 +78,7 @@
 #  win_dsc:
 #    resource_name: Package
 #    Path: '{{ temp_directory }}\mcafee_epo\setup.exe'
-#    ProductId: '{E2C3579A-6B3B-40F6-88E8-BE08E78C8D1A}'
+#    ProductId: "{{ product_id }}"
 #    Name: Microsoft SQL Server 2016
 #    Arguments: >
 #      /qn
