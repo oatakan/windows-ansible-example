@@ -1,0 +1,97 @@
+---
+
+- name: copy setup file
+  win_copy:
+    src: '{{ install_file_location }}\{{ install_file_name }}'
+    dest: '{{ temp_directory }}\'
+    remote_src: yes
+
+- name: create temporary directory
+  win_file:
+    path: '{{ temp_directory }}\mcafee_epo'
+    state: directory
+
+- name: unzip file
+  win_unzip:
+    src: '{{ temp_directory }}\{{ install_file_name }}'
+    dest: '{{ temp_directory }}\mcafee_epo'
+    rm: no
+  ignore_errors: yes
+  register: mcafee_epo_unzip
+
+- name: create install script
+  win_template:
+    src: installMcAfeeEPO.bat
+    dest: '{{ temp_directory }}\mcafee_epo\installMcAfeeEPO.bat'
+
+- name: install pstools
+  win_chocolatey:
+    name: pstools
+    state: present
+
+- name: install McAfee EPO
+  win_psexec:
+    command: '{{ temp_directory }}\mcafee_epo\installMcAfeeEPO.bat'
+    priority: high
+    interactive: yes
+
+# keep tasks below for reference. McAfee requires UI access and only seem to work with psexec
+#- name: install McAfee EPO
+#  win_package:
+#    path: '{{ temp_directory }}\mcafee_epo\setup.exe'
+#    product_id: "{{ product_id }}"
+#    arguments:
+#      - /qn
+#      - /l* C:\McAfee_ePO.log
+#      - MFSADMINUSERNAME_UE=admin
+#      - MFSADMINPASSWORD_UE={{ mssql_password }}
+#      - MFSADMINVERIFYPASSWORD_UE={{ mssql_password }}
+#      - MFSDATABASESERVERNAME={{ sql_server_hostname }}
+#      - MFSDATABASEPORT=1433
+#      - MFSDATABASENAME=EPODB
+#      - MFSDATABASEUSERNAME_UE=sa
+#      - MFSDATABASEPASSWORD_UE={{ mssql_password }}
+#      - AGENTPORT=80
+#      - AGENTSECUREPORT=443
+#      - TOMCATSECUREPORT=8443
+#      - MFSDATABASEAUTHENTICATION=2
+#      - SQLUDPPORTISENABLED=0
+#      - IGNOREPROPINI=1
+#      - MFSKEYSTOREPASSWORD_UE={{ mssql_password }}
+#      - MFSVERIFYKEYSTOREPASSWORD={{ mssql_password }}
+#      - ENABLETELEMETRY=0
+#      - ENABLEFIPSMODE=0
+#      - SKIPAUTOPRODINST=0
+#      - AgreeToLicense="Yes"
+#  register: mcafee_epo_install
+
+#- name: install McAfee EPO
+#  win_dsc:
+#    resource_name: Package
+#    Path: '{{ temp_directory }}\mcafee_epo\setup.exe'
+#    ProductId: "{{ product_id }}"
+#    Name: Microsoft SQL Server 2016
+#    Arguments: >
+#      /qn
+#      /l* C:\McAfee_ePO.log
+#      MFSADMINUSERNAME_UE=admin
+#      MFSADMINPASSWORD_UE={{ mssql_password }}
+#      MFSADMINVERIFYPASSWORD_UE={{ mssql_password }}
+#      MFSDATABASESERVERNAME={{ sql_server_hostname }}
+#      MFSDATABASEPORT=1433
+#      MFSDATABASENAME=EPODB
+#      MFSDATABASEUSERNAME_UE=sa
+#      MFSDATABASEPASSWORD_UE={{ mssql_password }}
+#      AGENTPORT=80
+#      AGENTSECUREPORT=443
+#      TOMCATSECUREPORT=8443
+#      MFSDATABASEAUTHENTICATION=2
+#      SQLUDPPORTISENABLED=0
+#      IGNOREPROPINI=1
+#      MFSKEYSTOREPASSWORD_UE={{ mssql_password }}
+#      MFSVERIFYKEYSTOREPASSWORD={{ mssql_password }}
+#      ENABLETELEMETRY=0
+#      ENABLEFIPSMODE=0
+#      SKIPAUTOPRODINST=0
+#      AgreeToLicense="Yes"
+#  register: mcafee_epo_install
