@@ -6,11 +6,6 @@
     dest: '{{ temp_directory }}\'
     remote_src: yes
 
-- name: remove temporary directory
-  win_file:
-    path: '{{ temp_directory }}\mcafee_epo'
-    state: absent
-
 - name: create temporary directory
   win_file:
     path: '{{ temp_directory }}\mcafee_epo'
@@ -22,6 +17,7 @@
     dest: '{{ temp_directory }}\mcafee_epo'
     #creates: "{{ install_location }}\\scripts"
     rm: no
+  ignore_errors: yes
   register: mcafee_epo_unzip
 
 #- name: install pstools
