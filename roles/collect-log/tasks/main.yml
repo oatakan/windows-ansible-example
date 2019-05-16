@@ -3,7 +3,7 @@
 - name: copy log file
   win_copy:
     src: '{{ log_file }}'
-    dest: '{{ smb_share }}\'
+    dest: '{{ smb_share }}\{{ destination_file_location }}\'
     remote_src: yes
   become: yes
   become_method: runas
