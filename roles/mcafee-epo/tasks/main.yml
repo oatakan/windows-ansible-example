@@ -24,7 +24,7 @@
     path: '{{ temp_directory }}\mcafee_epo\setup.exe'
     product_id: '{E2C3579A-6B3B-40F6-88E8-BE08E78C8D1A}'
     arguments:
-      - /qr
+      - /qn
       - /l* C:\McAfee_ePO.log
       - MFSADMINUSERNAME_UE=admin
       - MFSADMINPASSWORD_UE={{ mssql_password }}
