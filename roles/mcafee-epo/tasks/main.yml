@@ -22,7 +22,7 @@
 - name: install McAfee EPO
   win_package:
     path: '{{ temp_directory }}\mcafee_epo\setup.exe'
-    product_id: '{31BC3145A3-F2A8-4DE2-8FBF-68B220611A7F}'
+    product_id: '{E2C3579A-6B3B-40F6-88E8-BE08E78C8D1A}'
     arguments:
       - /qr
       - /l* C:\McAfee_ePO.log
