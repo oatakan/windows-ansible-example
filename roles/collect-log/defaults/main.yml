@@ -1,0 +1,3 @@
+---
+temp_directory: '{{ ansible_env.TEMP }}'
+log_file: C:\McAfee_ePO.log

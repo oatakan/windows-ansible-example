@@ -1,0 +1,52 @@
+---
+
+- name: copy setup file
+  win_copy:
+    src: '{{ install_file_location }}\{{ install_file_name }}'
+    dest: '{{ temp_directory }}\'
+    remote_src: yes
+
+- name: create temporary directory
+  win_file:
+    path: '{{ temp_directory }}\mcafee_epo'
+    state: directory
+
+- name: unzip file
+  win_unzip:
+    src: '{{ temp_directory }}\{{ install_file_name }}'
+    dest: '{{ temp_directory }}\mcafee_epo'
+    #creates: "{{ install_location }}\\scripts"
+    rm: no
+  register: mcafee_epo_unzip
+
+- name: install McAfee EPO
+  win_package:
+    path: '{{ temp_directory }}\mcafee_epo\setup.exe'
+    product_id: '{E2C3579A-6B3B-40F6-88E8-BE08E78C8D1A}'
+    arguments:
+      - /qr
+      - /l* C:\McAfee_ePO.log
+      - MFSADMINUSERNAME_UE=admin
+      - MFSADMINPASSWORD_UE={{ mssql_password }}
+      - MFSADMINVERIFYPASSWORD_UE={{ mssql_password }}
+      - MFSDATABASESERVERNAME={{ sql_server_hostname }}
+      - MFSDATABASEPORT=1433
+      - MFSDATABASENAME=EPODB
+      - MFSDATABASEUSERNAME_UE=sa
+      - MFSDATABASEPASSWORD_UE={{ mssql_password }}
+      - AGENTPORT=80
+      - AGENTSECUREPORT=443
+      - TOMCATSECUREPORT=8443
+      - MFSDATABASEAUTHENTICATION=2
+      - SQLUDPPORTISENABLED=0
+      - IGNOREPROPINI=1
+      - MFSKEYSTOREPASSWORD_UE={{ mssql_password }}
+      - MFSVERIFYKEYSTOREPASSWORD={{ mssql_password }}
+      - ENABLETELEMETRY=0
+      - ENABLEFIPSMODE=0
+      - SKIPAUTOPRODINST=0
+      - AgreeToLicense="Yes"
+  register: mcafee_epo_install
+
+- debug:
+    var: mcafee_epo_install

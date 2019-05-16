@@ -1,0 +1,13 @@
+---
+
+- name: copy log file
+  win_copy:
+    src: '{{ log_file }}'
+    dest: '{{ smb_share }}\'
+    remote_src: yes
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  vars:
+    ansible_become_user: "{{ smb_share_username }}"
+    ansible_become_pass: "{{ smb_share_password }}"
