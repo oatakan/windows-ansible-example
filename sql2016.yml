@@ -8,5 +8,5 @@
     install_with: ini
   roles:
     - role: sql2016
-    - role: mcafee-epo
-      sql_server_hostname: "{{ ansible_host | default(ansible_ssh_host) | default(inventory_hostname) }}"
+#    - role: mcafee-epo
+#      sql_server_hostname: "{{ ansible_host | default(ansible_ssh_host) | default(inventory_hostname) }}"
