@@ -19,34 +19,74 @@
     rm: no
   register: mcafee_epo_unzip
 
-- name: install McAfee EPO
-  win_package:
-    path: '{{ temp_directory }}\mcafee_epo\setup.exe'
-    product_id: '{E2C3579A-6B3B-40F6-88E8-BE08E78C8D1A}'
-    arguments:
-      - /qn
-      - /l* C:\McAfee_ePO.log
-      - MFSADMINUSERNAME_UE=admin
-      - MFSADMINPASSWORD_UE={{ mssql_password }}
-      - MFSADMINVERIFYPASSWORD_UE={{ mssql_password }}
-      - MFSDATABASESERVERNAME={{ sql_server_hostname }}
-      - MFSDATABASEPORT=1433
-      - MFSDATABASENAME=EPODB
-      - MFSDATABASEUSERNAME_UE=sa
-      - MFSDATABASEPASSWORD_UE={{ mssql_password }}
-      - AGENTPORT=80
-      - AGENTSECUREPORT=443
-      - TOMCATSECUREPORT=8443
-      - MFSDATABASEAUTHENTICATION=2
-      - SQLUDPPORTISENABLED=0
-      - IGNOREPROPINI=1
-      - MFSKEYSTOREPASSWORD_UE={{ mssql_password }}
-      - MFSVERIFYKEYSTOREPASSWORD={{ mssql_password }}
-      - ENABLETELEMETRY=0
-      - ENABLEFIPSMODE=0
-      - SKIPAUTOPRODINST=0
-      - AgreeToLicense="Yes"
-  register: mcafee_epo_install
+#- name: install pstools
+#  win_chocolatey:
+#    name: pstools
+#    state: present
+#
+#- name: install wincdemu
+#  win_psexec:
+#    command: '{{ temp_directory }}\{{ wincdemu_setup_file_name }} /UNATTENDED'
+#    interactive: yes
+#    system: yes
+#    session: 1
 
-- debug:
-    var: mcafee_epo_install
+#- name: install McAfee EPO
+#  win_package:
+#    path: '{{ temp_directory }}\mcafee_epo\setup.exe'
+#    product_id: '{E2C3579A-6B3B-40F6-88E8-BE08E78C8D1A}'
+#    arguments:
+#      - /qn
+#      - /l* C:\McAfee_ePO.log
+#      - MFSADMINUSERNAME_UE=admin
+#      - MFSADMINPASSWORD_UE={{ mssql_password }}
+#      - MFSADMINVERIFYPASSWORD_UE={{ mssql_password }}
+#      - MFSDATABASESERVERNAME={{ sql_server_hostname }}
+#      - MFSDATABASEPORT=1433
+#      - MFSDATABASENAME=EPODB
+#      - MFSDATABASEUSERNAME_UE=sa
+#      - MFSDATABASEPASSWORD_UE={{ mssql_password }}
+#      - AGENTPORT=80
+#      - AGENTSECUREPORT=443
+#      - TOMCATSECUREPORT=8443
+#      - MFSDATABASEAUTHENTICATION=2
+#      - SQLUDPPORTISENABLED=0
+#      - IGNOREPROPINI=1
+#      - MFSKEYSTOREPASSWORD_UE={{ mssql_password }}
+#      - MFSVERIFYKEYSTOREPASSWORD={{ mssql_password }}
+#      - ENABLETELEMETRY=0
+#      - ENABLEFIPSMODE=0
+#      - SKIPAUTOPRODINST=0
+#      - AgreeToLicense="Yes"
+#  register: mcafee_epo_install
+
+- name: install McAfee EPO
+  win_dsc:
+    resource_name: Package
+    Path: '{{ temp_directory }}\mcafee_epo\setup.exe'
+    ProductId: '{E2C3579A-6B3B-40F6-88E8-BE08E78C8D1A}'
+    Name: Microsoft SQL Server 2016
+    Arguments: >
+      /qn
+      /l* C:\McAfee_ePO.log
+      MFSADMINUSERNAME_UE=admin
+      MFSADMINPASSWORD_UE={{ mssql_password }}
+      MFSADMINVERIFYPASSWORD_UE={{ mssql_password }}
+      MFSDATABASESERVERNAME={{ sql_server_hostname }}
+      MFSDATABASEPORT=1433
+      MFSDATABASENAME=EPODB
+      MFSDATABASEUSERNAME_UE=sa
+      MFSDATABASEPASSWORD_UE={{ mssql_password }}
+      AGENTPORT=80
+      AGENTSECUREPORT=443
+      TOMCATSECUREPORT=8443
+      MFSDATABASEAUTHENTICATION=2
+      SQLUDPPORTISENABLED=0
+      IGNOREPROPINI=1
+      MFSKEYSTOREPASSWORD_UE={{ mssql_password }}
+      MFSVERIFYKEYSTOREPASSWORD={{ mssql_password }}
+      ENABLETELEMETRY=0
+      ENABLEFIPSMODE=0
+      SKIPAUTOPRODINST=0
+      AgreeToLicense="Yes"
+  register: mcafee_epo_install
