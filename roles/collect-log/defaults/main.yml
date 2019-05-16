@@ -1,4 +1,4 @@
 ---
 temp_directory: '{{ ansible_env.TEMP }}'
 log_file: C:\McAfee_ePO.log
-destination_file_location: 'iso_upload'
+destination_file_location: 'log_upload'
