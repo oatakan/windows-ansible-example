@@ -6,6 +6,11 @@
     dest: '{{ temp_directory }}\'
     remote_src: yes
 
+- name: remove temporary directory
+  win_file:
+    path: '{{ temp_directory }}\mcafee_epo'
+    state: absent
+
 - name: create temporary directory
   win_file:
     path: '{{ temp_directory }}\mcafee_epo'
