@@ -6,4 +6,5 @@
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
   roles:
-    - role: sql2016
+    - role: mcafee-epo
+      sql_server_hostname: "{{ ansible_host | default(ansible_ssh_host) | default(inventory_hostname) }}"
