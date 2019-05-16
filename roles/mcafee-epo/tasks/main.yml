@@ -33,9 +33,10 @@
 - name: install McAfee EPO
   win_psexec:
     command: '{{ temp_directory }}\mcafee_epo\installMcAfeeEPO.bat'
-    interactive: yes
-    system: yes
-    session: 1
+    priority: high
+    #interactive: yes
+    #system: yes
+    #session: 1
 
 #- name: install McAfee EPO
 #  win_package:
