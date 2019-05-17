@@ -36,6 +36,6 @@ nodes:
       timezone: 20
       password: '{{ ansible_password | default(ansible_ssh_password) }}'
       runonce:
-        - cmd.exe /c powershell -Command "Set-NetConnectionProfile -NetworkCategory Private"
+        #- cmd.exe /c powershell -Command "Set-NetConnectionProfile -NetworkCategory Private"
         - powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
         - winrm set winrm/config/service/auth @{CredSSP="true"}
