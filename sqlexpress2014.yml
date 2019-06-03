@@ -1,8 +1,0 @@
-- name: Install SQL Express 2014
-  hosts: all
-  vars:
-    ansible_port: 5986
-    ansible_connection: winrm
-
-  roles:
-  - ionut-maxim.win_sqlexpress2014

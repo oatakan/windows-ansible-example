@@ -4,6 +4,7 @@ nodes:
     role: windows
     app_name: windows_demo
     #vm_size: Standard_A1_v2
+    #vm_size: Standard_A2_v2
     vm_size: Standard_D2s_v3
     os_type: Windows
     image:
