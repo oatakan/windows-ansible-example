@@ -8,5 +8,6 @@
   vars:
     ansible_port: 5986
     windows: yes
+    ec2_use_module: ec2_instance
   roles:
     - ansible-role-ec2
