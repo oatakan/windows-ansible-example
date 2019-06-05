@@ -1,9 +1,9 @@
 <powershell>
 $admin = [adsi]("WinNT://./administrator, user")
 {% if ansible_password is defined %}
-$admin.PSBase.Invoke("SetPassword", "{{ ansible_password }}")
+$admin.PSBase.Invoke("SetPassword", "{{ ansible_password | b64encode | b64decode }}")
 {% elif ansible_ssh_password is defined %}
-$admin.PSBase.Invoke("SetPassword", "{{ ansible_ssh_password }}")
+$admin.PSBase.Invoke("SetPassword", "{{ ansible_ssh_password | b64encode | b64decode }}")
 {% endif %}
 & $([scriptblock]::Create((New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"))) -ForceNewSSLCert -EnableCredSSP
 Enable-WSManCredSSP -Role Server -Force
