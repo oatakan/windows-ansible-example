@@ -1,0 +1,14 @@
+---
+
+- name: ensure shares directory is created
+  win_file:
+    path: C:\shares\internal
+    state: directory
+
+- name: Add a share
+  win_share:
+    name: internal
+    description: internal share
+    path: C:\shares\internal
+    list: yes
+    full: Administrators

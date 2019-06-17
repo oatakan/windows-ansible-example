@@ -9,8 +9,8 @@ nodes:
     #image: ami-013e197b #windows 2012 R2
     volumes:
       - device_name: /dev/xvda
-        volume_type: gp2
-        volume_size: 50
-        delete_on_termination: true
+        ebs:
+          volume_size: 50
+          delete_on_termination: true
     user_data: "{{ lookup('template', 'templates/userdata.txt.j2') }}"
 
