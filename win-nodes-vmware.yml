@@ -11,7 +11,7 @@ nodes:
     app_name: windows_demo
     networks:
     - name: mgmt
-      ip: 192.168.1.55
+      ip: "{{ node_ip_address }}"
       netmask: 255.255.255.0
       gateway: 192.168.1.254
       domain: home.ad
