@@ -24,11 +24,6 @@ nodes:
     template: windows-2019-standard-core-auto
     snapshot_src: Linked
     linked_clone: True
-    customvalues:
-      - key: app_name
-        value: windemo
-      - key: role
-        value: sqlserver
     customization:
       autologon: True
       orgname: Ansible
