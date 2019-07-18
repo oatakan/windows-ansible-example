@@ -16,11 +16,18 @@
   retries: 5
   when: (":" in update_file_path) and (not update_file.stat.exists)
 
+- include_tasks: check_version.yml
+
 - name: patch SQL 2016
   win_package:
     path: '{{ update_file_path }}'
     product_id: '{0AE831BC-ABCD-4DE2-8FBF-68B220611A7F}'
     arguments:
-      - /allinstances
+      - /Q
       - /quiet
+      - /IAcceptSQLServerLicenseTerms
+      - /Action=Patch
+      - /AllInstances
   register: sql_update
+
+- include_tasks: check_version.yml
