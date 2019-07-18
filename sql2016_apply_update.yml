@@ -6,4 +6,4 @@
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
   tasks:
-    - name
+    - sql2016-update

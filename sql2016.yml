@@ -7,4 +7,3 @@
     ansible_winrm_server_cert_validation: ignore
   roles:
     - sql2016
-    - sql2016-update
