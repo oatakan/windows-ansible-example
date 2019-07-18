@@ -1,0 +1,26 @@
+---
+
+- name: check update file
+  win_stat:
+    path: "{{ update_file_path }}"
+  register: update_file
+  when: (":" in update_file_path)
+
+- name: download update file
+  win_get_url:
+    dest: "{{ update_file_path }}"
+    url: "{{ update_file_url }}"
+  register: download_update
+  until: download_update is success
+  delay: 3
+  retries: 5
+  when: (":" in update_file_path) and (not update_file.stat.exists)
+
+- name: patch SQL 2016
+  win_package:
+    path: '{{ update_file_path }}'
+    product_id: '{0AE831BC-ABCD-4DE2-8FBF-68B220611A7F}'
+    arguments:
+      - /allinstances
+      - /quiet
+  register: sql_update

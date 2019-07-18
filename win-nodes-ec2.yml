@@ -12,5 +12,9 @@ nodes:
         ebs:
           volume_size: 50
           delete_on_termination: true
+      - device_name: /dev/xvdb
+        ebs:
+          volume_size: 100
+          delete_on_termination: true
     user_data: "{{ lookup('template', 'templates/userdata.txt.j2') }}"
 

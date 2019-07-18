@@ -1,0 +1,3 @@
+---
+update_file_path: '{{ ansible_env.TEMP }}\SQLServer2016SP2-KB4052908-x64-ENU.exe'
+update_file_url: https://download.microsoft.com/download/9/2/B/92BAD988-00C5-4F68-811E-B7FFBE009B00/SQLServer2016SP2-KB4052908-x64-ENU.exe
