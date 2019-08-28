@@ -1,8 +1,5 @@
 # Install SQL 2016
 
-- name: reboot system
-  win_reboot:
-
 - name: set up sqladmin user
   win_user:
     name: "{{ mssql_username }}"
