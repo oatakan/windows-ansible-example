@@ -1,5 +1,5 @@
 - name: Change VM Size on Windows Instance on Azure
-  hosts: localhost
+  hosts: all
   gather_facts: False
   connection: local
   become: no

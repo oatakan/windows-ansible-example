@@ -1,39 +1,14 @@
 - name: remove vms
   hosts: all
-  become: no
-  gather_facts: no
+  gather_facts: False
   connection: local
   vars:
-    ansible_port: 5986
+    ansible_ssh_password: ''
+  become: no
   vars_files:
     - win-nodes-ovirt.yml
-  tasks:
-    - name: obtain SSO token with using username/password credentials
-      ovirt_auth:
-        url: "{{ lookup('env', 'OVIRT_URL')|default(providers.ovirt.url) }}"
-        username: "{{ lookup('env', 'OVIRT_USERNAME')|default(providers.ovirt.username) }}"
-        password: "{{ lookup('env', 'OVIRT_PASSWORD')|default(providers.ovirt.password) }}"
-        insecure: yes
 
-    - name: remove vms
-      ovirt_vms:
-        auth: "{{ ovirt_auth }}"
-        name: "{{ item.name }}"
-        cluster: "{{ providers.ovirt.cluster | default('Default') }}"
-        state: absent
-        wait: yes
-      async: 7200
-      poll: 0
-      register: remove_instances
-      with_items: "{{ nodes }}"
+  roles:
+    - role: ansible-role-ovirt
+      role_action: deprovision
       delegate_to: localhost
-      when: nodes is defined
-
-    - name: wait for intances to finish deleting
-      async_status:
-        jid: "{{ item.ansible_job_id }}"
-      register: instances
-      until: instances.finished
-      retries: 300
-      delay: 10
-      with_items: "{{ remove_instances.results }}"
