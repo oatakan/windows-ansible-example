@@ -1,7 +1,7 @@
 ---
 providers:
   ovirt:
-    cluster: pele-Local
+    cluster: production
 nodes:
   - name: wintest2
     role: windows
