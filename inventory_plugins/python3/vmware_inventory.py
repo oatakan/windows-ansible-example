@@ -41,6 +41,8 @@ from time import time
 # REST API
 import requests
 from requests.auth import HTTPBasicAuth
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 from jinja2 import Environment
 from six import integer_types, PY3
