@@ -21,7 +21,7 @@ nodes:
     domain: home.ad
     memory: "{{ node_memory | default(4096) }}"
     cpu: "{{ node_cpu | default(2) }}"
-    template: windows-2008-r2-standard
+    template: windows-2019-standard-core
     snapshot_src: Linked
     linked_clone: True
     customization:
