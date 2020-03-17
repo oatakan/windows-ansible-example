@@ -11,3 +11,5 @@
   roles:
     - role: ansible-role-openstack
       role_action: deprovision
+      delegate_to: localhost
+      run_once: yes
