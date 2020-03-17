@@ -14,7 +14,7 @@
     Features: SQLENGINE
     InstallSharedDir: 'C:\Program Files\Microsoft SQL Server'
     SQLSysAdminAccounts:
-      - '{{ mssql_username }}'
+      - sa
     SQLSvcAccount_username: '{{ mssql_username }}'
     SQLSvcAccount_password: '{{ mssql_password }}'
     AgtSvcAccount_username: '{{ mssql_username }}'
