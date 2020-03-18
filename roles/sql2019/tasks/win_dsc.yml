@@ -19,4 +19,7 @@
     SQLSvcAccount_password: '{{ mssql_password }}'
     AgtSvcAccount_username: '{{ mssql_username }}'
     AgtSvcAccount_password: '{{ mssql_password }}'
+    SecurityMode: SQL
+    SAPwd_username: sa
+    SAPwd_password: '{{ mssql_password }}'
   register: sql_install
