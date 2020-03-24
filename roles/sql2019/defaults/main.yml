@@ -1,5 +1,5 @@
 ---
-iso_path: "{{ ansible_env.TEMP }}\\sql2019.iso"
+iso_path: '{{ ansible_env.TEMP }}\sql2019.iso'
 install_with: win_package # ini, batch, powershell, win_shell or psexec
 #iso_url: http://care.dlservice.microsoft.com/dl/download/F/E/9/FE9397FA-BFAB-4ADD-8B97-91234BC774B2/SQLServer2016-x64-ENU.iso
 iso_url: https://download.microsoft.com/download/9/0/7/907AD35F-9F9C-43A5-9789-52470555DB90/ENU/SQLServer2016SP1-FullSlipstream-x64-ENU.iso
