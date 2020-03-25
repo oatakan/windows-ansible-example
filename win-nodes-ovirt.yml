@@ -24,6 +24,6 @@ nodes:
     cpu: 2
     type: server
     user_name: vagrant
-    template: windows-2019-standard-core
+    template: "{{ template_name | default('windows-2019-standard-core') }}"
     #template: windows-2016
     sysprep: yes
