@@ -1,0 +1,39 @@
+- name: Install SQL 2016
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+  tasks:
+    - name: look for instance name
+      win_reg_stat:
+        path: HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server
+      register: sql_server_instance_names
+
+    - name: fail if no instance name found
+      fail:
+        msg: 'could not find MSSQL instance name'
+      when: sql_server_instance_names.properties.InstalledInstances.value is undefined or sql_server_instance_names.properties.InstalledInstances.value | length == 0
+
+    - name: find instance properties
+      win_reg_stat:
+        path: HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL
+        name: "{{ item }}"
+      register: sql_server_instance_name_properties
+      loop: "{{ sql_server_instance_names.properties.InstalledInstances.value }}"
+
+    - name: find instance information
+      win_reg_stat:
+        path: HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\{{ item.value }}\Setup
+      register: sql_server_instance_information
+      loop: "{{ sql_server_instance_name_properties.results }}"
+
+    - name: set version information
+      set_fact:
+        sql_server_edition: "{{ sql_server_instance_information.results[0].properties.Edition.value }}"
+        sql_server_version: "{{ sql_server_instance_information.results[0].properties.Version.value }}"
+
+    - name: show sql server version
+      debug:
+        msg: "SQL server: {{ sql_server_edition }} - {{ sql_server_version }}"
