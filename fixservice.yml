@@ -2,9 +2,6 @@
 
 - name: Fix a broken Service
   hosts: all
-  vars:
-    ansible_port: 5986
-    ansible_connection: winrm
 
   tasks:
     - name: Fix Print Spooler Service

@@ -2,11 +2,7 @@
   hosts: all
   gather_facts: yes
   serial: 1
-  vars:
-    ansible_port: 5986
-    ansible_connection: winrm
-    ansible_winrm_transport: credssp
-    ansible_winrm_server_cert_validation: ignore
+
   pre_tasks:
     - debug:
         msg: "{{ ansible_hostname | default('') }}"

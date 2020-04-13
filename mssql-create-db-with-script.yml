@@ -1,10 +1,6 @@
 - name: SQL 2016 Create DB with Script
   hosts: all
   vars:
-    ansible_port: 5986
-    ansible_connection: winrm
-    ansible_winrm_transport: credssp
-    ansible_winrm_server_cert_validation: ignore
     login_user: "{{ mssql_username }}"
     login_password: "{{ mssql_password }}"
     instance_name: "{{ ansible_hostname }}"

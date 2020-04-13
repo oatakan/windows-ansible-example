@@ -4,7 +4,6 @@
   connection: local
   become: no
   vars:
-    ansible_port: 5986
     config_file: "{{ lookup('env', 'OS_CLIENT_CONFIG_FILE') }}"
   vars_files:
     - node-config/cluster-nodes-openstack.yml
