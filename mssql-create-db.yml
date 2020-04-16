@@ -24,11 +24,6 @@
         state: present
         enabled: yes
 
-    - name: Create directory structure
-      win_file:
-        path: C:\Temp\{{ db_name }}
-        state: directory
-
     - name: Create a db
       mssql_db:
         login_host: "{{ ansible_host | default(ansible_ssh_host) | default(inventory_hostname) }}"
