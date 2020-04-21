@@ -1,0 +1,32 @@
+- name: Create incident on Service Now
+  hosts: all
+  gather_facts: no
+  connection: local
+  become: no
+
+  tasks:
+    - name: close servicenow request
+      snow_record:
+        state: present
+        table: sc_request
+        username: "{{ sn_username }}"
+        password: "{{ sn_password }}"
+        instance: "{{ sn_instance }}"
+        number: "{{ snow_request_id }}"
+        data:
+          work_notes: "Ansible Automation - Music store app version: {{ app_version }} deployed"
+          state: 3
+      delegate_to: localhost
+
+    - name: close ervicenow request item
+      snow_record:
+        state: present
+        table: sc_req_item
+        username: "{{ sn_username }}"
+        password: "{{ sn_password }}"
+        instance: "{{ sn_instance }}"
+        number: "RITM{{ snow_request_id.split('REQ')[1] }}"
+        data:
+          work_notes: "Ansible Automation - Music store app version: {{ app_version }} deployed"
+          state: 3
+        delegate_to: localhost
