@@ -17,6 +17,7 @@
           work_notes: "Ansible Automation - Music store app version: {{ app_version }} deployed"
           state: 3
       delegate_to: localhost
+      when: (snow_request_id | default('')) | length > 0
 
     - name: close ervicenow request item
       snow_record:
@@ -29,4 +30,5 @@
         data:
           work_notes: "Ansible Automation - Music store app version: {{ app_version }} deployed"
           state: 3
-        delegate_to: localhost
+      delegate_to: localhost
+      when: (snow_request_id | default('')) | length > 0
