@@ -19,7 +19,7 @@
       delegate_to: localhost
       when: (snow_request_id | default('')) | length > 0
 
-    - name: close ervicenow request item
+    - name: close servicenow request item
       snow_record:
         state: present
         table: sc_req_item
