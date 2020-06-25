@@ -377,7 +377,7 @@ class VMWareInventory(object):
         self.debugl('lower keys is %s' % self.lowerkeys)
         self.skip_keys = list(config.get('vmware', 'skip_keys').split(','))
         self.debugl('skip keys is %s' % self.skip_keys)
-        temp_host_filters = list(config.get('vmware', 'host_filters').split('}},'))
+        temp_host_filters = list(os.environ.get('VMWARE_HOST_FILTERS', config.get('vmware', 'host_filters')).split('}},'))
         for host_filter in temp_host_filters:
             host_filter = host_filter.rstrip()
             if host_filter != "":
