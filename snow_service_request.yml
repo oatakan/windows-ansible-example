@@ -1,10 +1,46 @@
-- name: Create incident on Service Now
+- name: Update ticket on Service Now
   hosts: all
   gather_facts: no
   connection: local
   become: no
 
   tasks:
+#    - name: create servicenow request if not provided
+#      snow_record:
+#        state: present
+#        table: sc_request
+#        username: "{{ sn_username }}"
+#        password: "{{ sn_password }}"
+#        instance: "{{ sn_instance }}"
+#        data:
+#          work_notes: "Ansible Automation - Music store app version: {{ app_version }} deployment started"
+#          state: 1
+#      delegate_to: localhost
+#      register: snow_request
+#      when: (snow_request_id | default('')) | length == 0
+#
+#    - debug:
+#        msg: "{{ snow_request }}"
+#
+#    - name: create servicenow request item
+#      snow_record:
+#        state: present
+#        table: sc_req_item
+#        username: "{{ sn_username }}"
+#        password: "{{ sn_password }}"
+#        instance: "{{ sn_instance }}"
+#        data:
+#          work_notes: "Ansible Automation - Music store app version: {{ app_version }} deployment started"
+#          state: 1
+#      delegate_to: localhost
+#      register: snow_request_item
+#      when: (snow_request_id | default('')) | length > 0
+#
+#    - name: set snow_request_id if not provided
+#      set_fact:
+#        snow_request_id: "{{ snow_request.record.sys_id }}"
+#      when: (snow_request_id | default('')) | length == 0
+
     - name: close servicenow request
       snow_record:
         state: present

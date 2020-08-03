@@ -1,0 +1,10 @@
+- name: Whoami
+  hosts: all
+
+  tasks:
+    - name: find whoami based on credentials supplied
+      win_whoami:
+
+    - name: find whoami based on become credentials
+      win_whoami:
+      become: yes
