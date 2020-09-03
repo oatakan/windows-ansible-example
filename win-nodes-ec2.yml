@@ -4,7 +4,7 @@ nodes:
     role: windows
     app_name: windows_demo
     instance_type: t2.large
-    image: ami-02d43577e47e684d9 # windows 2019 full
+    image: "{{ win2019_ami_id|default('ami-0105e6d241a21e66f') }}" #windows 2019
     #image: ami-603b1c1a #windows 2016
     #image: ami-013e197b #windows 2012 R2
     volumes:
