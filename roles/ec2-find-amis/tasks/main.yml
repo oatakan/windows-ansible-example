@@ -1,0 +1,77 @@
+- name: find ami for rhel7
+  ec2_ami_info:
+    owners: 309956199498
+    filters:
+      name: "{{ image_names['rhel-75'] }}"
+    region: "{{ ec2_region }}"
+  register: rhel7_ami_find
+
+- name: find ami for centos7
+  ec2_ami_info:
+    owners: 309956199498
+    filters:
+      name: "{{ image_names['centos-75'] }}"
+    region: "{{ ec2_region }}"
+  register: centos7_ami_find
+
+- name: find ami for windows 2016
+  ec2_ami_info:
+    filters:
+      name: "{{ image_names['win-2016'] }}"
+    region: "{{ ec2_region }}"
+  register: win2016_ami_find
+
+- name: find ami for windows 2019
+  ec2_ami_info:
+    filters:
+      name: "{{ image_names['win-2019'] }}"
+    region: "{{ ec2_region }}"
+  register: win2019_ami_find
+
+- name: set ami id for rhel7
+  set_fact:
+    rhel7_ami_id: "{{ rhel7_ami_find.images[-1].image_id }}"
+  when:
+    - rhel7_ami_find.images is defined
+    - rhel7_ami_find.images|length > 0
+
+- name: set ami id for centos7
+  set_fact:
+    centos7_ami_id: "{{ centos7_ami_find.images[-1].image_id }}"
+  when:
+    - centos7_ami_find.images is defined
+    - centos7_ami_find.images|length > 0
+
+- name: set ami id for windows 2016
+  set_fact:
+    win2016_ami_id: "{{ win2016_ami_find.images[-1].image_id }}"
+  when:
+    - win2016_ami_find.images is defined
+    - win2016_ami_find.images|length > 0
+
+- name: set ami id for windows 2019
+  set_fact:
+    win2019_ami_id: "{{ win2019_ami_find.images[-1].image_id }}"
+  when:
+    - win2019_ami_find.images is defined
+    - win2019_ami_find.images|length > 0
+
+- debug:
+    var: rhel7_ami_id
+  when:
+  - rhel7_ami_id is defined
+
+- debug:
+    var: centos7_ami_id
+  when:
+  - centos7_ami_id is defined
+
+- debug:
+    var: win2016_ami_id
+  when:
+  - win2016_ami_id is defined
+
+- debug:
+    var: win2019_ami_id
+  when:
+  - win2019_ami_id is defined

@@ -9,4 +9,5 @@
     ansible_port: 5986
     windows: yes
   roles:
+    - ec2-find-amis
     - ansible-role-ec2

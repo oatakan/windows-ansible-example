@@ -5,7 +5,7 @@ nodes:
     role: windows_ad
     app_name: windows_cluster_demo
     instance_type: t2.large
-    image: ami-603b1c1a #windows 2016
+    image: "{{ win2019_ami_id|default('ami-0105e6d241a21e66f') }}" #windows 2019
     volumes:
       - device_name: /dev/xvda
         volume_type: gp2
