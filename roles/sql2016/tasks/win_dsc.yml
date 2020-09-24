@@ -6,7 +6,7 @@
     state: present
 
 
-- name: install SQL 2019
+- name: install SQL 2016
   win_dsc:
     resource_name: SqlSetup
     InstanceName: MSSQLServer
