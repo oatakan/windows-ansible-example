@@ -9,12 +9,3 @@
     - name: output base user
       debug:
         msg: "{{ whoami_base.account.account_name }}"
-
-    - name: find whoami based on become credentials
-      win_whoami:
-      become: yes
-      register: whoami_become
-
-    - name: output become user
-      debug:
-        msg: "{{ whoami_become.account.account_name }}"
