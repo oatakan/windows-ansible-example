@@ -1,0 +1,17 @@
+- name: winrm enable ca cert
+  hosts: all
+
+  tasks:
+    - name: copy CA cert
+      win_copy:
+        src: winrm_cert.pem
+        dest: C:\Temp\winrm_cert.pem
+
+    - name: copy CA cert to trusted
+      win_certificate_store:
+        path: C:\Temp\winrm_cert.pem
+        state: present
+      register: winrm_ca_cert
+
+    - name: enable winrm to use the CA cert
+      win_shell: winrm create winrm/config/Listener?Address=*+Transport=HTTPS @{Hostname="{{ ansible_fqdn | uppper }}"; CertificateThumbprint="{{ winrm_ca_cert.thumbprints[0] }}"}
