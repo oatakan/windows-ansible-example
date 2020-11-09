@@ -11,6 +11,7 @@
       win_certificate_store:
         path: C:\Temp\winrm_cert.pem
         state: present
+        store_name: Root
       register: winrm_ca_cert
 
     - name: enable winrm to use the CA cert
