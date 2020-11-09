@@ -1,18 +1,36 @@
 - name: winrm enable ca cert
   hosts: all
+  vars:
+    # make sure you're using HTTP (default port 5985) as we need to delete HTTPS and replace with HTTPS using our cert
+    ansible_port: 5985
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
 
   tasks:
     - name: copy CA cert
       win_copy:
         src: winrm_cert.pem
-        dest: C:\Temp\winrm_cert.pem
+        dest: C:\winrm_cert.pfx
 
     - name: copy CA cert to trusted
       win_certificate_store:
-        path: C:\Temp\winrm_cert.pem
+        path: C:\winrm_cert.pfx
         state: present
         store_name: Root
       register: winrm_ca_cert
 
+    - debug:
+        msg: "{{ winrm_ca_cert.thumbprints[0] }}"
+
+    - name: delete winrm HTTPS listener
+      win_shell: winrm delete winrm/config/Listener?Address=*+Transport=HTTPS
+      register: delete_winrm_https_listener
+      failed_when:
+        - delete_winrm_https_listener.rc != 0
+        - ('The service cannot find the resource' not in delete_winrm_https_listener.stderr)
+      changed_when: delete_winrm_https_listener.rc == 0
+
     - name: enable winrm to use the CA cert
-      win_shell: winrm create winrm/config/Listener?Address=*+Transport=HTTPS @{Hostname="{{ ansible_fqdn | uppper }}"; CertificateThumbprint="{{ winrm_ca_cert.thumbprints[0] }}"}
+      win_shell: |
+        winrm create winrm/config/Listener?Address=*+Transport=HTTPS '@{Hostname="{{ ansible_fqdn | upper }}"; CertificateThumbprint="{{ winrm_ca_cert.thumbprints[0] }}"}'
