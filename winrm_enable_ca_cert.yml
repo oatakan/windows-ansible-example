@@ -1,23 +1,36 @@
-- name: winrm enable ca cert
+- name: winrm enable cert
   hosts: all
   vars:
     # make sure you're using HTTP (default port 5985) as we need to delete HTTPS and replace with HTTPS using our cert
+    # you can start using HTTPS (port 5986) with your newly imported cert after running this playbook
     ansible_port: 5985
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
 
   tasks:
-    - name: copy CA cert
-      win_copy:
-        src: winrm_cert.pem
-        dest: C:\winrm_cert.pfx
+    # we generate a self-signed cert as an example, you can remove this task if you have an existing certificate
+    - name: generate a new self-signed cert
+      win_shell: |
+        $store_location = 'cert:\localmachine\my'
+        $cert = New-SelfSignedCertificate -certstorelocation $store_location -dnsname {{ ansible_fqdn }}
+        $pwd = ConvertTo-SecureString -String "{{ ansible_password }}" -Force -AsPlainText
+        $path = $store_location + '{{"\\"}}' + $cert.thumbprint
+        Export-PfxCertificate -cert $path -FilePath C:\winrm_cert.p12 -Password $pwd
 
-    - name: copy CA cert to trusted
+    # uncomment the task below and update the src in this task if you want to copy and import and existing cert
+    #- name: copy CA cert
+    #  win_copy:
+    #    src: cert.pfx
+    #    dest: C:\winrm_cert.p12
+
+    - name: import cert
       win_certificate_store:
-        path: C:\winrm_cert.pfx
+        path: C:\winrm_cert.p12
         state: present
-        store_name: Root
+        store_location: LocalMachine
+        store_name: My
+        password: "{{ ansible_password }}"  # here you can update the password accordingly or remove if you don't have
       register: winrm_ca_cert
 
     - debug:
@@ -33,4 +46,4 @@
 
     - name: enable winrm to use the CA cert
       win_shell: |
-        winrm create winrm/config/Listener?Address=*+Transport=HTTPS '@{Hostname="{{ ansible_fqdn | upper }}"; CertificateThumbprint="{{ winrm_ca_cert.thumbprints[0] }}"}'
+        winrm create winrm/config/Listener?Address=*+Transport=HTTPS '@{Hostname="{{ ansible_fqdn }}"; CertificateThumbprint="{{ winrm_ca_cert.thumbprints[0] }}"}'
