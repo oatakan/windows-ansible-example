@@ -1,0 +1,20 @@
+- name: enable winrm via vmware
+  hosts: all
+  gather_facts: no
+  become: no
+  vars:
+    datacenter: cloud
+  tasks:
+    - name: enable winrm
+      vmware_vm_shell:
+        hostname: "{{ lookup('env', 'VMWARE_HOST')|default(providers.vcenter.hostname) }}"
+        username: "{{ lookup('env', 'VMWARE_USER')|default(providers.vcenter.username) }}"
+        password: "{{ lookup('env', 'VMWARE_PASSWORD')|default(providers.vcenter.password) }}"
+        datacenter: "{{ datacenter }}"
+        validate_certs: no
+        vm_id: "{{ name | default(inventory_hostname) }}"
+        vm_username: "{{ vm_username | default('Administrator') }}"
+        vm_password: "{{ vm_password | default(ansible_password) }}"
+        vm_shell: 'C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe'
+        vm_shell_args:  -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
+      delagate_to: localhost
