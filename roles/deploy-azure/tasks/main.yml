@@ -54,6 +54,7 @@
     name: "{{ item.name }}"
     vm_size: "{{ item.vm_size }}"
     public_ip_allocation_method: Dynamic
+    managed_disk_type: Standard_LRS
     open_ports:
       - 3389
       - 1433

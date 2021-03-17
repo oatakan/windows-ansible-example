@@ -8,8 +8,5 @@
   vars:
     ansible_port: 5986
     windows: yes
-    provider_id: 99000000000007
   roles:
     - deploy-azure
-  #  - { role: cloudforms-refresh-provider, when: manageiq is defined and provider_id is defined }
-  #  - { role: cloudforms-link-service, when: manageiq is defined and provider_id is defined }
