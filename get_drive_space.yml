@@ -10,4 +10,4 @@
 
     - name: drive space
       debug:
-        msg: "free drive space: {{ ((free_space_before_cleanup.stdout | from_json)['Free']|int / (1024*1024*1024)) | round(2, 'floor') }} GB"
+        msg: "free drive space: {{ ((drive_space.stdout | from_json)['Free']|int / (1024*1024*1024)) | round(2, 'floor') }} GB"
