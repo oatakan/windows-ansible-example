@@ -2,11 +2,6 @@
 
 - name: Get drive space
   hosts: all
-  vars:
-    ansible_port: 5986
-    ansible_connection: winrm
-    ansible_winrm_transport: credssp
-    ansible_winrm_server_cert_validation: ignore
 
   tasks:
     - name: get drive space
@@ -15,4 +10,4 @@
 
     - name: drive space
       debug:
-        msg: "drive space: {{ drive_space.stdout }}"
+        msg: "free drive space: {{ ((free_space_before_cleanup.stdout | from_json)['Free']|int / (1024*1024*1024)) | round(2, 'floor') }} GB"
