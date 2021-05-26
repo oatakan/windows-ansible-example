@@ -1,0 +1,7 @@
+---
+
+# read the content of a remote file
+include_tasks: read_remote_file.yml
+
+# add credential and use in a powershell script
+include_tasks: add_credential.yml

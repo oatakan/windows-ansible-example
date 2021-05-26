@@ -1,0 +1,16 @@
+---
+
+- name: read remote file
+  slurp:
+    src: \\host\test\some_file.txt
+  register: read_remote_file
+  become: true
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=net_credentials_only
+  vars:
+    ansible_become_user: "{{ smb_share_username  }}"
+    ansible_become_password: "{{ smb_share_password  }}"
+
+- name: show file content
+  debug:
+    msg: "{{ read_remote_file['content'] | b64decode }}"
