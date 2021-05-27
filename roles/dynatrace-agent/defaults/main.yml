@@ -1,0 +1,6 @@
+---
+
+install_with: chocolatey
+state: present
+
+package_url: https://downloads.dynatrace.com/clientservices/agent?version=6.5.0.1289&os=windows&arch=x64&techtype=java_net

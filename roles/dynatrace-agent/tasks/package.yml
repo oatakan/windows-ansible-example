@@ -1,0 +1,14 @@
+---
+- name: download dynatrace agent
+  win_get_url:
+    url: '{{ package_url }}'
+    dest: C:\dynatrace.msi
+  when: state == 'present'
+
+- name: ensure dynatrace agent is "{{ state }}"
+  win_package:
+    path: C:\dynatrace.msi
+    product_id: '{FEF8B348-84EA-4387-87EE-F05C3C1332A6}'
+    state: "{{ state }}"
+    arguments:
+      - /quiet
