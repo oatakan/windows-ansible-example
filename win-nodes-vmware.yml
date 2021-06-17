@@ -9,6 +9,7 @@ nodes:
   - name: wintest1
     role: windows
     app_name: windows_demo
+    environment: dev
     networks:
     - name: mgmt
       ip: 192.168.1.52

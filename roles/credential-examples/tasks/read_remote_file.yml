@@ -2,7 +2,7 @@
 
 - name: read remote file
   slurp:
-    src: \\host\test\some_file.txt
+    src: '{{ remote_file_path }}'
   register: read_remote_file
   become: true
   become_method: runas

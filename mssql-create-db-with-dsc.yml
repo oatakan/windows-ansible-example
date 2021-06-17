@@ -1,0 +1,74 @@
+- name: Create a db on MSSQL using DSC
+  hosts: all
+  gather_facts: no
+  become: no
+  vars:
+    db_name: rhdemo1
+
+  tasks:
+    - name: Install required DSC modules
+      win_psmodule:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - NetworkingDsc
+        - SqlServerDsc
+
+    - name: create database
+      win_dsc:
+        resource_name: SqlScriptQuery
+        ServerName: localhost
+        InstanceName: MSSQLServer
+        Credential_username: sa
+        Credential_password: '{{ mssql_password }}'
+        SetQuery: |
+          CREATE DATABASE ['{{ db_name }}']
+        TestQuery: |
+          if (select count(name) from sys.databases where name = '{{ db_name }}') = 0
+          BEGIN
+              RAISERROR ('Did not find database [{{ db_name }}]', 16, 1)
+          END
+          ELSE
+          BEGIN
+              PRINT 'Found database [{{ db_name }}]'
+          END
+        GetQuery: |
+          SELECT Name FROM sys.databases WHERE Name = '{{ db_name }}' FOR JSON AUTO
+
+    - name: Open port for MSSQL
+      win_dsc:
+        resource_name: Firewall
+        ensure: Present
+        name: MSSQL
+        enabled: True
+        localport: 1433
+        action: Allow
+        direction: Inbound
+        protocol: TCP
+
+#    - name: Set windows connection variables
+#      set_fact:
+#        ansible_port: 5986
+#        ansible_connection: winrm
+#        ansible_winrm_server_cert_validation: ignore
+#      delegate_to: 127.0.0.1
+#
+#    - name: Enable port for MSSQL
+#      win_firewall_rule:
+#        name: MSSQL
+#        localport: 1433
+#        action: allow
+#        direction: in
+#        protocol: tcp
+#        profiles: public
+#        state: present
+#        enabled: yes
+#
+#    - name: Create a db
+#      mssql_db:
+#        login_host: "{{ ansible_host | default(ansible_ssh_host) | default(inventory_hostname) }}"
+#        login_user: sa
+#        login_password: '{{ mssql_password }}'
+#        name: '{{ db_name }}'
+#        state: present
+#      delegate_to: 127.0.0.1

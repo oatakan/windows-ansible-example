@@ -1,0 +1,8 @@
+---
+
+- name: ensure required DSC module is available
+  win_psmodule:
+    name: SqlServerDsc
+    state: present
+
+- include_tasks: using_{{ script_execution_method }}.yml

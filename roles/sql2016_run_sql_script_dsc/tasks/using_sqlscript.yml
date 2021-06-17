@@ -1,0 +1,26 @@
+---
+
+- name: ensure required DSC module is available
+  win_psmodule:
+    name: SqlServerDsc
+    state: present
+
+- name: create db scripts
+  win_template:
+    src: '{{ item }}.j2'
+    dest: '{{ temp_directory }}\{{ item }}'
+  loop:
+    - Set-RunSQLScript.sql
+    - Test-RunSQLScript.sql
+    - Get-RunSQLScript.sql
+
+- name: create database tables (SqlScript)
+  win_dsc:
+    resource_name: SqlScript
+    ServerName: localhost
+    InstanceName: MSSQLServer
+    Credential_username: sa
+    Credential_password: '{{ mssql_password }}'
+    SetFilePath: '{{ temp_directory }}\Set-RunSQLScript.sql'
+    TestFilePath: '{{ temp_directory }}\Test-RunSQLScript.sql'
+    GetFilePath: '{{ temp_directory }}\Get-RunSQLScript.sql'

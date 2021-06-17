@@ -1,0 +1,8 @@
+---
+
+temp_directory: '{{ ansible_env.TEMP }}'
+script_execution_method: sqlscriptquery  #sqlscript or sqlscriptquery
+
+sql_query: >-
+  CREATE TABLE [{{ db_name }}].[dbo].[dbcaudit_temp]([SN] [varchar](255) NOT NULL,[Type]
+  [varchar](20) NOT NULL) ON [PRIMARY]

@@ -1,0 +1,13 @@
+- name: SQL 2016/2019 Create DB tables with DSC
+  hosts: all
+  vars:
+    login_user: sa
+    login_password: "{{ mssql_password }}"
+    instance_name: "{{ ansible_hostname }}"
+    db_name: rhdemo1
+    sql_query: >-
+      CREATE TABLE [{{ db_name }}].[dbo].[dbcaudit_temp]([SN] [varchar](255) NOT NULL,[Type]
+      [varchar](20) NOT NULL) ON [PRIMARY]
+
+  roles:
+  - sql2016_run_sql_script_dsc

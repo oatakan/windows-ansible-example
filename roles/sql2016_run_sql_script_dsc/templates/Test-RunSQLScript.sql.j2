@@ -1,0 +1,8 @@
+if (select count(name) from sys.databases where name = '{{ db_name }}') = 0
+BEGIN
+  RAISERROR ('Did not find database [{{ db_name }}]', 16, 1)
+END
+ELSE
+BEGIN
+  PRINT 'Found database [{{ db_name }}]'
+END

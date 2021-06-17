@@ -1,0 +1,17 @@
+---
+
+- name: ensure required DSC module is available
+  win_psmodule:
+    name: SqlServerDsc
+    state: present
+
+- name: create database tables (SqlScriptQuery)
+  win_dsc:
+    resource_name: SqlScriptQuery
+    ServerName: localhost
+    InstanceName: MSSQLServer
+    Credential_username: sa
+    Credential_password: '{{ mssql_password }}'
+    SetQuery: "{{ lookup('template', 'Set-RunSQLScript.sql.j2') }}"
+    TestQuery: "{{ lookup('template', 'Test-RunSQLScript.sql.j2') }}"
+    GetQuery: "{{ lookup('template', 'Get-RunSQLScript.sql.j2') }}"
