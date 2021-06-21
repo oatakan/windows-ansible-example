@@ -1,0 +1,58 @@
+- name: Expand disk on VMware Windows VM
+  hosts: all
+  vars:
+    disk_fullness_percentage_threshold: 80
+    disk_fullness_percentage: "{{ 100 - (100*(free_drive_space_before|int)/(total_size_before|int))|int }}"
+
+  tasks:
+    - name: get total size
+      win_shell: (Get-WmiObject -Class Win32_logicaldisk).Size
+      register: drive_total_size
+
+    - name: set total size
+      set_fact:
+        total_size_before: "{{ ((drive_total_size.stdout)|int / (1024*1024*1024)) | round(2, 'floor') }}"
+
+    - name: get drive space
+      win_shell: Get-PSDrive C | Select-Object Free | ConvertTo-Json
+      register: drive_space
+
+    - name: set free drive space
+      set_fact:
+        free_drive_space_before: "{{ ((drive_space.stdout | from_json)['Free']|int / (1024*1024*1024)) | round(2, 'floor') }}"
+
+    - debug:
+        msg: "free drive space:  {{ free_drive_space_before }} GB ({{ 100 - disk_fullness_percentage|int }}% of total space)"
+
+    - debug:
+        msg: "{{ total_size_before|int|round + 5 }}"
+
+    - block:
+        - name: expand vm disk to {{ total_size_before|int|round + 5 }}
+          vmware_guest:
+            hostname: "{{ lookup('env', 'VMWARE_HOST')|default(providers.vcenter.hostname) }}"
+            username: "{{ lookup('env', 'VMWARE_USER')|default(providers.vcenter.username) }}"
+            password: "{{ lookup('env', 'VMWARE_PASSWORD')|default(providers.vcenter.password) }}"
+            validate_certs: no
+            name: "{{ config.name }}"
+            disk:
+              - size_gb: "{{ total_size_before|int|round + 5 }}"
+                autoselect_datastore: yes
+          delegate_to: localhost
+          vars:
+            ansible_connection: local
+
+        - name: expand file system
+          win_shell: Resize-Partition -DriveLetter c -Size  (Get-PartitionSupportedSize -DriveLetter c).sizeMax -ErrorAction SilentlyContinue
+
+        - name: get drive space
+          win_shell: Get-PSDrive C | Select-Object Free | ConvertTo-Json
+          register: drive_space_after_expansion
+
+        - name: set free drive space after expansion
+          set_fact:
+            free_drive_space_after: "{{ ((drive_space_after_expansion.stdout | from_json)['Free']|int / (1024*1024*1024)) | round(2, 'floor') }}"
+
+        - debug:
+            msg: "free drive space:  {{ free_drive_space_after }} GB"
+      when: disk_fullness_percentage|int > disk_fullness_percentage_threshold|int
