@@ -30,6 +30,7 @@
       mac_address: "{{ ansible_interfaces[0].macaddress }}"
       serial_number: "{{ ansible_product_serial }}"
       os: "{{ ansible_facts.os_family }}"
+      sys_tags: "app_name_windows_demo"
     lookup_field: name
   delegate_to: localhost
   vars:
