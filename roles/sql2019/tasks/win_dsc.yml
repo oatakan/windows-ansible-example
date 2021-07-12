@@ -10,7 +10,7 @@
   win_dsc:
     resource_name: SqlSetup
     InstanceName: MSSQLServer
-    SourcePath: '{{ disk_image_out.mount_path }}'
+    SourcePath: '{{ disk_image_out.mount_paths[0] }}'
     Features: SQLENGINE
     InstallSharedDir: 'C:\Program Files\Microsoft SQL Server'
     SQLSysAdminAccounts:

@@ -1,7 +1,7 @@
 ---
 - name: install SQL 2016
   win_package:
-    path: '{{ disk_image_out.mount_path }}setup.exe'
+    path: '{{ disk_image_out.mount_paths[0] }}setup.exe'
     product_id: '{0AE831BC-F2A8-4DE2-8FBF-68B220611A7F}'
     arguments:
       - /Q

@@ -1,7 +1,7 @@
 ---
 - name: install SQL 2019
   win_package:
-    path: '{{ disk_image_out.mount_path }}setup.exe'
+    path: '{{ disk_image_out.mount_paths[0] }}setup.exe'
     product_id: '{{ product_id }}'
     arguments:
       - /Q

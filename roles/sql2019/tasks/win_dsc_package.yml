@@ -3,7 +3,7 @@
 - name: install SQL 2019
   win_dsc:
     resource_name: Package
-    Path: '{{ disk_image_out.mount_path }}setup.exe'
+    Path: '{{ disk_image_out.mount_paths[0] }}setup.exe'
     ProductId: '{{ product_id }}'
     Name: Microsoft SQL Server 2019
     Arguments: >

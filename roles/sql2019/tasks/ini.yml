@@ -5,7 +5,7 @@
     dest: c:\sqlsilent.ini
 
 - name: install SQL 2019
-  win_shell: "{{ disk_image_out.mount_path }}setup.exe /ConfigurationFile=C:\\sqlsilent.ini /INDICATEPROGRESS=False"
+  win_shell: "{{ disk_image_out.mount_paths[0] }}setup.exe /ConfigurationFile=C:\\sqlsilent.ini /INDICATEPROGRESS=False"
   args:
     executable: cmd
     chdir: c:\

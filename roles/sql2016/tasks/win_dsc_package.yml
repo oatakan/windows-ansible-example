@@ -2,7 +2,7 @@
 - name: install SQL 2016
   win_dsc:
     resource_name: Package
-    Path: '{{ disk_image_out.mount_path }}setup.exe'
+    Path: '{{ disk_image_out.mount_paths[0] }}setup.exe'
     ProductId: '{0AE831BC-F2A8-4DE2-8FBF-68B220611A7F}'
     Name: Microsoft SQL Server 2016
     Arguments: >
