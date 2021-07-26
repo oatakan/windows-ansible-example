@@ -1,0 +1,23 @@
+---
+
+- name: install/uninstall splunk forwarder
+  hosts: all
+  vars:
+    package_state: present   #present/absent
+    splunk_package_url: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.2.1&product=universalforwarder&filename=splunkforwarder-8.2.1-ddff1c41e5cf-x64-release.msi&wget=true
+  tasks:
+    - name: download package
+      win_get_url:
+        url: "{{ splunk_package_url }}"
+        dest: c:\splunkforwarder-8.2.1-ddff1c41e5cf-x64-release.msi
+      when: package_state == 'present'
+
+    - name: ensure splunk forwarder {{ package_state }}
+      win_package:
+        path: c:\splunkforwarder-8.2.1-ddff1c41e5cf-x64-release.msi
+        product_id: '{3D9AF58B-098C-4F85-AF29-EAA55C44FFDC}'
+        state: "{{ package_state }}"
+        arguments:
+          - /qn
+          - /norestart
+          - AGREETOLICENSE=YES
