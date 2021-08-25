@@ -15,7 +15,6 @@
             host: "{{ inventory_hostname }}"
             port: "{{ ansible_port }}"
           delegate_to: localhost
-          register: ping_hosts
       rescue:
         - set_fact:
             unreachable: true
