@@ -1,0 +1,29 @@
+---
+
+# in this method, the playbook will show as failed in Tower, listing unreachable systems as unreachable at the end
+# unreachable systems identified in the first play
+# any tasks/roles can be executed in the 2nd play on reachable systems
+# result: all tasks are executed on all reachable systems
+
+- name: ping hosts
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: ping host
+      win_ping:
+
+    - debug:
+        msg: "failed hosts: {{ ansible_play_hosts_all | difference(ansible_play_hosts) }}"
+      run_once: true
+
+    # you can take any action here on behalf of failed hosts
+    # remember to use (run_once: true) and (delegate_to: localhost) as appropriate
+    # why delegate_to: localhost? you might ask. Imagine a scenario where all hosts failed.
+    # in that case, there are no hosts to execute any tasks on, you can delegate_to: localhost for any action needed
+    # for example send email, make api call to update a record somewhere etc.
+
+- hosts: all
+  gather_facts: false
+  tasks:
+    - debug:
+        msg: "{{ inventory_hostname }} is reachable"
