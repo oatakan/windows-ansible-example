@@ -2,8 +2,6 @@
   hosts: all
   gather_facts: False
   connection: local
-  vars:
-    ansible_ssh_password: ''
   become: no
   vars_files:
     - win-nodes-ovirt.yml

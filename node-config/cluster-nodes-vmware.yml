@@ -34,7 +34,7 @@ nodes:
       orgname: Ansible
       fullname: Ansible
       timezone: 20
-      password: '{{ ansible_password | default(ansible_ssh_password) }}'
+      password: '{{ ansible_password }}'
       runonce:
       - powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
       - winrm set winrm/config/service/auth @{CredSSP="true"}
@@ -66,7 +66,7 @@ nodes:
       orgname: Ansible
       fullname: Ansible
       timezone: 20
-      password: '{{ ansible_password | default(ansible_ssh_password) }}'
+      password: '{{ ansible_password }}'
       runonce:
       - powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
       - winrm set winrm/config/service/auth @{CredSSP="true"}
@@ -98,7 +98,7 @@ nodes:
       orgname: Ansible
       fullname: Ansible
       timezone: 20
-      password: '{{ ansible_password | default(ansible_ssh_password) }}'
+      password: '{{ ansible_password }}'
       runonce:
       - powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
       - winrm set winrm/config/service/auth @{CredSSP="true"}
