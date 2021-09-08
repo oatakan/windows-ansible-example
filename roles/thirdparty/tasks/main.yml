@@ -5,5 +5,4 @@
     state: latest
   loop:
     - googlechrome
-    - 7zip.install
-    - "{{ windows_app_name | default(omit) }}"
+    - "{{ windows_app_name | default('7zip.install') }}"
