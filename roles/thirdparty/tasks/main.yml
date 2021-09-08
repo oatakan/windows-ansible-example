@@ -6,4 +6,4 @@
   loop:
     - googlechrome
     - 7zip.install
-    - "{{ windows_app_name | default('') }}"
+    - "{{ windows_app_name | default(omit) }}"
