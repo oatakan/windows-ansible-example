@@ -1,11 +1,9 @@
 ---
-- name: Install latest Google Chrome
+- name: Install latest packages
   win_chocolatey:
     name: "{{ item }}"
     state: latest
   loop:
     - googlechrome
-    - firefox
-    - flashplayerplugin
     - 7zip.install
-    - jre8
+    - "{{ windows_app_name | default('') }}"
