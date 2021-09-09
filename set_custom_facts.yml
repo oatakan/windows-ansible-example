@@ -1,0 +1,20 @@
+- name: set custom facts and gather
+  hosts: all
+  tasks:
+    - name: create custom facts on the system
+      win_copy:
+        content: |
+          @{
+              local_facts = @{
+                custom_fact_1 = 'test 1'
+                custom_fact_2 = 'test 2'
+              }
+          }
+        dest: C:\windows\temp\ansible_custom_facts.ps1
+
+    - name: gather custom facts
+      setup:
+        fact_path: C:\windows\temp\ansible_custom_facts.ps1
+
+    - debug:
+        msg: "custom_fact_1: {{ ansible_ansible_custom_facts.local_facts.custom_fact_1 }}, custom_fact_2: {{ ansible_ansible_custom_facts.local_facts.custom_fact_2 }}"
