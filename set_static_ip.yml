@@ -1,0 +1,6 @@
+- name: set static ip address on the 2nd interface
+  hosts: all
+  vars:
+    second_interface_static_ip_address: 10.10.10.52
+  roles:
+  - set-static-ip

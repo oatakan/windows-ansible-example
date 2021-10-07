@@ -1,0 +1,26 @@
+---
+
+- name: Install required DSC modules
+  win_psmodule:
+    name: NetworkingDsc
+    state: present
+
+- name: show current ip address of the 2nd interface
+  debug:
+    msg: "{{ ansible_ip_addresses[3] }}"
+
+- name: Set static address for the 2nd interface
+  win_dsc:
+    resource_name: IPAddress
+    IPAddress: "{{ second_interface_static_ip_address }}"
+    InterfaceAlias: "{{ ansible_interfaces[1].connection_name }}"
+    AddressFamily: IPV4
+
+- name: gather new networking facts
+  setup:
+    filter:
+      - 'ansible_ip_addresses'
+
+- name: show the new ip address of the 2nd interface
+  debug:
+    msg: "{{ ansible_ip_addresses[3] }}"
