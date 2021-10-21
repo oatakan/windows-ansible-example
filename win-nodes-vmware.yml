@@ -27,6 +27,7 @@ nodes:
     linked_clone: True
     customization:
       autologon: True
+      autologoncount: 1
       orgname: Ansible
       fullname: Ansible
       timezone: 20
