@@ -1,9 +1,13 @@
 - name: Destroy Windows Servers VMs
   hosts: all
   gather_facts: False
+  connection: local
   become: no
   vars_files:
     - win-nodes-vmware.yml
     
   roles:
-  - undeploy
+    - role: ansible-role-vmware
+      role_action: deprovision
+      delegate_to: localhost
+      run_once: yes
