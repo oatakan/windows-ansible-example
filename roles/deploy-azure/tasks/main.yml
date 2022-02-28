@@ -1,6 +1,6 @@
 ---
 - name: Create a resource group
-  azure_rm_resourcegroup:
+  azure.azcollection.azure_rm_resourcegroup:
     name: myResourceGroup
     location: southcentralus
     tags:
@@ -38,6 +38,36 @@
         access: Allow
         priority: 1001
         direction: Inbound
+      - name: WINRM
+        protocol: Tcp
+        destination_port_range: 5986
+        access: Allow
+        priority: 1002
+        direction: Inbound
+      - name: RDP
+        protocol: Tcp
+        destination_port_range: 3389
+        access: Allow
+        priority: 1003
+        direction: Inbound
+      - name: MSSQL
+        protocol: Tcp
+        destination_port_range: 1433
+        access: Allow
+        priority: 1004
+        direction: Inbound
+      - name: HTTP
+        protocol: Tcp
+        destination_port_range: 80
+        access: Allow
+        priority: 1005
+        direction: Inbound
+      - name: HTTPS
+        protocol: Tcp
+        destination_port_range: 443
+        access: Allow
+        priority: 1006
+        direction: Inbound
 
 - name: Create virtual network inteface card
   azure_rm_networkinterface:
@@ -45,7 +75,10 @@
     name: myNIC
     virtual_network: myVnet
     subnet: mySubnet
-    public_ip_name: myPublicIP
+    ip_configurations:
+      - name: ipconfig1
+        public_ip_address_name: myPublicIP
+        primary: True
     security_group: myNetworkSecurityGroup
 
 - name: Create Windows VM
@@ -58,19 +91,20 @@
     open_ports:
       - 3389
       - 1433
-      - "{{ ansible_port }}"
-    os_type: "{{ item.os_type }}"
+      - "{{ item.ansible_port | default(ansible_port) | default('5986') }}"
+    os_type: "{{ item.os_type | default('Windows') }}"
     network_interfaces: myNIC
     admin_username: ansible
-    admin_password: "{{ ansible_password }}"
+    admin_password: "{{ item.root_password | default(ansible_password) }}"
     image: "{{ item.image }}"
+    remove_on_absent: all
     tags:
       role: "{{ item.role }}"
       app_name: "{{ item.app_name }}"
   async: 7200
   poll: 0
   register: deploy
-  with_items: "{{ nodes }}"
+  loop: "{{ nodes }}"
   when: nodes is defined
 
 - name: Wait for instance creation to complete
@@ -99,7 +133,7 @@
     host: "{{ item.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
     port: "{{ ansible_port }}"
     timeout: 600
-  with_items: "{{ instances.results }}"
+  loop: "{{ instances.results }}"
   when: (instances | changed) and (nodes is defined)
 
 

@@ -25,3 +25,4 @@
   version: origin/master
 
 - src: dynatrace.oneagent
+  version: v1.0.8
