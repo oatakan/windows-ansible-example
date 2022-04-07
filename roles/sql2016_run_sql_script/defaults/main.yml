@@ -1,0 +1,3 @@
+---
+
+run_sql_script_method: mssql_script  # mssql_script or powershell
