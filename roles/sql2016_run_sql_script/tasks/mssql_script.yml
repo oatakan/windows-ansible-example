@@ -6,10 +6,10 @@
     login_user: sa
     login_password: '{{ mssql_password }}'
     output: dict
-    script: '{{ sql_query }}'
+    script: '{{ sql_script }}'
   delegate_to: localhost
   become: false
   register: mssql_execute_sql_query
 
 - debug:
-    msg: "{{ mssql_execute_sql_query }}"
+    msg: "validate table created: {{ mssql_execute_sql_query.query_results_dict[0][0][0]['TABLE_NAME'] }}"

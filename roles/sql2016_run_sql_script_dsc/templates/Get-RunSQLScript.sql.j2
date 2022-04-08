@@ -1,1 +1,1 @@
-SELECT Name FROM sys.databases WHERE Name = '{{ db_name }}' FOR JSON AUTO
+SELECT TABLE_NAME FROM [{{ db_name }}].INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' and TABLE_NAME = 'dbcaudit_temp'
