@@ -5,4 +5,4 @@
     login_password: "{{ mssql_password }}"
     instance_name: "{{ ansible_hostname }}"
   roles:
-  - sql2016_create_db_with_script
+  - sql_create_db_with_script

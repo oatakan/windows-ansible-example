@@ -6,4 +6,4 @@
     instance_name: "{{ ansible_hostname }}"
 
   roles:
-  - sql2016_run_sql_script
+  - sql_run_sql_script
