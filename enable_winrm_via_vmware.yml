@@ -16,5 +16,5 @@
         vm_username: "{{ vm_username | default('Administrator') }}"
         vm_password: "{{ vm_password | default(ansible_password) }}"
         vm_shell: 'C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe'
-        vm_shell_args:  -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
+        vm_shell_args:  -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible-documentation/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
       delegate_to: localhost
